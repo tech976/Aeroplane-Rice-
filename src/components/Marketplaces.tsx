@@ -1,11 +1,13 @@
 // Where else Aeroplane is sold. The logos are each company's own artwork (from Wikimedia Commons), shown unaltered.
-// Where else Aeroplane is sold. Each link opens that marketplace's own search for the product,
-// so it keeps working when listings change. Swap in exact store or listing addresses when they are supplied.
-const marketplaces = [
-  { name: 'Amazon', logo: 'amazon', search: (q: string) => `https://www.amazon.in/s?k=${q}` },
-  { name: 'Flipkart', logo: 'flipkart', search: (q: string) => `https://www.flipkart.com/search?q=${q}` },
-  { name: 'Blinkit', logo: 'blinkit', search: (q: string) => `https://blinkit.com/s/?q=${q}` },
-  { name: 'Zepto', logo: 'zepto', search: (q: string) => `https://www.zeptonow.com/search?query=${q}` },
+// Each link goes straight to that product's own listing where we hold the address
+// (see marketplace-links.ts); otherwise it falls back to the marketplace's search.
+import { listingFor, type Shop } from '../marketplace-links';
+
+const marketplaces: { name: string; logo: Shop; search: (q: string) => string }[] = [
+  { name: 'Amazon', logo: 'amazon', search: (q) => `https://www.amazon.in/s?k=${q}` },
+  { name: 'Flipkart', logo: 'flipkart', search: (q) => `https://www.flipkart.com/search?q=${q}` },
+  { name: 'Blinkit', logo: 'blinkit', search: (q) => `https://blinkit.com/s/?q=${q}` },
+  { name: 'Zepto', logo: 'zepto', search: (q) => `https://www.zeptonow.com/search?query=${q}` },
 ];
 
 const Out = () => (
@@ -15,17 +17,26 @@ const Out = () => (
 );
 
 /** A row of links to the marketplaces. `compact` is the small version used beside a product. */
-export function Marketplaces({ query, compact = false }: { query: string; compact?: boolean }) {
+export function Marketplaces({ query, productId, compact = false }: { query: string; productId?: string; compact?: boolean }) {
   const q = encodeURIComponent(query);
-  const links = marketplaces.map((shop) => (
+  const links = marketplaces.map((shop) => {
+    const exact = listingFor(productId, shop.logo);
+    return (
     <li key={shop.name}>
-      <a href={shop.search(q)} target="_blank" rel="noopener" aria-label={`Find ${query} on ${shop.name} (opens in a new tab)`}>
-        {!compact && <span className="label">Shop on</span>}
+      <a
+        href={exact ?? shop.search(q)}
+        target="_blank"
+        rel="noopener"
+        data-exact={exact ? '' : undefined}
+        aria-label={exact ? `Buy ${query} on ${shop.name} (opens in a new tab)` : `Find ${query} on ${shop.name} (opens in a new tab)`}
+      >
+        {!compact && <span className="label">{exact ? 'Buy on' : 'Search on'}</span>}
         <img className={`markets__logo markets__logo--${shop.logo}`} src={`/assets/marketplaces/${shop.logo}.svg`} alt={shop.name} loading="lazy" />
         <Out />
       </a>
     </li>
-  ));
+    );
+  });
 
   if (compact) {
     return (

@@ -16,6 +16,9 @@ import { Kitchen } from './components/Kitchen';
 import { Story } from './components/Story';
 import { Faq, Footer, Promise } from './components/Closing';
 import { ProductPage } from './components/ProductPage';
+import { CompanyPage } from './components/CompanyPage';
+import { ShopPage } from './components/ShopPage';
+import { findPage } from './company';
 
 function Home() {
   return (
@@ -40,20 +43,28 @@ function Home() {
 
 export function App() {
   const path = usePath();
-  const productId = path.match(/^\/products\/([^/]+)\/?$/)?.[1];
+  const clean = path.replace(/\/+$/, '') || '/';
+  const productId = clean.match(/^\/products\/([^/]+)$/)?.[1];
+  // the company pages added alongside the shop: /company, /investors, /contact and the rest
+  const company = !productId && clean !== '/' ? findPage(clean) : undefined;
+  const shop = clean === '/shop';
+  const inner = Boolean(productId || company || shop);
 
   // a link such as /#range opened directly: the section does not exist until the page has rendered
   useEffect(() => { if (location.hash) settle(location.hash); }, []);
-  useEffect(() => { if (!productId) setSeo(); }, [productId]);
+  useEffect(() => { if (!inner) setSeo(); }, [inner]);
 
   return (
     <LazyMotion features={domAnimation} strict>
       <MotionConfig reducedMotion="user">
         <CartProvider>
-          <Header plain={Boolean(productId)} />
-          {productId ? <ProductPage key={productId} id={productId} /> : <Home />}
+          <Header plain={inner} />
+          {productId ? <ProductPage key={productId} id={productId} />
+            : shop ? <ShopPage />
+            : company ? <CompanyPage key={company.path} path={company.path} />
+            : <Home />}
           <Footer />
-          {!productId && <ShopBar />}
+          {!inner && <ShopBar />}
         </CartProvider>
       </MotionConfig>
     </LazyMotion>

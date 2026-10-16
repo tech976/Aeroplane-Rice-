@@ -98,9 +98,9 @@ export function Footer() {
           <nav className="site-footer__nav" aria-label="Footer">
             <div>
               <h2 className="label">Rice</h2>
-              <a href="/#range">Basmati</a>
-              <a href="/#range">Regional rice</a>
-              <a href="/#range">Gifts and baskets</a>
+              <a href="/shop">Basmati</a>
+              <a href="/shop">Regional rice</a>
+              <a href="/shop">Gifts and baskets</a>
               <a href="https://shop.aeroplanerice.com" target="_blank" rel="noopener">Online shop</a>
             </div>
             <div>
@@ -112,9 +112,12 @@ export function Footer() {
             <div>
               <h2 className="label">Company</h2>
               <a href="/#story">Our story</a>
-              <a href="/#fields">Our fields</a>
-              <a href="mailto:trade@aeroplanerice.com">Trade and export</a>
-              <a href="mailto:hello@aeroplanerice.com">Contact</a>
+              <a href="/company">The company</a>
+              <a href="/company/infrastructure">Our mills</a>
+              <a href="/company/certifications">Certifications</a>
+              <a href="/investors">Investors</a>
+              <a href="/careers">Careers</a>
+              <a href="/contact">Contact</a>
             </div>
           </nav>
         </div>

@@ -88,7 +88,7 @@ export function Hero() {
         {!reduced && (
           <m.div className="wrap hero__opening" style={{ opacity: opening }}>
             <p className="label">Aged basmati, since 1969</p>
-            <p className="hero__say">Slender, fragrant, and never in a hurry.</p>
+            <p className="hero__say">Four decades.<br />Thirty-seven countries.</p>
             <a className="btn btn--yellow" href="#range">Shop the range</a>
           </m.div>
         )}

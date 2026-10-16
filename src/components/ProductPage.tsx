@@ -122,7 +122,7 @@ export function ProductPage({ id }: { id: string }) {
                 <a className="btn btn--line" href={product.url} target="_blank" rel="noopener">Buy now</a>
               </div>
               <p className="pdp__note">Buy now opens this product on the Aeroplane online shop, where payment and delivery are completed.</p>
-              <Marketplaces query={`Aeroplane ${product.name}`} compact />
+              <Marketplaces query={`Aeroplane ${product.name}`} productId={product.id} compact />
 
               <dl className="pdp__facts">
                 <div><dt className="label">Availability</dt><dd>{variant.inStock ? 'In stock' : 'Sold out in this size'}</dd></div>

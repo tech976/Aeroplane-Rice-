@@ -1,18 +1,29 @@
 import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import { ACCOUNT_URL } from '../products';
+import { usePath } from '../router';
 import { CartButton, useCart } from './Cart';
 
 const links = [
-  ['/#range', 'Shop'],
+  ['/shop', 'Shop'],
   ['/#heritage', 'Heritage'],
-  ['/#fields', 'Fields'],
   ['/#kitchen', 'Recipes'],
   ['/#story', 'Our story'],
+];
+
+// the company pages, grouped behind one nav item
+const company = [
+  ['/company', 'The company'],
+  ['/company/leadership', 'Leadership'],
+  ['/company/infrastructure', 'Mills'],
+  ['/company/certifications', 'Certifications'],
+  ['/careers', 'Careers'],
 ];
 
 export function Header({ plain = false }: { plain?: boolean }) {
   const menu = useRef<HTMLDialogElement>(null);
   const [solid, setSolid] = useState(false);
+  // off the home page the section links point back to it, so give people a plain way home
+  const away = usePath().replace(/\/+$/, '') !== '';
 
   // clear over the opening photograph, white once the page starts to move
   useEffect(() => {
@@ -36,7 +47,25 @@ export function Header({ plain = false }: { plain?: boolean }) {
             <img src="/assets/brand/logo-shield-clear.png" alt="La-Taste Aeroplane Basmati" width={400} height={188} />
           </a>
           <nav className="site-nav" aria-label="Main">
+            {away && <a href="/">Home</a>}
             {links.map(([href, label]) => <a key={href} href={href}>{label}</a>)}
+            <div className="site-nav__group">
+              <a href="/company" aria-haspopup="true">Company</a>
+              <div className="site-nav__menu">
+                {company.map(([href, label]) => <a key={href} href={href}>{label}</a>)}
+              </div>
+            </div>
+            <div className="site-nav__group">
+              <a href="/investors" aria-haspopup="true">Investors</a>
+              <div className="site-nav__menu">
+                <a href="/investors">Overview</a>
+                <a href="/investors/financials">Financial information</a>
+                <a href="/investors/announcements">Filings and announcements</a>
+                <a href="/investors/governance">Corporate governance</a>
+                <a href="/investors/offer-documents">Offer documents</a>
+              </div>
+            </div>
+            <a href="/contact">Contact</a>
           </nav>
           <div className="site-header__tools">
             <a className="account-link" href={ACCOUNT_URL} target="_blank" rel="noopener" aria-label="Your account, on the Aeroplane online shop (opens in a new tab)">
@@ -59,8 +88,23 @@ export function Header({ plain = false }: { plain?: boolean }) {
             <button className="menu__close" type="button" aria-label="Close menu"><span /><span /></button>
           </div>
           <nav className="menu__nav" aria-label="Mobile">
+            {away && <a href="/">Home</a>}
             {links.map(([href, label]) => <a key={href} href={href}>{label}</a>)}
+            <a href="/#fields">Fields</a>
             <a href="/#table">The Indian table</a>
+            <span className="menu__rule" aria-hidden="true" />
+            {company.map(([href, label]) => <a key={href} href={href}>{label}</a>)}
+            <div className="site-nav__group">
+              <a href="/investors" aria-haspopup="true">Investors</a>
+              <div className="site-nav__menu">
+                <a href="/investors">Overview</a>
+                <a href="/investors/financials">Financial information</a>
+                <a href="/investors/announcements">Filings and announcements</a>
+                <a href="/investors/governance">Corporate governance</a>
+                <a href="/investors/offer-documents">Offer documents</a>
+              </div>
+            </div>
+            <a href="/contact">Contact</a>
             <a href={ACCOUNT_URL} target="_blank" rel="noopener">Account</a>
           </nav>
           <p className="menu__note">Long-grain basmati, since 1969.</p>
@@ -84,7 +128,7 @@ export function ShopBar() {
 
   return (
     <div className="shop-bar" data-shown={shown} inert={!shown}>
-      <a className="btn" href="/#range">Shop the range</a>
+      <a className="btn" href="/shop">Shop the range</a>
       <button type="button" className="btn btn--line" onClick={open}>Cart ({count})</button>
     </div>
   );

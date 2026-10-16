@@ -882,3 +882,20 @@ export const ACCOUNT_URL = `${SHOP_URL}/my-account/`;
 const rupees = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
 export const price = (amount: number) => rupees.format(amount);
 export const firstInStock = (product: Product) => product.variants.find((v) => v.inStock) ?? product.variants[0];
+
+/** Weight of a pack in kilograms, when the size says so plainly. */
+export function kilos(size: string) {
+  if (size.includes('+')) return null;
+  const match = size.match(/(\d+(?:\.\d+)?)\s*(kg|g)\b/i);
+  if (!match) return null;
+  const count = Number(size.match(/^(\d+)\s*x/i)?.[1] ?? 1);
+  return count * Number(match[1]) * (match[2].toLowerCase() === 'g' ? 0.001 : 1);
+}
+export function perKilo(variant: Variant) {
+  const weight = kilos(variant.size);
+  return weight && weight >= 0.5 ? Math.round(variant.price / weight) : null;
+}
+/** The cheapest in-stock pack, used for sorting the shop. */
+export const lowestPrice = (product: Product) =>
+  Math.min(...(product.variants.filter((v) => v.inStock).length ? product.variants.filter((v) => v.inStock) : product.variants).map((v) => v.price));
+export const anyInStock = (product: Product) => product.variants.some((v) => v.inStock);

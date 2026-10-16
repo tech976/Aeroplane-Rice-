@@ -6,6 +6,9 @@ const SIZES: Record<string, [number, number, number]> = {
   cover: [1920, 1080, 800],
   field: [1536, 1024, 800], 'field-day': [1536, 1024, 800], 'grain-macro': [1536, 1024, 800], 'grains-row': [1536, 1024, 800],
   'dal-chawal': [1536, 1024, 800], 'family-table': [1536, 1024, 800], kitchen: [1536, 1024, 800], 'harvest-dawn': [1536, 1024, 800],
+  'mill-outside': [1600, 779, 800], 'mill-front': [1600, 900, 800], 'mill-aerial': [1600, 749, 800],
+  'mill-floor': [1600, 770, 800], 'mill-machines': [1600, 764, 800], 'mill-silos': [1600, 773, 800],
+  'mill-silos-2': [1600, 765, 800], 'award-export': [381, 254, 381], 'rahul-suri': [960, 1280, 800],
   pulao: [1024, 1024, 640], 'pulao-plate': [1024, 1024, 640], panicle: [1024, 1024, 640], scoop: [1024, 1024, 640], pouch: [1024, 1024, 640],
 };
 
