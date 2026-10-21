@@ -6,6 +6,8 @@ import { ProductCard, Reasons } from './Range';
 import { productSummary, setSeo } from '../seo';
 import { Marketplaces } from './Marketplaces';
 import { Band } from './ui';
+import { asset, liveVariant, onShopify } from '../host';
+import { bestSaving, plansFor } from '../subscriptions';
 
 /** Weight of a pack in kilograms, when the size says so plainly. */
 function kilos(size: string) {
@@ -32,6 +34,8 @@ export function ProductPage({ id }: { id: string }) {
   const [size, setSize] = useState(product ? firstInStock(product).size : '');
   const [quantity, setQuantity] = useState(1);
   const [shot, setShot] = useState(0);
+  const [subscribe, setSubscribe] = useState(false);
+  const [planId, setPlanId] = useState('');
 
   useEffect(() => {
     if (!product) { setSeo({ title: 'Product not found | Aeroplane Basmati Rice', path: `/products/${id}` }); return; }
@@ -56,14 +60,28 @@ export function ProductPage({ id }: { id: string }) {
   }
 
   const info = details[product.id];
-  const gallery = info?.gallery.length ? info.gallery : [{ src: product.image, width: product.width, height: product.height }];
+  const gallery = info?.gallery.length ? info.gallery.map((image) => ({ ...image, src: asset(image.src) })) : [{ src: product.image, width: product.width, height: product.height }];
   const variant = product.variants.find((v) => v.size === size)!;
   const saving = Math.round((1 - variant.price / variant.was) * 100);
   const rates = product.variants.filter((v) => v.inStock).map(perKilo).filter((rate): rate is number => rate !== null);
   const best = rates.length > 1 ? Math.min(...rates) : null;
   const isBasmati = product.category === 'Basmati';
   const related = products.filter((p) => p.category === product.category && p.id !== product.id).slice(0, 4);
-  const addToCart = () => { add(product.id, size, quantity); setQuantity(1); };
+  const plans = plansFor(product, variant);
+  // a monthly delivery is the usual choice, so it starts selected when the store offers one
+  const plan = subscribe ? plans.find((p) => p.id === planId) ?? plans.find((p) => p.id === '1m' || /^(delivery )?every month$/i.test(p.name)) ?? plans[0] : undefined;
+  const each = plan?.price ?? variant.price;
+  const addToCart = () => { add(product.id, size, quantity, plan?.id); setQuantity(1); };
+  // inside the Shopify theme, Buy now puts the pack in the store's cart and goes straight to checkout
+  const buyNow = async () => {
+    const live = liveVariant(product.id, size);
+    if (!live) return;
+    await fetch('/cart/add.js', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({ items: [{ id: live.id, quantity, ...(plan && { selling_plan: Number(plan.id) }) }] }),
+    });
+    location.href = '/checkout';
+  };
 
   return (
     <main id="main" className="pdp light">
@@ -96,9 +114,10 @@ export function ProductPage({ id }: { id: string }) {
               <p className="label pdp__category">{product.category}</p>
               <h1>{product.name}</h1>
               <p className="pdp__price">
-                <b>{price(variant.price)}</b>
-                {variant.was > variant.price && <s>{price(variant.was)}</s>}
-                {perKilo(variant) !== null && <span>{price(perKilo(variant)!)} per kg</span>}
+                <b>{price(each)}</b>
+                {variant.was > each && <s>{price(variant.was)}</s>}
+                {plan && <em>Subscribe and save</em>}
+                {perKilo(variant) !== null && <span>{price(perKilo({ ...variant, price: each })!)} per kg</span>}
               </p>
               {info?.short && <p className="pdp__offer">{info.short}</p>}
 
@@ -116,13 +135,48 @@ export function ProductPage({ id }: { id: string }) {
                 ))}
               </fieldset>
 
+              {plans.length > 0 && (
+                <fieldset className="pdp__plans">
+                  <legend className="label">How would you like it?</legend>
+                  <label>
+                    <input type="radio" name="pdp-buy" checked={!subscribe} onChange={() => setSubscribe(false)} />
+                    <span><b>One-time purchase</b><small>{price(variant.price)}</small></span>
+                  </label>
+                  <label>
+                    <input type="radio" name="pdp-buy" checked={subscribe} onChange={() => setSubscribe(true)} />
+                    <span>
+                      <b>Subscribe and save</b>
+                      <small>From {price(Math.min(...plans.map((p) => p.price)))} a delivery, on repeat</small>
+                      <em>Save {bestSaving(variant, plans)}%</em>
+                    </span>
+                  </label>
+                  {plan && (
+                    <div className="pdp__cadence" role="radiogroup" aria-label="Delivery frequency">
+                      {plans.map((p) => (
+                        <label key={p.id}>
+                          <input type="radio" name="pdp-cadence" checked={p.id === plan.id} onChange={() => setPlanId(p.id)} />
+                          <span>{p.name}</span>
+                        </label>
+                      ))}
+                    </div>
+                  )}
+                </fieldset>
+              )}
+
               <div className="pdp__actions">
                 <Stepper value={quantity} onChange={(q) => setQuantity(Math.max(1, q))} label={`Quantity of ${product.name}`} />
-                <button type="button" className="btn" disabled={!variant.inStock} onClick={addToCart}>{variant.inStock ? 'Add to cart' : 'Sold out'}</button>
-                <a className="btn btn--line" href={product.url} target="_blank" rel="noopener">Buy now</a>
+                <button type="button" className="btn" disabled={!variant.inStock} onClick={addToCart}>{!variant.inStock ? 'Sold out' : plan ? 'Subscribe' : 'Add to cart'}</button>
+                {onShopify
+                  ? <button type="button" className="btn btn--line" disabled={!variant.inStock} onClick={buyNow}>Buy now</button>
+                  : <a className="btn btn--line" href={product.url} target="_blank" rel="noopener">Buy now</a>}
               </div>
-              <p className="pdp__note">Buy now opens this product on the Aeroplane online shop, where payment and delivery are completed.</p>
               <Marketplaces query={`Aeroplane ${product.name}`} productId={product.id} compact />
+              <p className="pdp__note">
+                {onShopify
+                  ? 'Buy now takes this pack straight to checkout.'
+                  : 'Buy now opens this product on the Aeroplane online shop, where payment and delivery are completed.'}
+                {plan && ' Subscriptions repeat at the subscribed price until you change or cancel them.'}
+              </p>
 
               <dl className="pdp__facts">
                 <div><dt className="label">Availability</dt><dd>{variant.inStock ? 'In stock' : 'Sold out in this size'}</dd></div>
@@ -183,8 +237,8 @@ export function ProductPage({ id }: { id: string }) {
       )}
 
       <div className="shop-bar" data-shown="true">
-        <p><b>{price(variant.price)}</b><span>{variant.size}</span></p>
-        <button type="button" className="btn" disabled={!variant.inStock} onClick={addToCart}>{variant.inStock ? 'Add to cart' : 'Sold out'}</button>
+        <p><b>{price(each)}</b><span>{variant.size}{plan && `, ${plan.name.toLowerCase()}`}</span></p>
+        <button type="button" className="btn" disabled={!variant.inStock} onClick={addToCart}>{!variant.inStock ? 'Sold out' : plan ? 'Subscribe' : 'Add to cart'}</button>
       </div>
     </main>
   );

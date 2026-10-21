@@ -3,6 +3,7 @@ import { findPage, pages, type Block, type Page } from '../company';
 import { docGroups } from '../investor-docs';
 import { setSeo } from '../seo';
 import { Band, Img } from './ui';
+import { asset } from '../host';
 
 function Blocks({ blocks }: { blocks: Block[] }) {
   return (
@@ -82,7 +83,7 @@ function Blocks({ blocks }: { blocks: Block[] }) {
                     <ul>
                       {group.docs.map((doc) => (
                         <li key={doc.file}>
-                          <a href={`/assets/investors/${doc.file}`} target="_blank" rel="noopener">
+                          <a href={asset(`/assets/investors/${doc.file}`)} target="_blank" rel="noopener">
                             <span className="docs__name">{doc.title}</span>
                             <span className="docs__meta">PDF{doc.size ? ` · ${(doc.size / 1048576).toFixed(doc.size > 10485760 ? 0 : 1)} MB` : ''}</span>
                           </a>

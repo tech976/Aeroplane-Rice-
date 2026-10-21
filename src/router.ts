@@ -35,6 +35,8 @@ document.addEventListener('click', (event) => {
   if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
   const link = (event.target as Element).closest?.('a[href]') as HTMLAnchorElement | null;
   if (!link || link.target || link.hasAttribute('download') || link.origin !== location.origin || link.pathname === location.pathname) return;
+  // pages the Shopify store serves itself
+  if (/^\/(checkout|account|cart|cdn|policies)(\/|$)/.test(link.pathname)) return;
   event.preventDefault();
   navigate(link.href);
 });

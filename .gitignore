@@ -1,5 +1,6 @@
 node_modules
 dist
+dist-shopify
 .playwright-mcp
 .DS_Store
 

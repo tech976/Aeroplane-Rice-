@@ -3,7 +3,7 @@ import { m, useMotionValueEvent, useReducedMotion, useScroll, useTransform } fro
 import { Img } from './ui';
 
 const pages = [
-  { year: '1969', photo: 'harvest-dawn', alt: 'A farmer carrying cut paddy across a field at dawn', text: 'The first sacks leave the mill under the Aeroplane name.' },
+  { year: 'Origins', photo: 'harvest-dawn', alt: 'A farmer carrying cut paddy across a field at dawn', text: 'The first sacks leave the mill under the Aeroplane name.' },
   { year: '1980s', photo: 'hands', alt: 'Hands cupping milled basmati rice', text: 'Traders abroad begin asking for it by name. Word travels kitchen to kitchen.' },
   { year: '1990s', photo: 'ageing', alt: 'Jute sacks of basmati resting in a grain store', text: 'We build our own ageing stores, so every lot can rest a full season.' },
   { year: '2010s', photo: 'scoop', alt: 'Milled basmati rice with a wooden scoop', text: 'The same aged grain reaches home kitchens in packs of every size.' },

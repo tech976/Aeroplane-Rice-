@@ -2,6 +2,7 @@
 // Each link goes straight to that product's own listing where we hold the address
 // (see marketplace-links.ts); otherwise it falls back to the marketplace's search.
 import { listingFor, type Shop } from '../marketplace-links';
+import { asset } from '../host';
 
 const marketplaces: { name: string; logo: Shop; search: (q: string) => string }[] = [
   { name: 'Amazon', logo: 'amazon', search: (q) => `https://www.amazon.in/s?k=${q}` },
@@ -16,8 +17,11 @@ const Out = () => (
   </svg>
 );
 
-/** A row of links to the marketplaces. `compact` is the small version used beside a product. */
-export function Marketplaces({ query, productId, compact = false }: { query: string; productId?: string; compact?: boolean }) {
+/**
+ * Links to the marketplaces. The full section sits on the home and shop pages; `compact` is the row
+ * beside a product's buy buttons, and `hero` the light row over the opening film.
+ */
+export function Marketplaces({ query, productId, compact = false, hero = false }: { query: string; productId?: string; compact?: boolean; hero?: boolean }) {
   const q = encodeURIComponent(query);
   const links = marketplaces.map((shop) => {
     const exact = listingFor(productId, shop.logo);
@@ -30,18 +34,18 @@ export function Marketplaces({ query, productId, compact = false }: { query: str
         data-exact={exact ? '' : undefined}
         aria-label={exact ? `Buy ${query} on ${shop.name} (opens in a new tab)` : `Find ${query} on ${shop.name} (opens in a new tab)`}
       >
-        {!compact && <span className="label">{exact ? 'Buy on' : 'Search on'}</span>}
-        <img className={`markets__logo markets__logo--${shop.logo}`} src={`/assets/marketplaces/${shop.logo}.svg`} alt={shop.name} loading="lazy" />
+        {!compact && !hero && <span className="label">{exact ? 'Buy on' : 'Search on'}</span>}
+        <img className={`markets__logo markets__logo--${shop.logo}`} src={asset(`/assets/marketplaces/${shop.logo}.svg`)} alt={shop.name} loading="lazy" />
         <Out />
       </a>
     </li>
     );
   });
 
-  if (compact) {
+  if (compact || hero) {
     return (
-      <div className="markets markets--compact">
-        <p className="label">Also find it on</p>
+      <div className={`markets markets--compact${hero ? ' markets--hero' : ''}`}>
+        <p className="label">{hero ? 'Also on' : 'Or buy it on'}</p>
         <ul>{links}</ul>
       </div>
     );

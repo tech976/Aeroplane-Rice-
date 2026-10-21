@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { m, useScroll, useTransform } from 'motion/react';
 import { Icon } from './ui';
+import { asset } from '../host';
 
 const WREATH = '<path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(105.1 234.5) rotate(-138.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(119.3 260.8) rotate(-155.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(140.6 281.7) rotate(-172.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(167.1 295.5) rotate(-189.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(196.5 300.9) rotate(-206.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(226.1 297.6) rotate(-223.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(253.5 285.7) rotate(-240.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(276.2 266.3) rotate(-257.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(292.3 241.1) rotate(-274.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(294.9 234.5) rotate(138.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(280.7 260.8) rotate(155.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(259.4 281.7) rotate(172.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(232.9 295.5) rotate(189.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(203.5 300.9) rotate(206.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(173.9 297.6) rotate(223.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(146.5 285.7) rotate(240.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(123.8 266.3) rotate(257.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(107.7 241.1) rotate(274.0)"/>';
 
@@ -29,20 +30,20 @@ export function Promise() {
               <circle cx="200" cy="200" r="127" strokeWidth="1" />
               <g fill="currentColor" stroke="none" dangerouslySetInnerHTML={{ __html: WREATH }} />
               <g fill="currentColor" stroke="none" textAnchor="middle">
-                <text className="seal__since" x="200" y="170">Since</text>
-                <text className="seal__year" x="200" y="236">1969</text>
+                <text className="seal__since" x="200" y="170">Product of</text>
+                <text className="seal__year" x="200" y="226" fontSize="62">India</text>
                 <path d="M200 252l6 6-6 6-6-6z" />
               </g>
             </g>
           </svg>
           <m.svg className="seal__ring" viewBox="0 0 400 400" style={{ rotate }}>
             <defs><path id="seal-path" d="M200 200m-152 0a152 152 0 1 1 304 0a152 152 0 1 1-304 0" /></defs>
-            <text><textPath href="#seal-path" textLength="946">Aeroplane Basmati Rice • Product of India • Since 1969 •</textPath></text>
+            <text><textPath href="#seal-path" textLength="946">Aeroplane Basmati Rice • Aged eight months • La-Taste •</textPath></text>
           </m.svg>
         </div>
 
         <div className="seal__copy">
-          <h2 className="display">One house, one name, since 1969.</h2>
+          <h2 className="display">One house, one name.</h2>
           <p className="lede">Every Aeroplane pack comes from the same house: Amir Chand Jagdish Kumar (Exports) Limited.</p>
           <p>Turn any pack over and you will find its FSSAI licence, 10012011000454, printed on the back.</p>
           <a className="btn btn--yellow" href="/#range">Shop the range</a>
@@ -90,7 +91,7 @@ export function Footer() {
       </div>
       <div className="site-footer__body">
         <div className="site-footer__badge">
-          <img src="/assets/brand/logo-primary-clear.png" alt="La-Taste Aeroplane Basmati Rice" width={400} height={400} loading="lazy" />
+          <img src={asset('/assets/brand/logo-primary-clear.png')} alt="La-Taste Aeroplane Basmati Rice" width={400} height={400} loading="lazy" />
         </div>
         <div className="pattern" aria-hidden="true" />
         <div className="wrap site-footer__grid">

@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { m, useScroll, useTransform, type MotionValue } from 'motion/react';
+import { asset } from '../host';
 
 type Piece = { word: string } | { photo: string; alt: string };
 
@@ -14,7 +15,7 @@ const sentence: Piece[] = [
 ];
 
 const figures = [
-  ['1969', 'The year we began'],
+  ['4 decades', 'Of milling basmati'],
   ['8 months', 'Rested before milling'],
   ['38', 'Countries we reach'],
 ];
@@ -27,7 +28,7 @@ function Reveal({ piece, index, total, progress }: { piece: Piece; index: number
   return (
     <>
       <m.span className="heritage__inset" style={{ opacity }}>
-        <img src={`/assets/img/${piece.photo}-s.webp`} alt={piece.alt} loading="lazy" decoding="async" />
+        <img src={asset(`/assets/img/${piece.photo}-s.webp`)} alt={piece.alt} loading="lazy" decoding="async" />
       </m.span>{' '}
     </>
   );
@@ -41,7 +42,7 @@ export function Heritage() {
     <section className="heritage light" id="heritage">
       <div className="wrap">
         <div className="heritage__top">
-          <h2 className="label">Since 1969</h2>
+          <h2 className="label">Our heritage</h2>
           <span aria-hidden="true" />
           <p className="label">Amir Chand Jagdish Kumar (Exports) Limited</p>
         </div>

@@ -31,7 +31,7 @@ function page({ title, description, path, image, type = 'website', data, body })
 
 const organisation = {
   '@context': 'https://schema.org', '@type': 'Organization', name: site.name, url: site.url,
-  logo: site.url + '/assets/brand/logo-primary.png', foundingDate: '1969',
+  logo: site.url + '/assets/brand/logo-primary.png',
   parentOrganization: { '@type': 'Organization', name: 'Amir Chand Jagdish Kumar (Exports) Limited' },
 };
 
@@ -39,7 +39,7 @@ const organisation = {
 writeFileSync('dist/index.html', page({
   title: site.title, description: site.description, path: '/', image: '/assets/img/og.jpg',
   data: [organisation, { '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, url: site.url }],
-  body: `<h1>The long grain of India.</h1><p>${esc(site.description)}</p><h2>Shop the range</h2><ul>${
+  body: `<h1>Aeroplane Basmati Rice</h1><p>${esc(site.description)}</p><h2>Shop the range</h2><ul>${
     products.map((p) => `<li><a href="/products/${p.id}">${esc(p.name)}</a>, from ${rupees(Math.min(...p.variants.map((v) => v.price)))}</li>`).join('')}</ul>`,
 }));
 

@@ -1,5 +1,6 @@
 import { useId, useRef, type ReactNode } from 'react';
 import { m, useScroll, useTransform } from 'motion/react';
+import { asset } from '../host';
 
 // [full width, height, small width]; anything not listed is a 1024 x 1536 portrait
 const SIZES: Record<string, [number, number, number]> = {
@@ -21,8 +22,8 @@ export function Img({ name, alt, sizes, eager, className }: ImgProps) {
   return (
     <img
       className={className}
-      src={`${base}.webp`}
-      srcSet={`${base}-s.webp ${small}w, ${base}.webp ${full}w`}
+      src={asset(`${base}.webp`)}
+      srcSet={`${asset(`${base}-s.webp`)} ${small}w, ${asset(`${base}.webp`)} ${full}w`}
       sizes={sizes}
       width={full}
       height={height}
@@ -42,7 +43,7 @@ export function Sketch({ name, alt, className = '' }: { name: keyof typeof SKETC
   return (
     <figure className={`sketch ${className}`}>
       <img
-        src={`/assets/art/ill-${name}.webp`} srcSet={`/assets/art/ill-${name}-s.webp 1024w, /assets/art/ill-${name}.webp ${width}w`}
+        src={asset(`/assets/art/ill-${name}.webp`)} srcSet={`${asset(`/assets/art/ill-${name}-s.webp`)} 1024w, ${asset(`/assets/art/ill-${name}.webp`)} ${width}w`}
         sizes="(min-width: 1100px) 62rem, 100vw" width={width} height={height} alt={alt} loading="lazy" decoding="async"
       />
     </figure>
@@ -89,7 +90,7 @@ export function Band({ art, tone = 'indigo' }: { art: 'harvest' | 'dance' | 'kit
   const x = useTransform(scrollYProgress, [0, 1], ['0px', '-260px']);
   return (
     <div className={`band band--${tone}`} ref={ref} aria-hidden="true">
-      <m.div className="band__art" style={{ x, maskImage: `url(/assets/art/warli-${art}.svg)`, WebkitMaskImage: `url(/assets/art/warli-${art}.svg)` }} />
+      <m.div className="band__art" style={{ x, maskImage: `url(${asset(`/assets/art/warli-${art}.svg`)})`, WebkitMaskImage: `url(${asset(`/assets/art/warli-${art}.svg`)})` }} />
     </div>
   );
 }

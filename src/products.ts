@@ -1,9 +1,12 @@
 // Generated from "Aeroplane Shop Export" (shop.aeroplanerice.com, scraped 12 October 2026).
 // Prices are in rupees. `was` is the regular price; when it is higher than `price` the pack is on sale.
+import { asset, liveVariant, onShopify } from './host';
+
 export type Variant = { size: string; price: number; was: number; inStock: boolean };
 export type Product = { id: string; name: string; category: string; url: string; image: string; width: number; height: number; variants: Variant[] };
 
-export const products: Product[] = [
+// scripts/seo.mjs and scripts/shopify-products.mjs read this list as JSON, so it stays plain data
+const exported: Product[] = [
   {
     "id": "raw-la-taste-basmati-rice",
     "name": "Raw La-Taste Basmati",
@@ -875,9 +878,22 @@ export const products: Product[] = [
 ];
 
 export const categories = ['Basmati', 'Regional rice', 'Speciality', 'Gifts and baskets', 'Kitchen staples'];
+
+// Inside the Shopify theme, prices and stock are the store's own. A pack the store does not have yet
+// shows as sold out, so nothing can be added that checkout would not recognise.
+export const products: Product[] = exported.map((product) => ({
+  ...product,
+  image: asset(product.image),
+  variants: onShopify
+    ? product.variants.map((variant) => {
+      const live = liveVariant(product.id, variant.size);
+      return live ? { ...variant, price: live.price, was: Math.max(live.was, live.price), inStock: live.available } : { ...variant, inStock: false };
+    })
+    : product.variants,
+}));
 export const SHOP_URL = 'https://shop.aeroplanerice.com';
 // Customer accounts live on the shop. When the shop moves to Shopify, change this one address.
-export const ACCOUNT_URL = `${SHOP_URL}/my-account/`;
+export const ACCOUNT_URL = onShopify ? '/account' : `${SHOP_URL}/my-account/`;
 
 const rupees = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
 export const price = (amount: number) => rupees.format(amount);

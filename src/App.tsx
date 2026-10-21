@@ -17,8 +17,10 @@ import { Story } from './components/Story';
 import { Faq, Footer, Promise } from './components/Closing';
 import { ProductPage } from './components/ProductPage';
 import { CompanyPage } from './components/CompanyPage';
+import { InvestorsPage } from './components/InvestorsPage';
 import { ShopPage } from './components/ShopPage';
 import { findPage } from './company';
+import { WhatsApp } from './components/WhatsApp';
 
 function Home() {
   return (
@@ -47,7 +49,8 @@ export function App() {
   const productId = clean.match(/^\/products\/([^/]+)$/)?.[1];
   // the company pages added alongside the shop: /company, /investors, /contact and the rest
   const company = !productId && clean !== '/' ? findPage(clean) : undefined;
-  const shop = clean === '/shop';
+  // Shopify serves its catalogue at /collections, so inside the theme that is the shop page too
+  const shop = clean === '/shop' || clean === '/collections' || clean.startsWith('/collections/');
   const inner = Boolean(productId || company || shop);
 
   // a link such as /#range opened directly: the section does not exist until the page has rendered
@@ -61,10 +64,12 @@ export function App() {
           <Header plain={inner} />
           {productId ? <ProductPage key={productId} id={productId} />
             : shop ? <ShopPage />
+            : company?.path === '/investors' ? <InvestorsPage />
             : company ? <CompanyPage key={company.path} path={company.path} />
             : <Home />}
           <Footer />
           {!inner && <ShopBar />}
+          <WhatsApp />
         </CartProvider>
       </MotionConfig>
     </LazyMotion>

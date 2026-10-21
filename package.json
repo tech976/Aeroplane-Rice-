@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build && node scripts/seo.mjs",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:shopify": "tsc --noEmit && node scripts/shopify-theme.mjs",
+    "shopify:products": "node scripts/shopify-products.mjs",
+    "shopify:dev": "npm run build:shopify && shopify theme dev --path dist-shopify",
+    "shopify:push": "npm run build:shopify && shopify theme push --path dist-shopify --unpublished"
   },
   "dependencies": {
     "motion": "^14.1.0",
