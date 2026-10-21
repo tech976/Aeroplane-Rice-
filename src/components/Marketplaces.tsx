@@ -1,14 +1,15 @@
 // Where else Aeroplane is sold. The logos are each company's own artwork (from Wikimedia Commons), shown unaltered.
-// Each link goes straight to that product's own listing where we hold the address
-// (see marketplace-links.ts); otherwise it falls back to the marketplace's search.
-import { listingFor, type Shop } from '../marketplace-links';
+// Beside a product, each link goes straight to that product's own listing, and a marketplace
+// without one is left out. Elsewhere the links open the Aeroplane brand page, or a brand search
+// where a marketplace has no brand page (see marketplace-links.ts).
+import { brandPages, listingFor, type Shop } from '../marketplace-links';
 import { asset } from '../host';
 
 const marketplaces: { name: string; logo: Shop; search: (q: string) => string }[] = [
   { name: 'Amazon', logo: 'amazon', search: (q) => `https://www.amazon.in/s?k=${q}` },
   { name: 'Flipkart', logo: 'flipkart', search: (q) => `https://www.flipkart.com/search?q=${q}` },
   { name: 'Blinkit', logo: 'blinkit', search: (q) => `https://blinkit.com/s/?q=${q}` },
-  { name: 'Zepto', logo: 'zepto', search: (q) => `https://www.zeptonow.com/search?query=${q}` },
+  { name: 'Zepto', logo: 'zepto', search: (q) => `https://www.zepto.com/search?query=${q}` },
 ];
 
 const Out = () => (
@@ -23,8 +24,10 @@ const Out = () => (
  */
 export function Marketplaces({ query, productId, compact = false, hero = false }: { query: string; productId?: string; compact?: boolean; hero?: boolean }) {
   const q = encodeURIComponent(query);
-  const links = marketplaces.map((shop) => {
-    const exact = listingFor(productId, shop.logo);
+  const shown = productId ? marketplaces.filter((shop) => listingFor(productId, shop.logo)) : marketplaces;
+  if (!shown.length) return null;
+  const links = shown.map((shop) => {
+    const exact = productId ? listingFor(productId, shop.logo) : brandPages[shop.logo] ?? null;
     return (
     <li key={shop.name}>
       <a
@@ -32,9 +35,9 @@ export function Marketplaces({ query, productId, compact = false, hero = false }
         target="_blank"
         rel="noopener"
         data-exact={exact ? '' : undefined}
-        aria-label={exact ? `Buy ${query} on ${shop.name} (opens in a new tab)` : `Find ${query} on ${shop.name} (opens in a new tab)`}
+        aria-label={productId ? `Buy ${query} on ${shop.name} (opens in a new tab)` : `${query} on ${shop.name} (opens in a new tab)`}
       >
-        {!compact && !hero && <span className="label">{exact ? 'Buy on' : 'Search on'}</span>}
+        {!compact && !hero && <span className="label">Shop on</span>}
         <img className={`markets__logo markets__logo--${shop.logo}`} src={asset(`/assets/marketplaces/${shop.logo}.svg`)} alt={shop.name} loading="lazy" />
         <Out />
       </a>
