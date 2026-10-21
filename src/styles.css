@@ -168,28 +168,23 @@ h3 { font-family: var(--display); font-weight: 700; line-height: 1.1; letter-spa
 .menu__nav a:hover, .menu__nav a:focus-visible { color: var(--yellow); }
 .menu__note { font-size: .9375rem; opacity: .8; }
 
-/* ---------- 1. Hero: photograph first, headline after ---------- */
-.hero { position: relative; height: 270vh; margin-top: -1px; background: var(--rice); }
-.hero__pin { position: sticky; top: 0; height: 100svh; overflow: hidden; }
-.hero__photo, .hero__sheet { position: absolute; inset: 0; }
-.hero__sheet { background: var(--rice); }
-.hero__logo { position: absolute; top: 42%; left: 50%; translate: -50% -50%; width: min(68vw, 42svh, 22rem); margin: 0; }
-.hero__logo img { display: block; width: 100%; height: auto; }
+/* ---------- 1. Hero: one screen of film ---------- */
+.hero { position: relative; height: 100svh; min-height: 36rem; margin-top: -1px; overflow: hidden; background: var(--night); }
+.hero__photo { position: absolute; inset: 0; }
 .hero__photo video { display: block; width: 100%; height: 100%; object-fit: cover; }
-.hero__opening { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start; gap: 1.5rem; padding-block: 0 clamp(2.5rem, 6vw, 5rem); color: var(--rice); }
-/* the text sits inside the page width, but the wash has to cross the whole photograph */
-.hero__opening::before { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 100vw; translate: -50% 0; z-index: -1; pointer-events: none; background: linear-gradient(to bottom, rgb(20 17 42 / .45), rgb(20 17 42 / 0) 22%, rgb(20 17 42 / 0) 48%, rgb(20 17 42 / .78)); }
+.hero__opening { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start; gap: 1.25rem; padding-block: 0 clamp(2.5rem, 6vw, 5rem); color: var(--rice); }
+/* the text sits inside the page width, but the wash has to cross the whole film */
+.hero__opening::before { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 100vw; translate: -50% 0; z-index: -1; pointer-events: none; background: linear-gradient(to bottom, rgb(20 17 42 / .58), rgb(20 17 42 / .1) 20%, rgb(20 17 42 / 0) 32%, rgb(20 17 42 / .5) 60%, rgb(20 17 42 / .88)); }
 .hero__opening .label { color: var(--yellow); }
-.hero__say { font: 600 clamp(2.5rem, 6.4vw, 6.25rem)/.98 var(--display); letter-spacing: -.05em; max-width: 11em; text-wrap: balance; }
-.hero__closing { position: absolute; inset: auto 0 0; display: grid; gap: 1.5rem; padding-block: 0 clamp(1.75rem, 4vw, 3.5rem); }
-.hero__closing .lede { max-width: 27em; color: var(--indigo); font-size: clamp(1.0625rem, 1.3vw, 1.25rem); }
-.hero__actions { display: flex; flex-wrap: wrap; gap: .75rem; }
-@media (max-width: 899px) { .hero__opening { padding-bottom: 5rem; } .hero__closing { padding-bottom: 6.25rem; } .hero__logo { top: 34%; } }
-.hero[data-still] { height: auto; }
-.hero[data-still] .hero__pin { position: relative; }
-@media (min-width: 900px) {
-  .hero__closing { grid-template-columns: 1fr auto; align-items: end; gap: 4rem; }
-}
+.hero__say { font: 600 clamp(2.5rem, 6.4vw, 6.25rem)/.98 var(--display); letter-spacing: -.05em; max-width: 11em; text-wrap: balance; color: var(--rice); }
+.hero__lede { max-width: 30em; font-size: clamp(1rem, 1.3vw, 1.1875rem); line-height: 1.55; opacity: .92; }
+.hero__actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: .25rem; }
+.hero__actions .btn--line { color: var(--rice); }
+.hero__actions .btn--line:hover { color: var(--indigo); }
+/* the offer bar above pushes the hero down a little on phones, so the content sits higher to stay on the first screen */
+@media (max-width: 899px) { .hero__opening { padding-bottom: 4rem; gap: 1rem; } }
+/* on narrow phones the heritage section follows straight on, so its button gives its room to the marketplaces */
+@media (max-width: 599px) { .hero__actions .btn--line { display: none; } }
 
 /* ---------- Warli bands ---------- */
 .band { overflow: hidden; padding-block: clamp(1rem, 2vw, 1.75rem); }
