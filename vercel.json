@@ -1,4 +1,7 @@
 {
   "cleanUrls": true,
-  "rewrites": [{ "source": "/products/:id", "destination": "/" }]
+  "rewrites": [
+    { "source": "/products/:id", "destination": "/" },
+    { "source": "/:path((?!assets/).*)", "destination": "/" }
+  ]
 }
