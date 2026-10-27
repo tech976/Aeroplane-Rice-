@@ -43,7 +43,8 @@
 {{ 'fonts-montserrat.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
 {{ 'fonts-manrope.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
 {%- if template.name == 'index' %}
-<link rel="preload" as="image" href="{{ 'video-hero-field-poster.webp' | asset_url }}" fetchpriority="high">
+<link rel="preload" as="image" media="(min-aspect-ratio: 1/1)" imagesrcset="{{ 'img-banner-16x9-s.webp' | asset_url }} 1280w, {{ 'img-banner-16x9.webp' | asset_url }} 1672w" imagesizes="100vw" fetchpriority="high">
+<link rel="preload" as="image" media="(max-aspect-ratio: 1/1)" imagesrcset="{{ 'img-banner-9x16-s.webp' | asset_url }} 640w, {{ 'img-banner-9x16.webp' | asset_url }} 941w" imagesizes="100vw" fetchpriority="high">
 {%- endif %}
 {{ 'aeroplane.css' | asset_url | stylesheet_tag }}
 {{ content_for_header }}

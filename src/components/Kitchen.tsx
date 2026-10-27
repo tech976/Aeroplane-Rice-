@@ -7,13 +7,13 @@ export function Kitchen() {
       <div className="wrap">
         <div className="head">
           <h2 className="display">From our kitchen.</h2>
-          <p className="lede">Recipes and small lessons from people who have cooked this grain all their lives.</p>
+          <p className="lede">Recipes and small lessons from people who have cooked this grain all their lives. <a href="mailto:kitchen@aeroplanerice.com">Send us yours.</a></p>
         </div>
 
         <div className="kitchen__grid">
           <article className="story story--feature">
             <a href="#kitchen" className="story__media frame" tabIndex={-1} aria-hidden="true">
-              <Img name="kitchen" alt="" sizes="(min-width: 900px) 60vw, 100vw" />
+              <Img name="kitchen-method" alt="" sizes="(min-width: 900px) 60vw, 100vw" />
               <Notch icon="scoop" />
             </a>
             <div className="story__body">
@@ -40,13 +40,15 @@ export function Kitchen() {
             </div>
           </article>
 
-          <article className="story story--empty dark">
-            <div className="pattern" aria-hidden="true" />
+          <article className="story">
+            <a href="/products/atta" className="story__media frame" tabIndex={-1} aria-hidden="true">
+              <Img name="kitchen-atta" alt="" sizes="(min-width: 900px) 28vw, 100vw" />
+            </a>
             <div className="story__body">
-              <Icon name="handi" />
-              <h3>More is on the stove</h3>
-              <p>New recipes land here every month. Tell us what your family cooks with Aeroplane.</p>
-              <a className="btn btn--line btn--small" href="mailto:kitchen@aeroplanerice.com">Send us a recipe</a>
+              <p className="label story__kind"><Icon name="sack" />From the pantry</p>
+              <h3><a href="/products/atta">Everyday rotis start with the atta</a></h3>
+              <p>Shudh chakki atta, 100% whole wheat, for the rotis that go alongside every bowl of rice.</p>
+              <QuickAdd productId="atta" className="story__buy" />
             </div>
           </article>
         </div>

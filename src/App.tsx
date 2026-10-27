@@ -9,6 +9,7 @@ import { Band } from './components/ui';
 import { Hero } from './components/Hero';
 import { Heritage } from './components/Heritage';
 import { Pour } from './components/Pour';
+import { Films } from './components/Films';
 import { Range } from './components/Range';
 import { Fields } from './components/Fields';
 import { Table } from './components/Table';
@@ -29,6 +30,7 @@ function Home() {
       <Band art="harvest" />
       <Heritage />
       <Pour />
+      <Films />
       <Range />
       <Marketplaces query="Aeroplane basmati rice" />
       <Fields />
@@ -61,7 +63,8 @@ export function App() {
     <LazyMotion features={domAnimation} strict>
       <MotionConfig reducedMotion="user">
         <CartProvider>
-          <Header plain={inner} />
+          {/* the home page opens on a banner photograph, which the bar sits above rather than over */}
+          <Header plain />
           {productId ? <ProductPage key={productId} id={productId} />
             : shop ? <ShopPage />
             : company?.path === '/investors' ? <InvestorsPage />

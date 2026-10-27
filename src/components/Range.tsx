@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { anyInStock, categories, firstInStock, lowestPrice, perKilo, price, products, type Product } from '../products';
 import { useCart } from './Cart';
+import { Img, Notch } from './ui';
 
 // the brand's own six reasons, from its pack inserts
 const reasons = [
@@ -13,6 +14,12 @@ const reasons = [
 ] as const;
 
 const FIRST = 8;
+
+// The campaign photograph beside the heading, matched to the category in view
+const SHELF = { photo: 'range-shelf', alt: 'Aeroplane Classic, Metro, La-Taste, Rozana, Apple, Royal and Brown rice packs on a wooden kitchen shelf' };
+const scenes: Record<string, typeof SHELF> = {
+  'Kitchen staples': { photo: 'range-staples', alt: 'Two women in a warm kitchen presenting Aeroplane sooji, maida, besan, atta, salt and sugar' },
+};
 
 export function ProductCard({ product }: { product: Product }) {
   const { add } = useCart();
@@ -87,13 +94,20 @@ export function Range() {
       return 0;
     });
   const shown = all ? matching : matching.slice(0, FIRST);
+  const scene = scenes[category] ?? SHELF;
 
   return (
     <section className="range light" id="range">
       <div className="wrap">
-        <div className="head">
-          <h2 className="display">Shop the range.</h2>
-          <p className="lede">Every Aeroplane pack, at today's shop prices. Choose a size and add it to your cart.</p>
+        <div className="head range__head">
+          <div>
+            <h2 className="display">Shop the range.</h2>
+            <p className="lede">Every Aeroplane pack, at today's shop prices. Choose a size and add it to your cart.</p>
+          </div>
+          <figure className="range__scene frame">
+            <Img key={scene.photo} name={scene.photo} alt={scene.alt} sizes="(min-width: 900px) 34vw, 100vw" />
+            <Notch icon="sack" />
+          </figure>
         </div>
 
         <div className="filters" role="group" aria-label="Filter products">

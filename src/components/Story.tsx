@@ -7,7 +7,7 @@ const pages = [
   { year: '1980s', photo: 'hands', alt: 'Hands cupping milled basmati rice', text: 'Traders abroad begin asking for it by name. Word travels kitchen to kitchen.' },
   { year: '1990s', photo: 'ageing', alt: 'Jute sacks of basmati resting in a grain store', text: 'We build our own ageing stores, so every lot can rest a full season.' },
   { year: '2010s', photo: 'scoop', alt: 'Milled basmati rice with a wooden scoop', text: 'The same aged grain reaches home kitchens in packs of every size.' },
-  { year: 'Today', photo: 'family-table', alt: 'A family sharing a dish of basmati rice', text: 'Thirty-eight countries, and still the same fields and the same patience.' },
+  { year: 'Today', photo: 'table-royal', alt: 'A family at dinner behind a pack of Aeroplane Royal basmati and a bowl of vegetable pulao', text: 'Thirty-eight countries, and still the same fields and the same patience.' },
 ];
 
 /** The story as an album: one decade to a page. On wide screens the page turns as you scroll; on phones you swipe. */

@@ -168,23 +168,62 @@ h3 { font-family: var(--display); font-weight: 700; line-height: 1.1; letter-spa
 .menu__nav a:hover, .menu__nav a:focus-visible { color: var(--yellow); }
 .menu__note { font-size: .9375rem; opacity: .8; }
 
-/* ---------- 1. Hero: one screen of film ---------- */
-.hero { position: relative; height: 100svh; min-height: 36rem; margin-top: -1px; overflow: hidden; background: var(--night); }
-.hero__photo { position: absolute; inset: 0; }
-.hero__photo video { display: block; width: 100%; height: 100%; object-fit: cover; }
-.hero__opening { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start; gap: 1.25rem; padding-block: 0 clamp(2.5rem, 6vw, 5rem); color: var(--rice); }
-/* the text sits inside the page width, but the wash has to cross the whole film */
-.hero__opening::before { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 100vw; translate: -50% 0; z-index: -1; pointer-events: none; background: linear-gradient(to bottom, rgb(20 17 42 / .58), rgb(20 17 42 / .1) 20%, rgb(20 17 42 / 0) 32%, rgb(20 17 42 / .5) 60%, rgb(20 17 42 / .88)); }
-.hero__opening .label { color: var(--yellow); }
-.hero__say { font: 600 clamp(2.5rem, 6.4vw, 6.25rem)/.98 var(--display); letter-spacing: -.05em; max-width: 11em; text-wrap: balance; color: var(--rice); }
-.hero__lede { max-width: 30em; font-size: clamp(1rem, 1.3vw, 1.1875rem); line-height: 1.55; opacity: .92; }
-.hero__actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: .25rem; }
+/* ---------- 1. Hero: the campaign banner ---------- */
+/* The banner runs edge to edge in what is left of the first screen under the offer strip and the
+   bar. It is made at the shape of that space on a typical screen (9:4 wide, 5:8 tall), so other
+   screens trim only a sliver from its edges; the buttons sit over the empty counter at its foot. */
+.hero { --offer: 2.2rem; position: relative; display: grid; height: calc(100svh - var(--offer)); min-height: 30rem; padding-top: 4.5rem; overflow: hidden; background: #120c08; color: var(--rice); }
+.hero__banner { position: relative; min-height: 0; }
+.hero__banner img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%; }
+/* a wash across the foot, so the buttons read against the counter */
+.hero__banner::after { content: ""; position: absolute; inset: auto 0 0; height: min(14rem, 30%); background: linear-gradient(to bottom, rgb(18 12 8 / 0), rgb(18 12 8 / .5) 55%, rgb(18 12 8 / .75)); pointer-events: none; }
+.hero__intro { position: absolute; inset: auto 0 0; display: grid; justify-items: center; padding-block: 2.5rem clamp(1.25rem, 3vw, 2rem); }
+/* only the buttons go over the photograph; the line stays for search engines and screen readers */
+.hero__intro > div:first-child { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.hero__buy { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .9rem 1.5rem; }
+.hero__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem; }
 .hero__actions .btn--line { color: var(--rice); }
 .hero__actions .btn--line:hover { color: var(--indigo); }
-/* the offer bar above pushes the hero down a little on phones, so the content sits higher to stay on the first screen */
-@media (max-width: 899px) { .hero__opening { padding-bottom: 4rem; gap: 1rem; } }
-/* on narrow phones the heritage section follows straight on, so its button gives its room to the marketplaces */
-@media (max-width: 599px) { .hero__actions .btn--line { display: none; } }
+.hero .markets--hero { margin: 0; display: flex; align-items: center; gap: .75rem; }
+.hero .markets--hero .label { margin: 0; color: var(--rice); opacity: .85; }
+.hero .markets--hero ul { width: auto; grid-template-columns: repeat(4, 4.75rem); }
+
+@media (max-aspect-ratio: 1/1) {
+  /* left-aligned, stopping short of the WhatsApp button in the corner */
+  .hero__intro { justify-items: start; padding-block: 2rem 1.25rem; }
+  .hero__buy { display: grid; justify-items: start; gap: .9rem; }
+  .hero .markets--hero { display: block; }
+  .hero .markets--hero .label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .hero .markets--hero ul { grid-template-columns: repeat(4, minmax(0, 1fr)); width: min(100vw - 2 * var(--gutter) - 5rem, 22rem); }
+}
+/* upright tablets have room to centre the buttons on the picture and still clear the corner */
+@media (max-aspect-ratio: 1/1) and (min-width: 600px) { .hero__intro, .hero__buy { justify-items: center; } }
+/* the offer strip runs to two lines on phones */
+@media (max-width: 599px) { .hero { --offer: 3.35rem; } .hero__actions .btn--line { display: none; } }
+
+/* ---------- The campaign film ---------- */
+/* The whole section fits one screen under the bar: a compact heading, then the film sized to the
+   height that is left (the reserve is the bar, the spacing, the heading and the row beneath it). */
+.films { --reserve: 22.5rem; position: relative; overflow: hidden; padding-block: clamp(1.5rem, 3vw, 2.5rem); }
+.films .pattern { opacity: .05; -webkit-mask-size: 32rem; mask-size: 32rem; }
+.films .wrap { position: relative; }
+.films .head { margin-bottom: clamp(1rem, 2vw, 1.5rem); gap: .5rem 3rem; }
+.films .display { font-size: clamp(2rem, 4.2vw, 3.75rem); }
+.films .lede { font-size: clamp(1rem, 1.2vw, 1.125rem); }
+.film { width: min(100%, calc((100svh - var(--reserve)) * 1920 / 816)); margin: 0 auto; }
+.film__screen { background: var(--night); }
+.film__screen video { display: block; width: 100%; height: 100%; object-fit: cover; cursor: pointer; }
+/* the pause and sound buttons sit in the row just below the film, beside its title */
+.film__controls { display: flex; gap: .5rem; }
+.film__controls button { display: flex; align-items: center; justify-content: center; gap: .5rem; min-width: 2.75rem; height: 2.75rem; padding: 0 1rem; border: 1px solid var(--line); border-radius: 999px; background: rgb(253 252 249 / .06); color: var(--rice); font: 700 .6875rem/1 var(--display); letter-spacing: .12em; text-transform: uppercase; cursor: pointer; transition: background-color .2s, color .2s; }
+.film__controls button:first-child { padding: 0; }
+.film__controls button:hover { background: var(--yellow); color: var(--indigo); }
+.film__controls button:focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
+.film__controls button[aria-pressed="true"] { background: var(--yellow); color: var(--indigo); }
+.film figcaption { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem 1.5rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+.film figcaption > span { font: 600 clamp(1.125rem, 1.6vw, 1.375rem)/1.2 var(--display); color: var(--rice); }
+/* on phones the buttons sit at the left, clear of the WhatsApp button in the corner */
+@media (max-width: 599px) { .film figcaption { justify-content: flex-start; } }
 
 /* ---------- Warli bands ---------- */
 .band { overflow: hidden; padding-block: clamp(1rem, 2vw, 1.75rem); }
@@ -267,6 +306,11 @@ h3 { font-family: var(--display); font-weight: 700; line-height: 1.1; letter-spa
 
 /* ---------- 4. Shop ---------- */
 .range { padding-block: var(--space); }
+/* the campaign photograph beside the heading, square so the packs and faces both sit whole */
+.range__head .lede { margin-top: 1.5rem; }
+.range__scene { margin: 0; aspect-ratio: 1; }
+.range__scene img { object-position: 50% 62%; animation: pdp-in .45s var(--ease); }
+@media (min-width: 900px) { .range__head { grid-template-columns: 1.3fr 1fr; align-items: center; } }
 .filters { display: flex; gap: .5rem; overflow-x: auto; margin: 0 calc(var(--gutter) * -1) clamp(2rem, 4vw, 3.5rem); padding: 4px var(--gutter); scrollbar-width: none; }
 .filters__pill { flex: none; display: flex; align-items: center; gap: .6rem; padding: .8rem 1.25rem; border: 1.5px solid var(--rule); border-radius: 999px; background: none; cursor: pointer; font: 600 .9375rem/1 var(--body); color: var(--indigo); transition: background-color .2s, border-color .2s, color .2s; }
 .filters__pill span { font-size: .75rem; opacity: .65; }
@@ -529,6 +573,8 @@ h3 { font-family: var(--display); font-weight: 700; line-height: 1.1; letter-spa
 
 .kitchen__grid { display: grid; gap: 3.5rem 2rem; }
 .story__media { display: block; }
+.story:not(.story--feature) .story__media { aspect-ratio: 4 / 3; }
+.story:not(.story--feature) .story__media img { object-position: 50% 35%; }
 .story__media img { transition: scale 1.2s var(--ease); }
 .story:hover .story__media img { scale: 1.04; }
 .story__body { padding-top: 1.5rem; }
@@ -656,11 +702,12 @@ h3 { font-family: var(--display); font-weight: 700; line-height: 1.1; letter-spa
 .shop-bar { position: fixed; inset: auto 0 0; z-index: 40; display: flex; gap: .5rem; padding: .75rem var(--gutter) calc(.75rem + env(safe-area-inset-bottom)); background: var(--rice); border-top: 1px solid var(--rule); translate: 0 110%; transition: translate .4s var(--ease); }
 .shop-bar[data-shown="true"] { translate: 0 0; }
 /* WhatsApp: a round indigo button that opens into a label on hover and focus, and lifts above the phone buy bar */
-.wa { position: fixed; right: var(--gutter); bottom: calc(1.25rem + env(safe-area-inset-bottom)); z-index: 45; display: flex; align-items: center; gap: .6rem; height: 3.5rem; padding: 0 .95rem; border: 2px solid var(--rice); border-radius: 999px; background: var(--indigo); color: var(--rice); text-decoration: none; box-shadow: 0 10px 28px -10px rgb(20 17 42 / .55); transition: bottom .4s var(--ease), background-color .2s, box-shadow .2s; }
+/* closed it is an exact circle: the 26px mark, 13px either side and the 2px ring make 3.5rem each way */
+.wa { position: fixed; right: var(--gutter); bottom: calc(1.25rem + env(safe-area-inset-bottom)); z-index: 45; box-sizing: border-box; display: flex; align-items: center; height: 3.5rem; min-width: 3.5rem; padding: 0 13px; border: 2px solid var(--rice); border-radius: 999px; background: var(--indigo); color: var(--rice); text-decoration: none; box-shadow: 0 10px 28px -10px rgb(20 17 42 / .55); transition: bottom .4s var(--ease), background-color .2s, box-shadow .2s; }
 .wa svg { flex: none; }
-.wa span { max-width: 0; overflow: hidden; white-space: nowrap; font: 700 .75rem/1 var(--display); letter-spacing: .12em; text-transform: uppercase; transition: max-width .4s var(--ease); }
+.wa span { max-width: 0; margin-left: 0; overflow: hidden; white-space: nowrap; font: 700 .75rem/1 var(--display); letter-spacing: .12em; text-transform: uppercase; transition: max-width .4s var(--ease), margin-left .4s var(--ease); }
 .wa:hover, .wa:focus-visible { background: var(--night-2); box-shadow: 0 0 0 3px var(--yellow), 0 10px 28px -10px rgb(20 17 42 / .55); }
-.wa:hover span, .wa:focus-visible span { max-width: 9rem; }
+.wa:hover span, .wa:focus-visible span { max-width: 9rem; margin-left: .6rem; }
 body:has(.shop-bar[data-shown="true"]) .wa { bottom: calc(5.5rem + env(safe-area-inset-bottom)); }
 @media (min-width: 900px) { body:has(.shop-bar[data-shown="true"]) .wa { bottom: calc(1.5rem + env(safe-area-inset-bottom)); } .wa { bottom: 1.5rem; } }
 .shop-bar .btn { min-height: 3rem; }
