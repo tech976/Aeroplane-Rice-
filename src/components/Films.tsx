@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from 'motion/react';
 import { asset } from '../host';
 
-// "Above the clouds", from the campaign, trimmed of its letterbox bars and its first three seconds.
+// "Above the clouds", from the campaign, trimmed of its letterbox bars and its first four seconds.
 // It plays on a silent loop while it is on screen (browsers only start a film on their own when it
 // is muted); a click on the film, or the sound button, brings the sound in. It only loads once the
 // section comes near, and it stays still for people who ask their device for less motion.
-const FILM = { title: 'Above the clouds', src: '/assets/video/campaign-clouds-48s.mp4', poster: '/assets/video/campaign-clouds-poster.webp', width: 1920, height: 816 };
+const FILM = { title: 'Above the clouds', src: '/assets/video/campaign-clouds-47s.mp4', poster: '/assets/video/campaign-clouds-poster.webp', width: 1920, height: 816 };
 
 const Sound = ({ on }: { on: boolean }) => (
   <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

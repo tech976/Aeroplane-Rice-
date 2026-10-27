@@ -731,7 +731,11 @@ body:has(.shop-bar[data-shown="true"]) .wa { bottom: calc(5.5rem + env(safe-area
 .site-footer__nav h2 { margin: 0 0 1rem; color: var(--yellow); }
 .site-footer__nav a { padding-block: .3rem; font-size: 1.125rem; text-decoration: none; background: linear-gradient(var(--yellow), var(--yellow)) no-repeat left bottom / 0 2px; transition: background-size .35s var(--ease); }
 .site-footer__nav a:hover { background-size: 100% 2px; }
-.site-footer__base { position: relative; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin-top: clamp(3rem, 6vw, 6rem); padding-top: 1.5rem; border-top: 1px solid var(--line); font-size: .875rem; }
+.site-footer__base { position: relative; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin-top: clamp(3rem, 6vw, 6rem); padding-top: 1.5rem; font-size: .875rem; }
+/* the rule above the copyright runs the width of the text, like every other rule on the site, not into the margins */
+.site-footer__base::before { content: ""; position: absolute; top: 0; inset-inline: var(--gutter); border-top: 1px solid var(--line); }
+/* leave the corner to the WhatsApp button */
+@media (min-width: 900px) { .site-footer__base { padding-right: calc(var(--gutter) + 4.75rem); } }
 @media (min-width: 900px) {
   .site-footer__grid { grid-template-columns: 5fr 7fr; }
   .site-footer__nav { grid-template-columns: repeat(3, minmax(0, 1fr)); }
