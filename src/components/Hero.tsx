@@ -29,8 +29,9 @@ export function Hero() {
 
       <div className="wrap hero__intro">
         <div>
-          <p className="label">Aged Indian basmati</p>
-          <h1 className="hero__say">Four decades.<br />Thirty-seven countries.</h1>
+          {/* read by search engines and screen readers; the banner says the rest */}
+          <h1 className="hero__say">Aeroplane Basmati Rice: aged Indian basmati, rice and kitchen staples</h1>
+          <p className="label">Four decades. Thirty-seven countries.</p>
         </div>
         <div className="hero__buy">
           <div className="hero__actions">

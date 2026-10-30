@@ -35,11 +35,12 @@ export function Marketplaces({ query, productId, compact = false, hero = false }
         target="_blank"
         rel="noopener"
         data-exact={exact ? '' : undefined}
-        aria-label={productId ? `Buy ${query} on ${shop.name} (opens in a new tab)` : `${query} on ${shop.name} (opens in a new tab)`}
       >
         {!compact && !hero && <span className="label">Shop on</span>}
         <img className={`markets__logo markets__logo--${shop.logo}`} src={asset(`/assets/marketplaces/${shop.logo}.svg`)} alt={shop.name} loading="lazy" />
         <Out />
+        {/* spoken after what is shown, so the visible words stay at the front of the link's name */}
+        <span className="sr">{productId ? `, buy ${query}` : `, ${query}`} (opens in a new tab)</span>
       </a>
     </li>
     );

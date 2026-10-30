@@ -1,25 +1,33 @@
 import { useEffect } from 'react';
+import { categoryByName } from '../catalog';
 import { products } from '../products';
 import { setSeo } from '../seo';
+import { Crumbs } from './Crumbs';
 import { Range } from './Range';
 import { Marketplaces } from './Marketplaces';
 import { Band } from './ui';
 
-export function ShopPage() {
+/** /shop, and each category's landing page at /shop/<category>. */
+export function ShopPage({ category = 'All' }: { category?: string }) {
+  const landing = category === 'All' ? undefined : categoryByName(category);
+  const path = landing ? `/shop/${landing.slug}` : '/shop';
+
   useEffect(() => {
-    setSeo({
-      title: 'Shop all Aeroplane rice and staples | Aeroplane Basmati Rice',
-      description: `Every Aeroplane pack in one place — ${products.length} products across basmati, regional rice, speciality grains, gift baskets and kitchen staples. Choose a size and add it to your cart.`,
-      path: '/shop',
-    });
-  }, []);
+    setSeo(landing
+      ? { title: landing.seoTitle, description: landing.seoDescription, path }
+      : {
+        title: 'Shop Basmati Rice, Atta & Kitchen Staples Online | Aeroplane',
+        description: `Every Aeroplane pack in one place: ${products.length} products across basmati, regional rice, speciality rice, gift baskets and kitchen staples, with free delivery across India.`,
+        path,
+      });
+  }, [landing, path]);
 
   return (
     <main id="main" className="shop-page light">
       <div className="wrap shop-page__head">
-        <p className="page__crumb"><a href="/">Aeroplane</a> <span aria-hidden="true">/</span> Shop</p>
+        <Crumbs path={path} className="page__crumb" />
       </div>
-      <Range />
+      <Range key={category} page={category} />
       <Band art="kitchen" tone="rice" />
       <Marketplaces query="Aeroplane basmati rice" />
     </main>

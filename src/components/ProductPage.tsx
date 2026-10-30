@@ -3,11 +3,14 @@ import { details } from '../product-details';
 import { firstInStock, price, products, type Variant } from '../products';
 import { Stepper, useCart } from './Cart';
 import { ProductCard, Reasons } from './Range';
-import { productSummary, setSeo } from '../seo';
+import { setSeo } from '../seo';
+import { categoryPath, fullName, listingHighlights, productSeo } from '../catalog';
+import { Crumbs } from './Crumbs';
 import { Marketplaces } from './Marketplaces';
 import { Band } from './ui';
 import { asset, liveVariant, onShopify } from '../host';
 import { bestSaving, plansFor } from '../subscriptions';
+import { item, track } from '../analytics';
 
 /** Weight of a pack in kilograms, when the size says so plainly. */
 function kilos(size: string) {
@@ -38,13 +41,9 @@ export function ProductPage({ id }: { id: string }) {
   const [planId, setPlanId] = useState('');
 
   useEffect(() => {
-    if (!product) { setSeo({ title: 'Product not found | Aeroplane Basmati Rice', path: `/products/${id}` }); return; }
-    const lowest = Math.min(...product.variants.map((v) => v.price));
-    setSeo({
-      title: `${product.name} | Aeroplane Basmati Rice`,
-      description: productSummary(product.name, product.variants.map((v) => v.size), price(lowest)),
-      path: `/products/${product.id}`,
-    });
+    if (!product) { setSeo({ title: 'Product not found | Aeroplane Basmati Rice', path: `/products/${id}`, index: false }); return; }
+    setSeo({ ...productSeo(product, details[product.id]), path: `/products/${product.id}` });
+    track('view_item', [item(product, firstInStock(product).size)]);
   }, [product, id]);
 
   if (!product) {
@@ -60,6 +59,9 @@ export function ProductPage({ id }: { id: string }) {
   }
 
   const info = details[product.id];
+  const name = fullName(product);
+  // the shop export has no words for some packs; the brand's own marketplace listings fill the gap
+  const highlights = info?.highlights.length ? info.highlights : listingHighlights[product.id] ?? [];
   const gallery = info?.gallery.length ? info.gallery.map((image) => ({ ...image, src: asset(image.src) })) : [{ src: product.image, width: product.width, height: product.height }];
   const variant = product.variants.find((v) => v.size === size)!;
   const saving = Math.round((1 - variant.price / variant.was) * 100);
@@ -88,14 +90,12 @@ export function ProductPage({ id }: { id: string }) {
       <section className="pdp__top">
         <p className="pdp__ghost" aria-hidden="true">{product.name}</p>
         <div className="wrap">
-          <nav className="pdp__crumbs label" aria-label="Breadcrumb">
-            <a href="/#range">Shop</a><span aria-hidden="true">/</span><span>{product.category}</span><span aria-hidden="true">/</span><span aria-current="page">{product.name}</span>
-          </nav>
+          <Crumbs path={`/products/${product.id}`} className="pdp__crumbs label" />
 
           <div className="pdp__grid">
             <div className="pdp__gallery">
               <div className="pdp__frame">
-                <img key={gallery[shot].src} src={gallery[shot].src} width={gallery[shot].width} height={gallery[shot].height} alt={`${product.name}, picture ${shot + 1} of ${gallery.length}`} fetchPriority="high" />
+                <img key={gallery[shot].src} src={gallery[shot].src} width={gallery[shot].width} height={gallery[shot].height} alt={`Aeroplane ${name}${gallery.length > 1 ? `, picture ${shot + 1} of ${gallery.length}` : ' pack'}`} fetchPriority="high" />
                 {!variant.inStock ? <span className="product__flag product__flag--out">Sold out</span>
                   : saving > 0 && <span className="product__flag">Save {saving}%</span>}
               </div>
@@ -112,7 +112,7 @@ export function ProductPage({ id }: { id: string }) {
 
             <div className="pdp__buy">
               <p className="label pdp__category">{product.category}</p>
-              <h1>{product.name}</h1>
+              <h1>{name}</h1>
               <p className="pdp__price">
                 <b>{price(each)}</b>
                 {variant.was > each && <s>{price(variant.was)}</s>}
@@ -125,7 +125,7 @@ export function ProductPage({ id }: { id: string }) {
                 <legend className="label">Pack size</legend>
                 {product.variants.map((v) => (
                   <label key={v.size}>
-                    <input type="radio" name="pdp-size" value={v.size} checked={v.size === size} onChange={() => setSize(v.size)} />
+                    <input type="radio" name="pdp-size" value={v.size} checked={v.size === size} onChange={() => { setSize(v.size); track('select_item', [item(product, v.size)]); }} />
                     <span data-out={!v.inStock || undefined}>
                       <b>{v.size}</b>
                       <small>{!v.inStock ? 'Sold out' : price(v.price)}</small>
@@ -181,6 +181,10 @@ export function ProductPage({ id }: { id: string }) {
               <dl className="pdp__facts">
                 <div><dt className="label">Availability</dt><dd>{variant.inStock ? 'In stock' : 'Sold out in this size'}</dd></div>
                 <div><dt className="label">Sizes</dt><dd>{product.variants.map((v) => v.size).join(', ')}</dd></div>
+                <div><dt className="label">Category</dt><dd><a href={categoryPath(product.category)}>{product.category}</a></dd></div>
+                <div><dt className="label">Delivery</dt><dd><a href="/shipping-policy">Free across India</a>, dispatched the next working day</dd></div>
+                <div><dt className="label">Brand</dt><dd>Aeroplane, by Amir Chand Jagdish Kumar (Exports) Ltd</dd></div>
+                <div><dt className="label">Country of origin</dt><dd>India</dd></div>
                 <div><dt className="label">FSSAI licence</dt><dd>10012011000454</dd></div>
               </dl>
             </div>
@@ -188,15 +192,15 @@ export function ProductPage({ id }: { id: string }) {
         </div>
       </section>
 
-      {info && (info.paragraphs.length > 0 || info.highlights.length > 0) && (
+      {((info?.paragraphs.length ?? 0) > 0 || highlights.length > 0) && (
         <section className="pdp__about">
           <div className="wrap pdp__about-grid">
             <h2 className="display">About this pack.</h2>
             <div>
-              {info.paragraphs.map((text, i) => <p key={i} className={i === 0 ? 'lede' : undefined}>{text}</p>)}
-              {info.highlights.length > 0 && (
+              {info?.paragraphs.map((text, i) => <p key={i} className={i === 0 ? 'lede' : undefined}>{text}</p>)}
+              {highlights.length > 0 && (
                 <ul className="pdp__points">
-                  {info.highlights.map((text) => <li key={text}>{text}</li>)}
+                  {highlights.map((text) => <li key={text}>{text}</li>)}
                 </ul>
               )}
             </div>

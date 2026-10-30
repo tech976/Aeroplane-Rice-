@@ -18,3 +18,4 @@ dist-shopify
 # Raw client originals and source footage; the site uses the compressed copies in public/assets
 /new imgs/
 /public/assets/art/Farmers_walking_in_rice_paddy_*.mp4
+.seo-build

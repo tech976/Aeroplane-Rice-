@@ -2,6 +2,8 @@ import { useRef } from 'react';
 import { m, useScroll, useTransform } from 'motion/react';
 import { Icon } from './ui';
 import { asset } from '../host';
+import { shopCategories } from '../catalog';
+import { policyPages } from '../policies';
 
 const WREATH = '<path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(105.1 234.5) rotate(-138.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(119.3 260.8) rotate(-155.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(140.6 281.7) rotate(-172.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(167.1 295.5) rotate(-189.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(196.5 300.9) rotate(-206.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(226.1 297.6) rotate(-223.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(253.5 285.7) rotate(-240.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(276.2 266.3) rotate(-257.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(292.3 241.1) rotate(-274.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(294.9 234.5) rotate(138.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(280.7 260.8) rotate(155.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(259.4 281.7) rotate(172.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(232.9 295.5) rotate(189.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(203.5 300.9) rotate(206.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(173.9 297.6) rotate(223.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(146.5 285.7) rotate(240.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(123.8 266.3) rotate(257.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(107.7 241.1) rotate(274.0)"/>';
 
@@ -98,11 +100,9 @@ export function Footer() {
           <p className="site-footer__line">Basmati, given time.</p>
           <nav className="site-footer__nav" aria-label="Footer">
             <div>
-              <h2 className="label">Rice</h2>
-              <a href="/shop">Basmati</a>
-              <a href="/shop">Regional rice</a>
-              <a href="/shop">Gifts and baskets</a>
-              <a href="https://shop.aeroplanerice.com" target="_blank" rel="noopener">Online shop</a>
+              <h2 className="label">Shop</h2>
+              {shopCategories.map((c) => <a key={c.slug} href={`/shop/${c.slug}`}>{c.name}</a>)}
+              <a href="/shop">All products</a>
             </div>
             <div>
               <h2 className="label">Cook</h2>
@@ -119,6 +119,10 @@ export function Footer() {
               <a href="/investors">Investors</a>
               <a href="/careers">Careers</a>
               <a href="/contact">Contact</a>
+            </div>
+            <div>
+              <h2 className="label">Help</h2>
+              {policyPages.map((p) => <a key={p.path} href={p.path}>{p.nav}</a>)}
             </div>
           </nav>
         </div>

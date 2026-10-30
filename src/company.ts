@@ -1,4 +1,5 @@
 import { docGroups } from './investor-docs';
+import { policyPages } from './policies';
 // Content for the company pages. The facts come from aeroplanerice.com; the
 // headlines are written for this site.
 
@@ -244,7 +245,7 @@ export const pages: Page[] = [
       'Amir Chand Jagdish Kumar (Exports) Ltd is listed on the NSE and BSE. Every filing, result and policy is published here.',
     seoTitle: 'Investors | Aeroplane Basmati Rice',
     seoDescription:
-      'Investor information for Amir Chand Jagdish Kumar (Exports) Ltd — financial results, annual reports, shareholding, governance policies, statutory filings and offer documents.',
+      'Investor relations for Amir Chand Jagdish Kumar (Exports) Ltd: results, annual reports, shareholding, governance policies, filings and offer documents.',
     blocks: [
       {
         t: 'links',
@@ -371,4 +372,7 @@ export const pages: Page[] = [
   },
 ];
 
-export const findPage = (path: string) => pages.find((p) => p.path === path);
+// the company pages and the customer policies share one renderer
+export const allPages: Page[] = [...pages, ...policyPages];
+export const findPage = (path: string) => allPages.find((p) => p.path === path);
+export const isPolicy = (path: string) => policyPages.some((p) => p.path === path);

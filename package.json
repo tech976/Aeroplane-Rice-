@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build && node scripts/seo.mjs",
+    "build": "tsc --noEmit && vite build && vite build --ssr src/seo-data.ts --outDir .seo-build && node scripts/seo.mjs",
     "preview": "vite preview",
     "build:shopify": "tsc --noEmit && node scripts/shopify-theme.mjs",
     "shopify:products": "node scripts/shopify-products.mjs",

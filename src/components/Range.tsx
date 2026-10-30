@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { anyInStock, categories, firstInStock, lowestPrice, perKilo, price, products, type Product } from '../products';
 import { useCart } from './Cart';
+import { categoryByName, categoryPath } from '../catalog';
 import { Img, Notch } from './ui';
 
 // the brand's own six reasons, from its pack inserts
@@ -74,8 +75,16 @@ export function Reasons() {
   );
 }
 
-export function Range() {
-  const [category, setCategory] = useState('Basmati');
+/**
+ * The range. On the home page the category pills filter in place and the list opens on eight packs.
+ * On /shop and its category pages (`page` is 'All' or a category name) the pills are links to each
+ * category's own address, the heading is the page's main heading, and every product is listed, so
+ * search engines can reach all of them without pressing anything.
+ */
+export function Range({ page }: { page?: string } = {}) {
+  const [picked, setCategory] = useState('Basmati');
+  const category = page ?? picked;
+  const landing = page && page !== 'All' ? categoryByName(page) : undefined;
   const [all, setAll] = useState(false);
   const [query, setQuery] = useState('');
   const [sort, setSort] = useState('featured');
@@ -93,7 +102,7 @@ export function Range() {
       if (sort === 'name') return a.name.localeCompare(b.name);
       return 0;
     });
-  const shown = all ? matching : matching.slice(0, FIRST);
+  const shown = all || page ? matching : matching.slice(0, FIRST);
   const scene = scenes[category] ?? SHELF;
 
   return (
@@ -101,8 +110,10 @@ export function Range() {
       <div className="wrap">
         <div className="head range__head">
           <div>
-            <h2 className="display">Shop the range.</h2>
-            <p className="lede">Every Aeroplane pack, at today's shop prices. Choose a size and add it to your cart.</p>
+            {page
+              ? <h1 className="display">{landing?.heading ?? 'Shop the range.'}</h1>
+              : <h2 className="display">Shop the range.</h2>}
+            <p className="lede">{landing?.intro ?? "Every Aeroplane pack, at today's shop prices. Choose a size and add it to your cart."}</p>
           </div>
           <figure className="range__scene frame">
             <Img key={scene.photo} name={scene.photo} alt={scene.alt} sizes="(min-width: 900px) 34vw, 100vw" />
@@ -111,12 +122,18 @@ export function Range() {
         </div>
 
         <div className="filters" role="group" aria-label="Filter products">
-          {[...categories, 'All'].map((name) => (
-            <button key={name} type="button" className="filters__pill" aria-pressed={name === category} onClick={() => { setCategory(name); setAll(false); }}>
-              {name}
-              <span>{name === 'All' ? products.length : products.filter((p) => p.category === name).length}</span>
-            </button>
-          ))}
+          {[...categories, 'All'].map((name) => {
+            const count = <span>{name === 'All' ? products.length : products.filter((p) => p.category === name).length}</span>;
+            return page ? (
+              <a key={name} className="filters__pill" href={name === 'All' ? '/shop' : categoryPath(name)} aria-current={name === category ? 'page' : undefined}>
+                {name}{count}
+              </a>
+            ) : (
+              <button key={name} type="button" className="filters__pill" aria-pressed={name === category} onClick={() => { setCategory(name); setAll(false); }}>
+                {name}{count}
+              </button>
+            );
+          })}
         </div>
 
         <div className="shop-tools">
@@ -149,12 +166,15 @@ export function Range() {
 
         {matching.length === 0 ? (
           <p className="shop-empty">
-            No packs match “{query}”. <button type="button" className="btn btn--line btn--small" onClick={() => { setQuery(''); setCategory('All'); }}>Clear filters</button>
+            No packs match “{query}”. <button type="button" className="btn btn--line btn--small" onClick={() => { setQuery(''); if (!page) setCategory('All'); }}>Clear search</button>
           </p>
         ) : (
+          <>
+          {page && <h2 className="sr">{landing ? `${landing.name} products` : 'All products'}</h2>}
           <div className="products" aria-live="polite">
             {shown.map((product) => <ProductCard key={product.id} product={product} />)}
           </div>
+          </>
         )}
 
         {matching.length > FIRST && !all && (

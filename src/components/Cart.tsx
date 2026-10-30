@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 import { SHOP_URL, firstInStock, price, products } from '../products';
 import { fromVariantId, liveVariant, onShopify } from '../host';
 import { plansFor } from '../subscriptions';
+import { item, track } from '../analytics';
 
 // `plan` is the subscription plan's id when the pack is on subscribe and save; `key` is the
 // store's own id for the line inside the Shopify theme
@@ -90,6 +91,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setLines((lines) => lines.some((line) => line.id === id)
       ? lines.map((line) => (line.id === id ? { ...line, quantity: line.quantity + quantity } : line))
       : [...lines, { id, productId, size, quantity, plan }]);
+    const product = products.find((p) => p.id === productId);
+    if (product) track('add_to_cart', [item(product, size, quantity)]);
     const variant = liveVariant(productId, size);
     if (variant) send(() => post('/cart/add.js', { items: [{ id: variant.id, quantity, ...(plan && { selling_plan: Number(plan) }) }] }));
     open();
@@ -112,6 +115,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     return [{ ...line, product, each: plan?.price ?? variant.price, was: variant.was, planName: plan?.name }];
   });
   const count = rows.reduce((sum, row) => sum + row.quantity, 0);
+  const beginCheckout = () => track('begin_checkout', rows.map((row) => item(row.product, row.size, row.quantity)));
   const subtotal = rows.reduce((sum, row) => sum + row.each * row.quantity, 0);
   const saved = rows.reduce((sum, row) => sum + (row.was - row.each) * row.quantity, 0);
 
@@ -158,12 +162,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
                 {onShopify ? (
                   <>
                     <p className="cart__note">Delivery and taxes are worked out at checkout.</p>
-                    <a className="btn cart__checkout" href="/checkout">Checkout</a>
+                    <a className="btn cart__checkout" href="/checkout" onClick={beginCheckout}>Checkout</a>
                   </>
                 ) : (
                   <>
                     <p className="cart__note">Payment and delivery are completed on the Aeroplane online shop, where you can pick these packs again at the same prices.</p>
-                    <a className="btn cart__checkout" href={`${SHOP_URL}/shop/`} target="_blank" rel="noopener">Continue to the shop</a>
+                    <a className="btn cart__checkout" href={`${SHOP_URL}/shop/`} target="_blank" rel="noopener" onClick={beginCheckout}>Continue to the shop</a>
                   </>
                 )}
               </footer>

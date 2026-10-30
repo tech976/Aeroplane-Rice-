@@ -1,7 +1,9 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-export default defineConfig(({ mode }) => ({
+export default defineConfig(({ mode, isSsrBuild }) => ({
+  // the data build for scripts/seo.mjs needs no copy of public/
+  ...(isSsrBuild && { publicDir: false }),
   plugins: [react()],
   server: { port: 4173 },
   preview: { port: 4173 },
@@ -15,7 +17,8 @@ export default defineConfig(({ mode }) => ({
       cssCodeSplit: false,
       rollupOptions: {
         input: 'src/main.tsx',
-        output: { entryFileNames: 'aeroplane.js', assetFileNames: 'aeroplane[extname]' },
+        // one file for the theme: the pages the site loads on demand are folded back in
+        output: { entryFileNames: 'aeroplane.js', assetFileNames: 'aeroplane[extname]', inlineDynamicImports: true },
       },
     },
   }),

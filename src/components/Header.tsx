@@ -3,9 +3,9 @@ import { ACCOUNT_URL } from '../products';
 import { usePath } from '../router';
 import { CartButton, useCart } from './Cart';
 import { asset, onShopify } from '../host';
+import { shopCategories } from '../catalog';
 
 const links = [
-  ['/shop', 'Shop'],
   ['/#heritage', 'Heritage'],
   ['/#kitchen', 'Recipes'],
   ['/#story', 'Our story'],
@@ -44,11 +44,18 @@ export function Header({ plain = false }: { plain?: boolean }) {
       <p className="announce">Free 1 kg sugar with 5, 10 and 20 kg packs of Raw La-Taste Basmati. <a href="/#range">Shop now</a></p>
       <header className="site-header" data-solid={solid || plain}>
         <div className="site-header__bar">
-          <a className="site-header__logo" href="/#top" aria-label="Aeroplane Basmati, home">
+          <a className="site-header__logo" href="/" aria-label="Aeroplane Basmati, home">
             <img src={asset('/assets/brand/logo-shield-clear.png')} alt="La-Taste Aeroplane Basmati" width={400} height={188} />
           </a>
           <nav className="site-nav" aria-label="Main">
             {away && <a href="/">Home</a>}
+            <div className="site-nav__group">
+              <a href="/shop" aria-haspopup="true">Shop</a>
+              <div className="site-nav__menu">
+                <a href="/shop">All products</a>
+                {shopCategories.map((c) => <a key={c.slug} href={`/shop/${c.slug}`}>{c.name}</a>)}
+              </div>
+            </div>
             {links.map(([href, label]) => <a key={href} href={href}>{label}</a>)}
             <div className="site-nav__group">
               <a href="/company" aria-haspopup="true">Company</a>
@@ -90,6 +97,13 @@ export function Header({ plain = false }: { plain?: boolean }) {
           </div>
           <nav className="menu__nav" aria-label="Mobile">
             {away && <a href="/">Home</a>}
+            <div className="site-nav__group">
+              <a href="/shop" aria-haspopup="true">Shop</a>
+              <div className="site-nav__menu">
+                <a href="/shop">All products</a>
+                {shopCategories.map((c) => <a key={c.slug} href={`/shop/${c.slug}`}>{c.name}</a>)}
+              </div>
+            </div>
             {links.map(([href, label]) => <a key={href} href={href}>{label}</a>)}
             <a href="/#fields">Fields</a>
             <a href="/#table">The Indian table</a>

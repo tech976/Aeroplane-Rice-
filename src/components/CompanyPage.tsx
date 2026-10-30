@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
-import { findPage, pages, type Block, type Page } from '../company';
+import { findPage, isPolicy, pages, type Block, type Page } from '../company';
+import { policyPages } from '../policies';
+import { Crumbs } from './Crumbs';
 import { docGroups } from '../investor-docs';
 import { setSeo } from '../seo';
 import { Band, Img } from './ui';
@@ -117,27 +119,18 @@ export function CompanyPage({ path }: { path: string }) {
 
   useEffect(() => {
     if (page) setSeo({ title: page.seoTitle, description: page.seoDescription, path: page.path });
-    else setSeo({ title: 'Page not found | Aeroplane Basmati Rice', path });
-  }, [page, path]);
+  }, [page]);
 
-  if (!page) {
-    return (
-      <main id="main" className="page light">
-        <div className="wrap page__head">
-          <h1 className="display">We could not find that page.</h1>
-          <p className="lede">It may have moved. The shop and the company pages are below.</p>
-          <a className="btn" href="/">Back to the home page</a>
-        </div>
-      </main>
-    );
-  }
+  if (!page) return <NotFound path={path} />;
 
-  const siblings = pages.filter((p) => p.path !== page.path);
+  // a policy page points to the other policies; a company page to the rest of the company
+  const policy = isPolicy(page.path);
+  const siblings = (policy ? policyPages : pages).filter((p) => p.path !== page.path);
 
   return (
     <main id="main" className="page light">
       <div className="wrap page__head">
-        <p className="page__crumb"><a href="/">Aeroplane</a> <span aria-hidden="true">/</span> {page.nav}</p>
+        <Crumbs path={page.path} className="page__crumb" />
         <h1 className="display">{page.title}</h1>
         <p className="lede">{page.lede}</p>
       </div>
@@ -149,7 +142,7 @@ export function CompanyPage({ path }: { path: string }) {
       <Band art="harvest" />
 
       <div className="wrap page__more">
-        <h2 className="page__h">More about us</h2>
+        <h2 className="page__h">{policy ? 'Our other policies' : 'More about us'}</h2>
         <ul className="page__links">
           {siblings.map((p) => (
             <li key={p.path}>
@@ -161,6 +154,23 @@ export function CompanyPage({ path }: { path: string }) {
             </li>
           ))}
         </ul>
+      </div>
+    </main>
+  );
+}
+
+/** Any address the site does not have. It says so to search engines too, so it is never indexed. */
+export function NotFound({ path }: { path: string }) {
+  useEffect(() => { setSeo({ title: 'Page not found | Aeroplane Basmati Rice', path, index: false }); }, [path]);
+  return (
+    <main id="main" className="page light">
+      <div className="wrap page__head">
+        <h1 className="display">We could not find that page.</h1>
+        <p className="lede">It may have moved, or the address may be mistyped. The shop and the home page are a click away.</p>
+        <div className="page__actions">
+          <a className="btn" href="/shop">Shop the range</a>
+          <a className="btn btn--line" href="/">Back to the home page</a>
+        </div>
       </div>
     </main>
   );
