@@ -13,6 +13,7 @@ const SIZES: Record<string, [number, number, number]> = {
   // campaign photographs from the client, October 2026
   'range-shelf': [1122, 1402, 640], 'range-staples': [1122, 1402, 640], 'kitchen-method': [1536, 1024, 800],
   'kitchen-atta': [1118, 1407, 640], 'table-royal': [1122, 1402, 640],
+  'campaign-shelf': [1080, 1350, 640], 'campaign-pot': [1536, 1024, 800],
   pulao: [1024, 1024, 640], 'pulao-plate': [1024, 1024, 640], panicle: [1024, 1024, 640], scoop: [1024, 1024, 640], pouch: [1024, 1024, 640],
 };
 

@@ -11,6 +11,7 @@ import { Heritage } from './components/Heritage';
 import { Pour } from './components/Pour';
 import { Films } from './components/Films';
 import { Range } from './components/Range';
+import { Campaign } from './components/Campaign';
 import { Fields } from './components/Fields';
 import { Table } from './components/Table';
 import { Kitchen } from './components/Kitchen';
@@ -37,6 +38,7 @@ function Home() {
       <Pour />
       <Films />
       <Range />
+      <Campaign />
       <Marketplaces query="Aeroplane basmati rice" />
       <Fields />
       <Table />

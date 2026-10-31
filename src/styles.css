@@ -934,3 +934,10 @@ body:has(.shop-bar[data-shown="true"]) .wa { bottom: calc(5.75rem + env(safe-are
 .ir__hours { margin-top: .75rem; opacity: .75; font-size: .9375rem; }
 @media (min-width: 900px) { .ir__contact { grid-template-columns: 3fr 2fr; align-items: center; } }
 .ir .page__more { margin-top: clamp(3rem, 6vw, 5rem); }
+
+/* ---------- Campaign photographs, October 2026 shoot ---------- */
+.campaign { padding-block: var(--space); }
+.campaign__grid { display: grid; gap: clamp(1rem, 2.5vw, 2rem); margin-top: clamp(2.5rem, 5vw, 4rem); }
+.campaign__shot { margin: 0; overflow: hidden; }
+.campaign__shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+@media (min-width: 900px) { .campaign__grid { grid-template-columns: 4fr 6fr; align-items: stretch; } }

@@ -3,6 +3,7 @@ import { Marketplaces } from './Marketplaces';
 
 const WIDE = { small: '/assets/img/banner-16x9-s.webp', smallW: 1280, full: '/assets/img/banner-16x9.webp', fullW: 1672 };
 const TALL = { small: '/assets/img/banner-9x16-s.webp', smallW: 640, full: '/assets/img/banner-9x16.webp', fullW: 941 };
+const ULTRA = { small: '/assets/img/banner-21x9-s.webp', smallW: 1280, full: '/assets/img/banner-21x9.webp', fullW: 1920 };
 const set = (b: typeof TALL) => `${asset(b.small)} ${b.smallW}w, ${asset(b.full)} ${b.fullW}w`;
 
 /**
@@ -14,6 +15,11 @@ export function Hero() {
   return (
     <section className="hero" id="top">
       <picture className="hero__banner">
+        <source
+          media="(min-aspect-ratio: 2/1)"
+          srcSet={set(ULTRA)}
+          sizes="100vw" width={1920} height={566}
+        />
         <source
           media="(max-aspect-ratio: 1/1)"
           srcSet={set(TALL)}
