@@ -17,7 +17,7 @@ const reasons = [
 const FIRST = 8;
 
 // The campaign photograph beside the heading, matched to the category in view
-const SHELF = { photo: 'range-shelf', alt: 'Aeroplane Classic, Metro, La-Taste, Rozana, Apple, Royal and Brown rice packs on a wooden kitchen shelf' };
+const SHELF = { photo: 'range-shelf', alt: 'Aeroplane atta, sugar, sooji, maida, besan and salt on a wooden shelf above two La-Taste basmati packs' };
 const scenes: Record<string, typeof SHELF> = {
   'Kitchen staples': { photo: 'range-staples', alt: 'Two women in a warm kitchen presenting Aeroplane sooji, maida, besan, atta, salt and sugar' },
 };
