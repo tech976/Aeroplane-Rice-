@@ -4,7 +4,7 @@
 // button opens that product. The home and shop pages are about the whole range: they open the
 // Aeroplane brand page where the marketplace has one, and a search for the brand otherwise.
 
-export type Shop = 'amazon' | 'flipkart' | 'blinkit' | 'zepto';
+export type Shop = 'amazon' | 'flipkart' | 'bigbasket' | 'instamart' | 'blinkit' | 'zepto';
 
 const amazon = (asin: string) => `https://www.amazon.in/dp/${asin}`;
 const flipkart = (slug: string) => `https://www.flipkart.com/${slug}`;

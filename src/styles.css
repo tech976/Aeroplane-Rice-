@@ -186,7 +186,7 @@ h3 { font-family: var(--display); font-weight: 700; line-height: 1.1; letter-spa
 .hero__actions .btn--line:hover { color: var(--indigo); }
 .hero .markets--hero { margin: 0; display: flex; align-items: center; gap: .75rem; }
 .hero .markets--hero .label { margin: 0; color: var(--rice); opacity: .85; }
-.hero .markets--hero ul { width: auto; grid-template-columns: repeat(4, 4.75rem); }
+.hero .markets--hero ul { width: auto; grid-template-columns: repeat(6, 4.75rem); }
 
 @media (max-aspect-ratio: 1/1) {
   /* left-aligned, stopping short of the WhatsApp button in the corner */
@@ -194,7 +194,7 @@ h3 { font-family: var(--display); font-weight: 700; line-height: 1.1; letter-spa
   .hero__buy { display: grid; justify-items: start; gap: .9rem; }
   .hero .markets--hero { display: block; }
   .hero .markets--hero .label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
-  .hero .markets--hero ul { grid-template-columns: repeat(4, minmax(0, 1fr)); width: min(100vw - 2 * var(--gutter) - 5rem, 22rem); }
+  .hero .markets--hero ul { grid-template-columns: repeat(3, minmax(0, 1fr)); width: min(100vw - 2 * var(--gutter) - 6rem, 22rem); }
 }
 /* upright tablets have room to centre the buttons on the picture and still clear the corner */
 @media (max-aspect-ratio: 1/1) and (min-width: 600px) { .hero__intro, .hero__buy { justify-items: center; } }
@@ -483,7 +483,7 @@ a.filters__pill { text-decoration: none; }
 .markets a svg { position: absolute; right: clamp(1rem, 2vw, 1.75rem); top: clamp(1rem, 2vw, 1.75rem); transition: translate .3s var(--ease); }
 .markets a:hover { background: var(--white); box-shadow: inset 0 -3px 0 var(--red); }
 .markets a:hover svg { translate: 3px -3px; }
-@media (min-width: 900px) { .markets ul { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 900px) { .markets ul { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .markets--compact { margin-top: 1.25rem; padding: 0; }
 .markets--compact .label { margin-bottom: .75rem; opacity: .75; }
 .markets--compact ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; border: 0; }
@@ -493,11 +493,11 @@ a.filters__pill { text-decoration: none; }
 .markets--compact .markets__logo--blinkit { height: 2.25rem; }
 .markets--compact a:hover { box-shadow: inset 0 -3px 0 var(--red); border-color: var(--indigo); }
 .markets--compact a svg { position: absolute; right: .55rem; top: .55rem; width: 12px; height: 12px; opacity: .55; }
-@media (min-width: 560px) { .markets--compact ul { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 560px) { .markets--compact ul { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 /* over the opening film: small light tiles that read as one row with the button above */
 .markets--hero { margin-top: .25rem; }
 .markets--hero .label { margin-bottom: .6rem; color: var(--rice); opacity: .9; }
-.markets--hero ul { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .4rem; width: min(100% - 4.25rem, 30rem); }
+.markets--hero ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .4rem; width: min(100% - 5.25rem, 30rem); }
 /* on phones the row stops short of the WhatsApp button in the corner */
 @media (min-width: 900px) { .markets--hero ul { width: min(100%, 30rem); } }
 .markets--hero a { height: 2.6rem; padding: .35rem .6rem; border: 0; border-radius: 999px; background: rgb(253 252 249 / .92); backdrop-filter: blur(6px); }
@@ -506,6 +506,18 @@ a.filters__pill { text-decoration: none; }
 .markets--hero .markets__logo--flipkart { height: 1.15rem; }
 .markets--hero .markets__logo--blinkit { height: 1.6rem; }
 .markets--hero a svg { display: none; }
+/* Instamart: Swiggy's logo with the name set beneath it */
+.markets__sub { font: 700 .75rem/1 var(--display); letter-spacing: .14em; text-transform: uppercase; color: #FE5005; }
+.markets__logo--instamart { height: 2.5rem; margin-block: .5rem 0; }
+.markets--compact a:has(.markets__sub) { flex-direction: column; gap: .15rem; }
+.markets--compact .markets__logo--instamart { height: 1.15rem; }
+.markets--compact .markets__sub { font-size: .5625rem; }
+.markets--hero .markets__logo--instamart { height: .9rem; }
+.markets--hero .markets__sub { font-size: .5rem; letter-spacing: .1em; }
+/* BigBasket's wordmark is small inside its artwork, so it gets a taller slot */
+.markets__logo--bigbasket { height: 3.75rem; margin-block: .125rem; }
+.markets--compact .markets__logo--bigbasket { height: 2.1rem; }
+.markets--hero .markets__logo--bigbasket { height: 1.6rem; }
 
 /* ---------- 5. Fields: five photographs, one open ---------- */
 .fields { padding-block: var(--space); }
@@ -703,13 +715,13 @@ a.filters__pill { text-decoration: none; }
 .shop-bar { position: fixed; inset: auto 0 0; z-index: 40; display: flex; gap: .5rem; padding: .75rem var(--gutter) calc(.75rem + env(safe-area-inset-bottom)); background: var(--rice); border-top: 1px solid var(--rule); translate: 0 110%; transition: translate .4s var(--ease); }
 .shop-bar[data-shown="true"] { translate: 0 0; }
 /* WhatsApp: a round indigo button that opens into a label on hover and focus, and lifts above the phone buy bar */
-/* closed it is an exact circle: the 26px mark, 13px either side and the 2px ring make 3.5rem each way */
-.wa { position: fixed; right: var(--gutter); bottom: calc(1.25rem + env(safe-area-inset-bottom)); z-index: 45; box-sizing: border-box; display: flex; align-items: center; height: 3.5rem; min-width: 3.5rem; padding: 0 13px; border: 2px solid var(--rice); border-radius: 999px; background: var(--indigo); color: var(--rice); text-decoration: none; box-shadow: 0 10px 28px -10px rgb(20 17 42 / .55); transition: bottom .4s var(--ease), background-color .2s, box-shadow .2s; }
+/* closed it is an exact circle: the 34px mark, 17px either side and the 2px ring make 4.5rem each way */
+.wa { position: fixed; right: var(--gutter); bottom: calc(1.25rem + env(safe-area-inset-bottom)); z-index: 45; box-sizing: border-box; display: flex; align-items: center; height: 4.5rem; min-width: 4.5rem; padding: 0 17px; border: 2px solid var(--rice); border-radius: 999px; background: var(--indigo); color: var(--rice); text-decoration: none; box-shadow: 0 10px 28px -10px rgb(20 17 42 / .55); transition: bottom .4s var(--ease), background-color .2s, box-shadow .2s; }
 .wa svg { flex: none; }
-.wa span { max-width: 0; margin-left: 0; overflow: hidden; white-space: nowrap; font: 700 .75rem/1 var(--display); letter-spacing: .12em; text-transform: uppercase; transition: max-width .4s var(--ease), margin-left .4s var(--ease); }
+.wa span { max-width: 0; margin-left: 0; overflow: hidden; white-space: nowrap; font: 700 .875rem/1 var(--display); letter-spacing: .12em; text-transform: uppercase; transition: max-width .4s var(--ease), margin-left .4s var(--ease); }
 .wa:hover, .wa:focus-visible { background: var(--night-2); box-shadow: 0 0 0 3px var(--yellow), 0 10px 28px -10px rgb(20 17 42 / .55); }
-.wa:hover span, .wa:focus-visible span { max-width: 9rem; margin-left: .6rem; }
-body:has(.shop-bar[data-shown="true"]) .wa { bottom: calc(5.5rem + env(safe-area-inset-bottom)); }
+.wa:hover span, .wa:focus-visible span { max-width: 11rem; margin-left: .7rem; }
+body:has(.shop-bar[data-shown="true"]) .wa { bottom: calc(5.75rem + env(safe-area-inset-bottom)); }
 @media (min-width: 900px) { body:has(.shop-bar[data-shown="true"]) .wa { bottom: calc(1.5rem + env(safe-area-inset-bottom)); } .wa { bottom: 1.5rem; } }
 .shop-bar .btn { min-height: 3rem; }
 .shop-bar .btn:first-child { flex: 1; }
@@ -736,7 +748,7 @@ body:has(.shop-bar[data-shown="true"]) .wa { bottom: calc(5.5rem + env(safe-area
 /* the rule above the copyright runs the width of the text, like every other rule on the site, not into the margins */
 .site-footer__base::before { content: ""; position: absolute; top: 0; inset-inline: var(--gutter); border-top: 1px solid var(--line); }
 /* leave the corner to the WhatsApp button */
-@media (min-width: 900px) { .site-footer__base { padding-right: calc(var(--gutter) + 4.75rem); } }
+@media (min-width: 900px) { .site-footer__base { padding-right: calc(var(--gutter) + 5.75rem); } }
 @media (min-width: 900px) {
   .site-footer__grid { grid-template-columns: 5fr 7fr; }
   .site-footer__nav { grid-template-columns: repeat(4, minmax(0, 1fr)); }

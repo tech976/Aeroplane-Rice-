@@ -8,6 +8,9 @@ import { asset } from '../host';
 const marketplaces: { name: string; logo: Shop; search: (q: string) => string }[] = [
   { name: 'Amazon', logo: 'amazon', search: (q) => `https://www.amazon.in/s?k=${q}` },
   { name: 'Flipkart', logo: 'flipkart', search: (q) => `https://www.flipkart.com/search?q=${q}` },
+  { name: 'BigBasket', logo: 'bigbasket', search: (q) => `https://www.bigbasket.com/ps/?q=${q}` },
+  // no Instamart logo file to hand yet, so the tile shows Swiggy's logo with the name beneath it
+  { name: 'Swiggy Instamart', logo: 'instamart', search: (q) => `https://www.swiggy.com/instamart/search?query=${q}` },
   { name: 'Blinkit', logo: 'blinkit', search: (q) => `https://blinkit.com/s/?q=${q}` },
   { name: 'Zepto', logo: 'zepto', search: (q) => `https://www.zepto.com/search?query=${q}` },
 ];
@@ -38,6 +41,7 @@ export function Marketplaces({ query, productId, compact = false, hero = false }
       >
         {!compact && !hero && <span className="label">Shop on</span>}
         <img className={`markets__logo markets__logo--${shop.logo}`} src={asset(`/assets/marketplaces/${shop.logo}.svg`)} alt={shop.name} loading="lazy" />
+        {shop.logo === 'instamart' && <span className="markets__sub" aria-hidden="true">Instamart</span>}
         <Out />
         {/* spoken after what is shown, so the visible words stay at the front of the link's name */}
         <span className="sr">{productId ? `, buy ${query}` : `, ${query}`} (opens in a new tab)</span>
