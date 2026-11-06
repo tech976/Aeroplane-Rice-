@@ -128,7 +128,15 @@ export function Footer() {
         </div>
         <div className="wrap site-footer__base">
           <p>© 2026 Aeroplane Basmati Rice, from the house of Amir Chand Jagdish Kumar (Exports) Limited. FSSAI licence 10012011000454.</p>
-          <p><a href="/#top">Back to top</a></p>
+          <div className="site-footer__end">
+            <a className="made-by" href="https://www.digiveritaz.com/" target="_blank" rel="noopener">
+              <span>Made by</span>
+              <img src={asset('/assets/brand/digiveritaz.webp')} alt="" width={24} height={24} loading="lazy" decoding="async" />
+              <b>DigiVeritaz</b>
+              <span className="sr"> (opens in a new tab)</span>
+            </a>
+            <a href="/#top">Back to top</a>
+          </div>
         </div>
       </div>
     </footer>

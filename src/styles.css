@@ -727,10 +727,11 @@ body:has(.shop-bar[data-shown="true"]) .wa { bottom: calc(5.75rem + env(safe-are
 .shop-bar .btn:first-child { flex: 1; }
 .shop-bar .btn--line { color: var(--indigo); }
 @media (min-width: 900px) { .shop-bar { display: none; } }
-@media (max-width: 899px) { .site-footer { padding-bottom: 6rem; } }
 
 /* ---------- Footer ---------- */
 .site-footer { position: relative; background: var(--indigo); color: var(--rice); padding-bottom: 2rem; }
+/* on phones the buy bar sits over the foot of the page, so the footer ends above it */
+@media (max-width: 899px) { .site-footer { padding-bottom: calc(6rem + env(safe-area-inset-bottom)); } }
 .site-footer__land { background: var(--rice); padding-top: 2rem; }
 .site-footer__paddy { height: clamp(4.5rem, 9vw, 8.5rem); background: var(--indigo); -webkit-mask: url("/assets/art/st-paddy.webp") bottom center / auto 100% repeat-x; mask: url("/assets/art/st-paddy.webp") bottom center / auto 100% repeat-x; }
 .site-footer__badge { position: absolute; left: 50%; top: 0; z-index: 2; translate: -50% -55%; width: clamp(8rem, 12vw, 11rem); aspect-ratio: 1; display: grid; place-items: center; border-radius: 50%; background: var(--rice); box-shadow: 0 0 0 .5rem var(--indigo); }
@@ -746,6 +747,13 @@ body:has(.shop-bar[data-shown="true"]) .wa { bottom: calc(5.75rem + env(safe-are
 .site-footer__nav a:hover { background-size: 100% 2px; }
 .site-footer__base { position: relative; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin-top: clamp(3rem, 6vw, 6rem); padding-top: 1.5rem; font-size: .875rem; }
 /* the rule above the copyright runs the width of the text, like every other rule on the site, not into the margins */
+.site-footer__end { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 2rem; }
+/* the studio credit: small and quiet, the logo in its own colours */
+.made-by { display: inline-flex; align-items: center; gap: .45rem; color: inherit; text-decoration: none; opacity: .85; transition: opacity .2s; }
+.made-by img { width: 1.5rem; height: 1.5rem; }
+.made-by b { font-weight: 700; letter-spacing: .01em; }
+.made-by:hover { opacity: 1; }
+.made-by:hover b { text-decoration: underline; text-underline-offset: .2em; }
 .site-footer__base::before { content: ""; position: absolute; top: 0; inset-inline: var(--gutter); border-top: 1px solid var(--line); }
 /* leave the corner to the WhatsApp button */
 @media (min-width: 900px) { .site-footer__base { padding-right: calc(var(--gutter) + 5.75rem); } }
