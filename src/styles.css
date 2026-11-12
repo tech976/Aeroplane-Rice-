@@ -231,6 +231,124 @@ h3 { font-family: var(--display); font-weight: 700; line-height: 1.1; letter-spa
 .band--rice { background: var(--rice); color: var(--indigo); }
 .band__art { width: calc(100% + 280px); height: clamp(5.5rem, 10.5vw, 10rem); background: currentColor; -webkit-mask: left center / auto 100% repeat-x; mask: left center / auto 100% repeat-x; }
 
+/* ---------- From the field to the pack, in Heritage ----------
+   A tall section with a pinned screen. Inside it the five drawings sit side by side like one long
+   hand-drawn scroll that fills the screen; scrolling glides along it, resting on each drawing. The
+   heading and the steps sit over the paper at the top and foot of the drawings. */
+.journey { --paper: #f7f0e1; position: relative; height: 460vh; margin-top: clamp(3rem, 6vw, 5rem); background: var(--paper); }
+.journey__pin { position: sticky; top: 4.5rem; height: calc(100svh - 4.5rem); overflow: hidden; }
+.journey__track { position: absolute; inset: 0; overflow: hidden; }
+.journey__strip { position: relative; height: 100%; will-change: transform; }
+.journey__scene { position: absolute; top: 0; height: 100%; }
+/* each drawing fades out of and into its neighbours across the blend strip at either end */
+.journey__frame { position: absolute; left: 0; width: 100%; -webkit-mask: linear-gradient(to right, transparent, #000 var(--blend), #000 calc(100% - var(--blend)), transparent); mask: linear-gradient(to right, transparent, #000 var(--blend), #000 calc(100% - var(--blend)), transparent); }
+.journey__frame > img { position: absolute; inset: 0; width: 100%; height: 100%; }
+/* paper washes at the top and foot, so the heading and the steps read over the drawing */
+.journey__track::before, .journey__track::after { content: ""; position: absolute; z-index: 1; left: 0; right: 0; pointer-events: none; }
+.journey__track::before { top: 0; height: 26%; background: linear-gradient(to bottom, var(--paper) 18%, rgb(247 240 225 / 0)); }
+.journey__track::after { bottom: 0; height: 22%; background: linear-gradient(to top, var(--paper) 30%, rgb(247 240 225 / 0)); }
+.journey__head { position: absolute; z-index: 2; top: 0; left: 0; right: 0; padding-top: clamp(1rem, 2.4vw, 1.75rem); pointer-events: none; }
+.journey__head .label { color: var(--red); }
+.journey__title { margin-top: .4rem; font: 600 clamp(1.5rem, 2.8vw, 2.5rem)/1.05 var(--display); letter-spacing: -.04em; color: var(--indigo); }
+/* the words sit on the empty paper each drawing leaves on its left */
+.journey__words { position: absolute; z-index: 2; left: calc(var(--rest) + var(--gutter)); top: 50%; translate: 0 -40%; width: min(27rem, 30vw); color: var(--indigo); }
+.journey__step { display: flex; align-items: center; gap: .75rem; font: 700 .75rem/1 var(--display); letter-spacing: .16em; text-transform: uppercase; color: var(--red); }
+.journey__step span { display: grid; place-items: center; flex: none; width: 2.25rem; height: 2.25rem; border: 1.5px solid currentColor; border-radius: 50%; letter-spacing: 0; }
+.journey__words h3, .journey__caption h3 { margin-top: 1rem; font: 600 clamp(1.5rem, 2.4vw, 2.6rem)/1.04 var(--display); letter-spacing: -.045em; text-wrap: balance; }
+.journey__words h3 + p, .journey__caption h3 + p { margin-top: .8rem; font-size: clamp(.9375rem, 1.05vw, 1.0625rem); line-height: 1.6; }
+.journey__caption { display: none; }
+/* the steps along the foot, with a red thread drawn through them */
+.journey__steps { position: absolute; z-index: 2; left: 0; right: 0; bottom: 0; display: grid; grid-template-columns: repeat(5, 1fr); padding-block: 1rem clamp(1rem, 2vw, 1.5rem); list-style: none; }
+.journey__steps::before { content: ""; position: absolute; left: var(--gutter); right: var(--gutter); top: calc(1rem + .3rem); border-top: 1.5px dashed rgb(50 43 106 / .25); }
+.journey__thread { position: absolute; left: var(--gutter); top: calc(1rem + .3rem - .75px); max-width: calc(100% - 2 * var(--gutter)); border-top: 1.5px solid var(--red); }
+.journey__steps li { position: relative; display: grid; gap: .55rem; justify-items: start; font: 600 .75rem/1 var(--display); letter-spacing: .12em; text-transform: uppercase; color: var(--indigo); opacity: .45; transition: opacity .4s; }
+.journey__steps i { width: .7rem; height: .7rem; rotate: 45deg; background: var(--paper); border: 1.5px solid var(--indigo); transition: background-color .4s, border-color .4s; }
+.journey__steps li[data-on] { opacity: 1; }
+.journey__steps li[data-on] i { background: var(--red); border-color: var(--red); }
+.journey__steps li[data-now] span { color: var(--red); }
+@media (min-width: 900px) and (min-aspect-ratio: 1/1) { .journey__steps { padding-right: calc(var(--gutter) + 4.75rem); } }
+
+/* phones and upright screens: heading on top, the scroll beneath it, then the words of the drawing in view */
+@media (max-width: 899px), (max-aspect-ratio: 1/1) {
+  .journey { height: 500vh; }
+  .journey__track { top: 6.5rem; bottom: auto; height: 44%; }
+  .journey__track::before { height: 14%; background: linear-gradient(to bottom, var(--paper), rgb(247 240 225 / 0)); }
+  .journey__track::after { height: 18%; background: linear-gradient(to top, var(--paper), rgb(247 240 225 / 0)); }
+  .journey__words { display: none; }
+  .journey__caption { display: grid; position: absolute; z-index: 2; left: var(--gutter); right: calc(var(--gutter) + 4.5rem); bottom: calc(7.75rem + env(safe-area-inset-bottom)); color: var(--indigo); }
+  .journey__caption > div { grid-area: 1 / 1; align-self: end; opacity: 0; translate: 0 12px; transition: opacity .45s var(--ease), translate .45s var(--ease); }
+  .journey__caption > div[data-on] { opacity: 1; translate: 0 0; }
+  .journey__caption h3 { font-size: clamp(1.5rem, 6.4vw, 2.25rem); margin-top: .8rem; }
+  .journey__steps { bottom: calc(4.75rem + env(safe-area-inset-bottom)); }
+  .journey__steps span { display: none; }
+  .journey__steps li { justify-items: center; }
+}
+
+/* less motion: the five drawings in colour, one under another, each with its words */
+.journey[data-still] { height: auto; }
+.journey[data-still] .journey__pin { position: relative; top: 0; height: auto; padding: 7rem 0 2rem; }
+.journey[data-still] .journey__track { position: relative; inset: auto; height: auto; }
+.journey[data-still] .journey__track::before, .journey[data-still] .journey__track::after { display: none; }
+.journey[data-still] .journey__strip { display: grid; gap: 3rem; height: auto; }
+.journey[data-still] .journey__scene { position: relative; width: 100%; height: auto; aspect-ratio: 16 / 9; }
+.journey[data-still] .journey__frame { inset: 0; -webkit-mask: none; mask: none; }
+.journey[data-still] .journey__words { display: block; left: var(--gutter); width: min(27rem, 30vw); }
+.journey[data-still] .journey__caption, .journey[data-still] .journey__steps { display: none; }
+@media (max-width: 899px) {
+  .journey[data-still] .journey__scene { aspect-ratio: auto; }
+  .journey[data-still] .journey__frame { position: relative; aspect-ratio: 16 / 9; }
+  .journey[data-still] .journey__words { position: relative; inset: auto; translate: none; width: auto; margin: 1rem var(--gutter) 0; }
+}
+
+/* ---------- Living Warli ----------
+   The same frieze drawn as figures (scripts/warli/live.py). Each moves a little, slowly, and the
+   delay follows its place along the band (--at), so a step travels down the row of dancers rather
+   than everyone moving at once. Nothing moves until the band is in view. */
+.band__live { display: flex; width: max-content; background: none; -webkit-mask: none; mask: none; }
+.band__live .warli { flex: none; height: 100%; width: auto; aspect-ratio: 1600 / 220; overflow: visible; }
+.warli path { fill: currentColor; }
+.warli path.s { fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+.warli g { transform-box: view-box; animation: var(--move) var(--time, 2s) var(--ease-w, ease-in-out) calc(var(--at) * var(--travel, -4s)) infinite var(--dir, alternate); animation-play-state: paused; }
+.band__live[data-on] .warli g { animation-play-state: running; }
+.warli .still { animation: none; }
+
+/* the dance: everyone steps and sways in turn, the tarpa player's horn lifts, the suns turn */
+.w-dancer { --move: w-step; --time: 2.4s; --dir: normal; --travel: -9.6s; }
+.w-player { --move: w-step; --time: 2.4s; --dir: normal; }
+.w-horn { --move: w-horn; --time: 1.2s; }
+.w-sun { --move: w-turn; --time: 40s; --ease-w: linear; --dir: normal; --travel: -40s; }
+/* the harvest: the cutters swing into the paddy, the paddy bends in the wind, the cart wheel rolls */
+.w-cutter { --move: w-cut; --time: 1.6s; --dir: normal; --travel: -3s; }
+.w-paddy { --move: w-sway; --time: 3.2s; --travel: -8s; }
+.w-bird { --move: w-flap; --time: .5s; --travel: -2s; }
+.w-bearer { --move: w-bob; --time: 1.8s; --travel: -3s; }
+.w-child { --move: w-rock; --time: 1.4s; }
+.w-wheel { --move: w-turn; --time: 7s; --ease-w: linear; --dir: normal; }
+.w-head { --move: w-nod; --time: 2.2s; }
+/* the kitchen: pestles pound, steam rises off the pot, grain falls from the winnowing tray */
+.w-pestle { --move: w-pound; --time: 1s; --dir: normal; --travel: -1.7s; }
+.w-pounder { --move: w-dip; --time: 1s; --dir: normal; --travel: -1.7s; }
+.w-steam { --move: w-rise; --time: 2.6s; --ease-w: ease-out; --dir: normal; }
+.w-stirrer { --move: w-rock; --time: 1.8s; }
+.w-tray { --move: w-sift; --time: .4s; }
+.w-grain { --move: w-fall; --time: 1.3s; --ease-w: ease-in; --dir: normal; }
+.w-wave { --move: w-rock; --time: 1.9s; --travel: -6s; }
+
+@keyframes w-step { 0%, 50%, 100% { transform: translateY(0) rotate(0); } 25% { transform: translateY(-5px) rotate(-3deg); } 75% { transform: translateY(-5px) rotate(3deg); } }
+@keyframes w-horn { from { transform: rotate(-4deg); } to { transform: rotate(7deg); } }
+@keyframes w-turn { to { transform: rotate(360deg); } }
+@keyframes w-cut { 0%, 100% { transform: rotate(0); } 35% { transform: rotate(9deg); } 55% { transform: rotate(9deg); } }
+@keyframes w-sway { from { transform: skewX(-5deg); } to { transform: skewX(4deg); } }
+@keyframes w-flap { from { transform: scaleY(1); } to { transform: scaleY(.45) translateY(2px); } }
+@keyframes w-bob { from { transform: translateY(0); } to { transform: translateY(-4px); } }
+@keyframes w-rock { from { transform: rotate(-4deg); } to { transform: rotate(4deg); } }
+@keyframes w-nod { from { transform: rotate(0); } to { transform: rotate(9deg); } }
+@keyframes w-pound { 0%, 100% { transform: translateY(0); } 45% { transform: translateY(-14px); } 70% { transform: translateY(1px); } 80% { transform: translateY(0); } }
+@keyframes w-dip { 0%, 60%, 100% { transform: translateY(0); } 72% { transform: translateY(2px); } }
+@keyframes w-rise { 0% { transform: translateY(4px); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateY(-10px); opacity: 0; } }
+@keyframes w-sift { from { transform: rotate(-2deg); } to { transform: rotate(2deg); } }
+@keyframes w-fall { 0% { transform: translateY(-8px); opacity: 0; } 25% { opacity: 1; } 100% { transform: translateY(14px); opacity: 0; } }
+
 /* ---------- Basmati, given time ---------- */
 .pour { padding-block: var(--space) clamp(3rem, 6vw, 6rem); overflow: clip; }
 .pour__stage {

@@ -1,5 +1,5 @@
-import { useId, useRef, type ReactNode } from 'react';
-import { m, useScroll, useTransform } from 'motion/react';
+import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
+import { m, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import { asset } from '../host';
 
 // [full width, height, small width]; anything not listed is a 1024 x 1536 portrait
@@ -87,13 +87,57 @@ export function Notch({ icon }: { icon: IconName }) {
 }
 
 /** A Warli frieze that runs between sections and drifts sideways as the page moves. */
+// The living versions of the bands, fetched once each and shared by every band that shows them
+const living = new Map<string, Promise<string>>();
+const fetchLiving = (art: string) => {
+  if (!living.has(art)) living.set(art, fetch(asset(`/assets/art/warli-${art}-live.svg`)).then((r) => (r.ok ? r.text() : Promise.reject(r.status))));
+  return living.get(art)!;
+};
+
+/**
+ * A Warli frieze between sections. It drifts sideways as the page scrolls. As it comes near, the
+ * still drawing gives way to a living one (scripts/warli/live.py) whose figures move while the band
+ * is in view: the dancers step round their circle, the harvesters swing at the paddy, the pestles
+ * pound. People who ask their device for less motion keep the still drawing.
+ */
 export function Band({ art, tone = 'indigo' }: { art: 'harvest' | 'dance' | 'kitchen'; tone?: 'indigo' | 'rice' }) {
   const ref = useRef<HTMLDivElement>(null);
+  const reduced = useReducedMotion();
+  const [svg, setSvg] = useState<string>();
+  const [copies, setCopies] = useState(2);
+  const [on, setOn] = useState(false);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
   const x = useTransform(scrollYProgress, [0, 1], ['0px', '-260px']);
+
+  useEffect(() => {
+    const band = ref.current;
+    if (!band || reduced) return;
+    const near = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      near.disconnect();
+      fetchLiving(art).then(setSvg, () => {});
+    }, { rootMargin: '600px 0px' });
+    const seen = new IntersectionObserver(([entry]) => setOn(entry.isIntersecting), { threshold: 0.35 });
+    near.observe(band);
+    seen.observe(band);
+    // enough copies of the drawing, side by side, to cover the band and its drift
+    const fit = () => {
+      const art = band.querySelector('.band__art') as HTMLElement | null;
+      if (art) setCopies(Math.max(2, Math.ceil((band.clientWidth + 280) / ((art.clientHeight * 1600) / 220))));
+    };
+    fit();
+    window.addEventListener('resize', fit);
+    return () => { near.disconnect(); seen.disconnect(); window.removeEventListener('resize', fit); };
+  }, [art, reduced]);
+
+  const mask = `url(${asset(`/assets/art/warli-${art}.svg`)})`;
   return (
     <div className={`band band--${tone}`} ref={ref} aria-hidden="true">
-      <m.div className="band__art" style={{ x, maskImage: `url(${asset(`/assets/art/warli-${art}.svg`)})`, WebkitMaskImage: `url(${asset(`/assets/art/warli-${art}.svg`)})` }} />
+      {svg && !reduced ? (
+        <m.div className="band__art band__live" data-on={on || undefined} style={{ x }} dangerouslySetInnerHTML={{ __html: svg.repeat(copies) }} />
+      ) : (
+        <m.div className="band__art" style={{ x, maskImage: mask, WebkitMaskImage: mask }} />
+      )}
     </div>
   );
 }

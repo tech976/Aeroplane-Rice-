@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { m, useScroll, useTransform, type MotionValue } from 'motion/react';
 import { asset } from '../host';
+import { Journey } from './Journey';
 
 type Piece = { word: string } | { photo: string; alt: string };
 
@@ -63,6 +64,7 @@ export function Heritage() {
           </dl>
         </div>
       </div>
+      <Journey />
     </section>
   );
 }
