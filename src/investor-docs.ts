@@ -1,6 +1,7 @@
-// Investor documents, taken from aeroplanerice.com and hosted here.
-// Generated — do not hand-edit; regenerate when the filings change.
-export type Doc = { title: string; file: string; size: number };
+// Investor documents and certificates, taken from aeroplanerice.com (checked against every file the
+// site publishes, November 2026). Files up to 45 MB are hosted here under public/assets/investors;
+// larger ones (over GitHub's limits) carry `url`, the official copy on aeroplanerice.com.
+export type Doc = { title: string; file: string; size: number; url?: string };
 export type Group = { heading: string; docs: Doc[] };
 export const docGroups: Record<string, Group[]> = {
   financials: [
@@ -8,20 +9,23 @@ export const docGroups: Record<string, Group[]> = {
       { title: 'ACJK FOODS Statement FY 2021-22', file: 'ACJK-FOODS-FY-21-22.pdf', size: 35876466 },
       { title: 'ACJK FOODS Statement FY 2022-23', file: 'ACJK-FOODS-FY-22-23.pdf', size: 33826785 },
       { title: 'ACJK FOODS Statement FY 2023-24', file: 'ACJK-FOODS-FY-23-24.pdf', size: 36218686 },
-      { title: 'ACJK FOODS Statement FY 2024-25', file: 'ACJK-Foods-2024-25.pdf', size: 58877785 },
-      { title: 'ACJK FOODS Statement FY 2025-26', file: 'ACJK-STANDALONE-B-L-SHEET-DT-5.9.26.pdf', size: 54214520 },
+      { title: 'ACJK FOODS Statement FY 2024-25', file: 'ACJK-Foods-2024-25.pdf', size: 58877785, url: "https://www.aeroplanerice.com/wp-content/uploads/2026/02/ACJK-Foods-2024-25.pdf" },
+      { title: 'ACJK FOODS Statement FY 2025-26', file: 'ACJK-STANDALONE-B-L-SHEET-DT-5.9.26.pdf', size: 54214520, url: "https://www.aeroplanerice.com/wp-content/uploads/2026/09/ACJK-STANDALONE-B-L-SHEET-DT-5.9.26.pdf" },
       { title: 'INVESTOR PRESENTATION Q4 & FY 26', file: 'INVESTOR-PRESENTATION_Q4-FY-26.pdf', size: 7242659 },
       { title: 'INVESTORS PRESENTATION Q1 FY 26-27', file: 'investor-presentation_7.8.26.pdf', size: 7776981 },
-      { title: 'Annual Report 2021-22', file: 'ACJKEL_Annual-Report-2021-22.pdf', size: 93648164 },
-      { title: 'Annual Report 2022-23', file: 'ACJKEL_Annual-Report-2022-23.pdf', size: 65393961 },
-      { title: 'Annual Report 2023-24', file: 'annual-report-consolidated_23-24.pdf', size: 84869039 },
-      { title: 'Annual Report 2024-25', file: 'Annual-report_2024-2025.pdf', size: 117394042 },
+      { title: 'Annual Report 2021-22', file: 'ACJKEL_Annual-Report-2021-22.pdf', size: 93648164, url: "https://www.aeroplanerice.com/wp-content/uploads/2025/06/ACJKEL_Annual-Report-2021-22.pdf" },
+      { title: 'Annual Report 2022-23', file: 'ACJKEL_Annual-Report-2022-23.pdf', size: 65393961, url: "https://www.aeroplanerice.com/wp-content/uploads/2025/06/ACJKEL_Annual-Report-2022-23.pdf" },
+      { title: 'Annual Report 2023-24', file: 'annual-report-consolidated_23-24.pdf', size: 84869039, url: "https://www.aeroplanerice.com/wp-content/uploads/2025/07/annual-report-consolidated_23-24.pdf" },
+      { title: 'Annual Report 2024-25', file: 'Annual-report_2024-2025.pdf', size: 117394042, url: "https://www.aeroplanerice.com/wp-content/uploads/2026/02/Annual-report_2024-2025.pdf" },
       { title: 'Annual Report 2025-26', file: 'Annual-Report-2025-2026.pdf', size: 24518253 },
       { title: 'Annual Return 2021-22', file: 'ACJKEL-Annual-Return_2021-22.pdf', size: 2533744 },
       { title: 'Annual Return 2022-23', file: 'ACJKEL-Annual-Return_2022-23.pdf', size: 4874814 },
       { title: 'Annual Return 2023-24', file: 'ACJKEL-Annual-Return_2023-24.pdf', size: 3548924 },
       { title: 'Annual Return 2024-25', file: 'ACJKEL_Form_MGT-7_AC1648598-24-25_Signed.pdf', size: 3166598 },
       { title: 'Annual Return 2025-26', file: 'Amir-Chand_Form-MGT-7_AC5873880_Draft_Final-1.pdf', size: 1533573 },
+      { title: "ACJKEL Standalone Financial Statements FY 2024-25", file: "ACJKEL_24-25.pdf", size: 71780488, url: "https://www.aeroplanerice.com/wp-content/uploads/2026/02/ACJKEL_24-25.pdf" },
+      { title: "ACJKEL Consolidated Financial Statements FY 2024-25", file: "ACJKEL_CONSO_24-25.pdf", size: 45613895, url: "https://www.aeroplanerice.com/wp-content/uploads/2026/02/ACJKEL_CONSO_24-25.pdf" },
+      { title: "Annual Report 2023-24 (standalone)", file: "ACJKEL_Annual-Report-2023-24.pdf", size: 58879917, url: "https://www.aeroplanerice.com/wp-content/uploads/2025/06/ACJKEL_Annual-Report-2023-24.pdf" },
     ] },
     { heading: 'FY 2025-2026', docs: [
       { title: 'Financial Results Q3 FY26', file: 'LRR_Q3fy25-filed-with-BSE_NSE.pdf', size: 13057921 },
@@ -29,6 +33,7 @@ export const docGroups: Record<string, Group[]> = {
     ] },
     { heading: 'FY 2026-2027', docs: [
       { title: 'Financial Results Q1 FY27', file: 'Final-Board-Meeting-Outcome-_Reg-30-ACJKEL_03.08.2026.pdf', size: 2481656 },
+      { title: "Financial Results Q2 FY27", file: "outcome_Q2_FY2627.pdf", size: 16987116 },
     ] },
   ],
   announcements: [
@@ -52,10 +57,10 @@ export const docGroups: Record<string, Group[]> = {
       { title: 'Notice of Board Meeting – 03.08.2026', file: 'Prior-Intimation-of-Board-Meeting-_Reg-29-ACJKEL-signed.pdf', size: 657529 },
       { title: 'Clarification on price moment_BSE', file: 'BSE_REPLY.pdf', size: 487282 },
       { title: 'Clarification on price moment_NSE', file: 'NSE_REPLY.pdf', size: 4097997 },
-      { title: 'Intimation Under Regulation 8(2) of SEBI (PIT), Regulations 2015-Code of practice and procedure for fair discl', file: 'Intimation-Under-Regulation-82-of-SEBI-PIT-Regulations-2015-Code-of-practice-and-procedure-for-fair-disclosure', size: 4009789 },
+      { title: 'Intimation Under Regulation 8(2) of SEBI (PIT), Regulations 2015-Code of practice and procedure for fair discl', file: 'Intimation-Under-Regulation-82-of-SEBI-PIT-Regulations-2015-Code-of-practice-and-procedure-for-fair-disclosure-of-UPSI.pdf', size: 4009789 },
       { title: 'Disclosure Under Regulation 30, SEBI (LODR) Regulations, 2015- Proposal to establish subsidiary in Singapore', file: 'Disclosure-Under-Regulation-30-SEBI-LODR-Regulations-2015-Proposal-to-establish-subsidiary-in-Singapore.pdf', size: 4211057 },
       { title: 'Closure of Trading Window', file: 'Closure-of-Trading-Window.pdf', size: 8733896 },
-      { title: 'Disclosure under regulation 30(5) of SEBI( LODR) Regulations 2015-Authorised person to determine materiality o', file: 'Disclosure-under-regulation-305-of-SEBI-LODR-Regulations-2015-Authorised-person-to-determine-materiality-of-ev', size: 10092970 },
+      { title: 'Disclosure under regulation 30(5) of SEBI( LODR) Regulations 2015-Authorised person to determine materiality o', file: 'Disclosure-under-regulation-305-of-SEBI-LODR-Regulations-2015-Authorised-person-to-determine-materiality-of-events-and-information.pdf', size: 10092970 },
       { title: 'Intimation of CIN updation', file: 'Intimation-of-CIN-updation-signed.pdf', size: 713960 },
       { title: 'Board Meeting Outcome Approval for Incorporation Of Wholly Owned Subsidiary In Singapore', file: 'Board-Meeting-outcomesigned.pdf', size: 18953805 },
       { title: 'Disclosure Under Reg 30, SEBI (LODR) Regulations, 2015- Intimation of Incorporation of Wholly Owned subsidiary', file: 'e851bac2-7b44-4f48-a137-005e1ab8b2fa.pdf', size: 598406 },
@@ -78,14 +83,30 @@ export const docGroups: Record<string, Group[]> = {
       { title: 'Intimation of Newspaper advertisement of Notice of AGM', file: 'Intimation_Newspaper-Advertisement-_ACJKEL_07.09.2026-1.pdf', size: 1588783 },
       { title: 'Credit Rating', file: 'Rating-Letter-Amir-Chand-Jagdish-Kumar-Exports-Limited.pdf', size: 414816 },
       { title: 'Material Creditors List', file: 'Material-Creditors.pdf', size: 208891 },
+      { title: "Notice of Board Meeting \u2013 02.11.2026", file: "Amir-Chand_BM-Intimation_Reg-29_27.10.2026-signed.pdf", size: 422794 },
+      { title: "Intimation of Monitoring Agency Report \u2013 06.11.2026", file: "Intimation-Monitoring-Agency-Report_06.11.2026-1.pdf", size: 584270 },
+      { title: "Investor press release of financial results for Q2 FY 2026-27", file: "Intimation-letter_Press-Release_06.09.2026-signed-file.pdf", size: 538338 },
+      { title: "Newspaper publication of financial results for Q2 FY 2026-27", file: "Newspaper_publication.pdf", size: 1493900 },
+      { title: "Intimation: appointment of Collective Artists Network as celebrity engagement partner \u2013 11.06.2026", file: "press-release.pdf", size: 749147 },
+    ] },
+    { heading: "Shareholding pattern and governance reports", docs: [
+      { title: "Shareholding Pattern", file: "15.-Shareholding-Pattern-1-1.xlsx", size: 16527 },
+      { title: "Shareholding Pattern as on 31.03.2026", file: "Report-SHP-31.03.2026.html", size: 63800 },
+      { title: "Shareholding Pattern as on 30.06.2026 (Regulation 31)", file: "Amirchand_Reg-31_SHP_30.06.2026.html", size: 53884 },
+      { title: "Shareholding Pattern \u2013 October 2026", file: "ACJKEL_SHP_06102026-4.html", size: 70701 },
+      { title: "Integrated Governance Report \u2013 May 2026", file: "Integrated-Governance-report.html", size: 60014 },
+      { title: "Integrated Governance Report as on 30.06.2026", file: "Amirchand_Integrated-Governance_30.06.2026.html", size: 36613 },
+    ] },
+    { heading: "Credit ratings", docs: [
+      { title: "Credit Rating FY 2025-26", file: "Intimation_Credit-Rating_12.10.2026-signed-1.pdf", size: 773195 },
     ] },
     { heading: 'Material Contracts', docs: [
-      { title: 'Issue Agreement', file: 'i-ISSUE-AGREEMENT-EMKAY-GLOBAL-FINANCIAL-SERVICES-LTD.pdf', size: 57546251 },
-      { title: 'Registrar Agreement', file: 'ii.-RTA-AGREEMENT-INDEMINITY.pdf', size: 50877030 },
+      { title: 'Issue Agreement', file: 'i-ISSUE-AGREEMENT-EMKAY-GLOBAL-FINANCIAL-SERVICES-LTD.pdf', size: 57546251, url: "https://www.aeroplanerice.com/wp-content/uploads/2026/03/i-ISSUE-AGREEMENT-EMKAY-GLOBAL-FINANCIAL-SERVICES-LTD.pdf" },
+      { title: 'Registrar Agreement', file: 'ii.-RTA-AGREEMENT-INDEMINITY.pdf', size: 50877030, url: "https://www.aeroplanerice.com/wp-content/uploads/2026/03/ii.-RTA-AGREEMENT-INDEMINITY.pdf" },
       { title: 'Monitoring Agency Agreement', file: 'vi.-MONITORING-AGENCY-AGREEMENT_29.1.26.pdf', size: 14765319 },
-      { title: 'Cash Escrow and Sponsor Bank Agreement', file: 'iii.-CASH-ESCROW-AGREEMENT.pdf', size: 51648133 },
-      { title: 'Syndicate Agreement', file: 'iv.-SYNDICATE-AGREEMENT-1.pdf', size: 59994185 },
-      { title: 'Underwriting Agreement', file: 'Underwriting-Agreement.pdf', size: 51130903 },
+      { title: 'Cash Escrow and Sponsor Bank Agreement', file: 'iii.-CASH-ESCROW-AGREEMENT.pdf', size: 51648133, url: "https://www.aeroplanerice.com/wp-content/uploads/2026/03/iii.-CASH-ESCROW-AGREEMENT.pdf" },
+      { title: 'Syndicate Agreement', file: 'iv.-SYNDICATE-AGREEMENT-1.pdf', size: 59994185, url: "https://www.aeroplanerice.com/wp-content/uploads/2026/03/iv.-SYNDICATE-AGREEMENT-1.pdf" },
+      { title: 'Underwriting Agreement', file: 'Underwriting-Agreement.pdf', size: 51130903, url: "https://www.aeroplanerice.com/wp-content/uploads/2026/04/Underwriting-Agreement.pdf" },
     ] },
     { heading: 'Other Agreements', docs: [
       { title: 'Tripartite Agreement – NSDL', file: 'xxv.-NSDL_-_TPA_-_ACJKEL-KFin_tech_Signed.pdf', size: 3725731 },
@@ -100,6 +121,8 @@ export const docGroups: Record<string, Group[]> = {
       { title: 'Memorandum of Association & Articles of Association', file: 'i.-MOA_AOA.pdf', size: 9796965 },
       { title: 'Certificate of Incorporation', file: 'ii.-COI_SIGNED.pdf', size: 218474 },
       { title: 'Certificate of Commencement of Business', file: 'iii.-COC_SIGNED.pdf', size: 319110 },
+      { title: "Industry Report", file: "Industry-Report.pdf", size: 1287664 },
+      { title: "List of Shareholders as on 31.03.2025", file: "17.-LIST-OF-SHAREHOLDERS-AS-ON-31.03.2025.pdf", size: 276764 },
     ] },
     { heading: 'Resolutions', docs: [
       { title: 'Board Resolution approving the Issue', file: 'iv.-BR_Approve-IPO_13.6.25.pdf', size: 5670571 },
@@ -121,9 +144,9 @@ export const docGroups: Record<string, Group[]> = {
       { title: 'Statement of Special Tax Benefits', file: '10-CERTIFICATE-ON-SPECIAL-TAX-BENEFITS.pdf', size: 355569 },
     ] },
     { heading: 'ANNUAL REPORT', docs: [
-      { title: 'Fiscals 2025', file: '3.-Annual-report_2024-25.pdf', size: 98946793 },
+      { title: 'Fiscals 2025', file: '3.-Annual-report_2024-25.pdf', size: 98946793, url: "https://www.aeroplanerice.com/wp-content/uploads/2026/03/3.-Annual-report_2024-25.pdf" },
       { title: 'Fiscals 2024', file: '2.-Annual-Report-2023-24.pdf', size: 37985532 },
-      { title: 'Fiscals 2023', file: '1.-Annual-report_2022-23.pdf', size: 57611636 },
+      { title: 'Fiscals 2023', file: '1.-Annual-report_2022-23.pdf', size: 57611636, url: "https://www.aeroplanerice.com/wp-content/uploads/2026/03/1.-Annual-report_2022-23.pdf" },
       { title: 'Audited financial statements for the six months ended September 30, 2025.', file: 'RESTATED-CONSOLIDATED-FINANCIALS_SEPT25.pdf', size: 35138479 },
       { title: 'Examination Report', file: 'xvii.-EXAMINATION-REPORT-CONSOLIDATED_SEPT25.pdf', size: 3055215 },
       { title: 'Confirmation from the BRLMs in relation to the utilization of proceeds received from the Pre-IPO Placement.', file: 'xxxii_BRLM-Letter-in-relation-to-utilisation-of-Pre-IPO-Proceeds.pdf', size: 3304701 },
@@ -172,6 +195,8 @@ export const docGroups: Record<string, Group[]> = {
       { title: 'Policy on Performance Evaluation of BOD', file: '4.-Policy-on-performance-evaluation-of-BOD-Committee.pdf', size: 449099 },
       { title: 'Criteria Detemining Qualification of ID’s', file: '6.-Positives-Attributes-of-IDs.pdf', size: 382302 },
       { title: 'COC for BOD and Senior Management', file: '10.-COC.pdf', size: 485273 },
+      { title: "Policy on Fair Disclosure of Unpublished Price Sensitive Information", file: "16.-Policy-of-Fair-Disclosure-of-UPSI.pdf", size: 414801 },
+      { title: "Code of Conduct for Employees and Connected Persons", file: "17.-COC-for-employees-and-connected-person.pdf", size: 551596 },
     ] },
     { heading: 'Disclosures under SEBI (LODR) Regulation 46', docs: [
       { title: 'Memorandum of Association and Article of Association', file: '2.-Memorandum-of-Association-and-Article-of-Association.pdf', size: 9205771 },
@@ -188,12 +213,33 @@ export const docGroups: Record<string, Group[]> = {
       { title: 'Dividend Distribution policy by the Company based on market capitalization as specified in sub-regulation (1) ', file: 'Dividend-Policy_V1.2025-1.pdf', size: 326276 },
       { title: 'Disclosure of Related Party Transactions', file: 'DISCLOSURE-OF-RPT.pdf', size: 73906 },
       { title: 'Disclosures under sub-regulation (8) of Regulation 30', file: '9edfa513-b320-4e9f-a0e4-6e55f3a00018.pdf', size: 3479772 },
+      { title: "Composition of Board Committees", file: "Board-Committees.xlsx", size: 10734 },
+      { title: "Letter of appointment \u2013 Independent Director (Ms. Rajni)", file: "Rajni-Appointment-Ltter.pdf", size: 1702477 },
+      { title: "Letter of appointment \u2013 Independent Director (Mr. Y. K. S.)", file: "Appointment-Letter_Mr.-YKS.pdf", size: 789842 },
+      { title: "Letter of appointment \u2013 Independent Director (Mr. Gauri Shankar)", file: "Appointment-letter_gauri-Shankar-.pdf", size: 421914 },
     ] },
   ],
   offer: [
     { heading: 'Offer documents', docs: [
       { title: 'DRHP', file: 'DRHP.pdf', size: 8097622 },
       { title: 'RHP', file: 'RHP-PDF-FINAL_website-2.pdf', size: 9403438 },
+    ] },
+  ],
+  certificates: [
+    { heading: 'Certificates', docs: [
+      { title: "ISO 22000:2018 certificate", file: "ISO-NEW-NOV-22.pdf", size: 892366 },
+      { title: "HACCP certificate", file: "HACCP-2022.pdf", size: 3036355 },
+      { title: "APEDA registration (RCMC), valid to 27.09.2027", file: "APEDA-RCMC-VALID-UPTO-27.09.2027-WITH-BRANCHES.pdf", size: 558176 },
+      { title: "NPPQ certificate \u2013 USA", file: "nppq2022usa.pdf", size: 1492435 },
+      { title: "NPPQ certificate \u2013 China", file: "nppq2022china.pdf", size: 1451147 },
+      { title: "Registration certificate \u2013 Delhi", file: "RC-DELHI-6.7.22.pdf", size: 279394 },
+    ] },
+    { heading: 'Awards and recognition', docs: [
+      { title: "Super Star Trading House, 2001", file: "Super-Star-Trading-House-2001.pdf", size: 400490 },
+      { title: "Honoured by the Prime Minister for rice exports", file: "prime-minister-rice-exports.pdf", size: 302857 },
+      { title: "Excellence award \u2013 Bank of India", file: "boi-excellence.pdf", size: 177989 },
+      { title: "Award \u2013 Union Bank of India and FIEO", file: "ubi-FIEO-awards.pdf", size: 332631 },
+      { title: "GST award, 2021", file: "gst-award-2021.pdf", size: 121930 },
     ] },
   ],
 };

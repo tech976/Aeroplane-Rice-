@@ -187,7 +187,7 @@ function blocks(items) {
       case 'links': return list(b.items.map((l) => `${link(l.href, l.label)}${l.note ? `: ${esc(l.note)}` : ''}`));
       case 'places': return b.items.map((p) => `<h3>${esc(p.label)}</h3><address>${p.lines.map(esc).join('<br>')}</address>`).join('');
       case 'figures': return list(b.items.map((f) => esc(f.caption)));
-      case 'docs': return (docGroups[b.section] ?? []).map((g) => `<h3>${esc(g.heading)}</h3>${list(g.docs.map((d) => link(`/assets/investors/${d.file}`, d.title)))}`).join('');
+      case 'docs': return (docGroups[b.section] ?? []).map((g) => `<h3>${esc(g.heading)}</h3>${list(g.docs.map((d) => link(d.url ?? `/assets/investors/${d.file}`, d.title)))}`).join('');
       default: return '';
     }
   }).join('\n');

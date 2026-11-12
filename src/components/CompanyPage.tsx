@@ -7,6 +7,9 @@ import { setSeo } from '../seo';
 import { Band, Img } from './ui';
 import { asset } from '../host';
 
+// the file's type, as people know it: PDF, Excel or a web page
+const kind = (file: string) => ({ xlsx: 'Excel', html: 'Web page' } as Record<string, string>)[file.split('.').pop()!.toLowerCase()] ?? 'PDF';
+
 function Blocks({ blocks }: { blocks: Block[] }) {
   return (
     <>
@@ -34,8 +37,32 @@ function Blocks({ blocks }: { blocks: Block[] }) {
               </dl>
             );
           case 'cards':
+            if (block.people) {
+              // one card per person: a portrait, or their initials where there is no photograph
+              return (
+                <div className="page__people" key={i}>
+                  {block.items.map((card) => {
+                    const [name, role] = card.title.split(' — ');
+                    return (
+                      <article className="page__person" key={card.title}>
+                        <div className="page__portrait">
+                          {card.img
+                            ? <Img name={card.img} alt={card.alt ?? name} sizes="(min-width: 900px) 12rem, 40vw" />
+                            : <span aria-hidden="true">{name.split(' ').map((w) => w[0]).join('')}</span>}
+                        </div>
+                        <div>
+                          <h3>{name}</h3>
+                          {role && <p className="page__role">{role}</p>}
+                          {card.text && <p>{card.text}</p>}
+                        </div>
+                      </article>
+                    );
+                  })}
+                </div>
+              );
+            }
             return (
-              <div className="page__cards" key={i}>
+              <div className="page__cards" data-count={block.items.length} key={i}>
                 {block.items.map((card) => (
                   <article className="page__card" key={card.title}>
                     <h3>{card.title}</h3>
@@ -66,7 +93,7 @@ function Blocks({ blocks }: { blocks: Block[] }) {
             );
           case 'figures':
             return (
-              <div className={`page__figures${block.wide ? ' page__figures--wide' : ''}`} key={i}>
+              <div className={`page__figures${block.wide ? ' page__figures--wide' : ''}`} data-count={block.items.length} key={i}>
                 {block.items.map((fig) => (
                   <figure key={fig.img}>
                     <Img name={fig.img} alt={fig.alt} sizes={block.wide ? '(min-width: 900px) 56rem, 100vw' : '(min-width: 900px) 28rem, 100vw'} />
@@ -85,9 +112,9 @@ function Blocks({ blocks }: { blocks: Block[] }) {
                     <ul>
                       {group.docs.map((doc) => (
                         <li key={doc.file}>
-                          <a href={asset(`/assets/investors/${doc.file}`)} target="_blank" rel="noopener">
+                          <a href={doc.url ?? asset(`/assets/investors/${doc.file}`)} target="_blank" rel="noopener">
                             <span className="docs__name">{doc.title}</span>
-                            <span className="docs__meta">PDF{doc.size ? ` · ${(doc.size / 1048576).toFixed(doc.size > 10485760 ? 0 : 1)} MB` : ''}</span>
+                            <span className="docs__meta">{kind(doc.file)}{doc.size ? ` · ${(doc.size / 1048576).toFixed(doc.size > 10485760 ? 0 : 1)} MB` : ''}</span>
                           </a>
                         </li>
                       ))}
@@ -123,9 +150,14 @@ export function CompanyPage({ path }: { path: string }) {
 
   if (!page) return <NotFound path={path} />;
 
-  // a policy page points to the other policies; a company page to the rest of the company
+  // the sidebar lists the pages of this part of the site: the policies, or the company and investors
   const policy = isPolicy(page.path);
-  const siblings = (policy ? policyPages : pages).filter((p) => p.path !== page.path);
+  const groups = policy
+    ? [{ name: 'Policies', items: policyPages }]
+    : [
+      { name: 'The company', items: pages.filter((p) => !p.path.startsWith('/investors')) },
+      { name: 'Investors', items: pages.filter((p) => p.path.startsWith('/investors')) },
+    ];
 
   return (
     <main id="main" className="page light">
@@ -135,26 +167,34 @@ export function CompanyPage({ path }: { path: string }) {
         <p className="lede">{page.lede}</p>
       </div>
 
-      <div className="wrap page__body">
-        <Blocks blocks={page.blocks} />
+      <div className="wrap page__layout">
+        <div className="page__body">
+          <Blocks blocks={page.blocks} />
+        </div>
+
+        <aside className="page__aside" aria-label="In this section">
+          {groups.map((g) => (
+            <nav key={g.name} className="page__toc" aria-label={g.name}>
+              <h2 className="label">{g.name}</h2>
+              <ul>
+                {g.items.map((p) => (
+                  <li key={p.path}>
+                    <a href={p.path} aria-current={p.path === page.path ? 'page' : undefined}>{p.path === '/investors' ? 'Overview' : p.nav}</a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
+          <div className="page__promo dark">
+            <div className="pattern" aria-hidden="true" />
+            <p className="label">Aeroplane basmati</p>
+            <p>Aged eight months, delivered free across India.</p>
+            <a className="btn btn--yellow btn--small" href="/shop">Shop the range</a>
+          </div>
+        </aside>
       </div>
 
       <Band art="harvest" />
-
-      <div className="wrap page__more">
-        <h2 className="page__h">{policy ? 'Our other policies' : 'More about us'}</h2>
-        <ul className="page__links">
-          {siblings.map((p) => (
-            <li key={p.path}>
-              <a href={p.path}>
-                <span className="page__links-label">{p.nav}</span>
-                <span className="page__links-note">{p.title.replace(/\.$/, '')}</span>
-                <span className="page__links-arrow" aria-hidden="true">→</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
     </main>
   );
 }

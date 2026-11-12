@@ -8,7 +8,7 @@ export type Block =
   | { t: 'h'; text: string }
   | { t: 'list'; items: string[] }
   | { t: 'stats'; items: { n: string; label: string }[] }
-  | { t: 'cards'; items: { title: string; text?: string; points?: string[] }[] }
+  | { t: 'cards'; people?: boolean; items: { title: string; text?: string; points?: string[]; img?: string; alt?: string }[] }
   | { t: 'links'; items: { label: string; href: string; note?: string }[] }
   | { t: 'places'; items: { label: string; lines: string[] }[] }
   | { t: 'figures'; wide?: boolean; items: { img: string; alt: string; caption: string }[] }
@@ -107,6 +107,7 @@ export const pages: Page[] = [
     blocks: [
       {
         t: 'cards',
+        people: true,
         items: [
           {
             title: 'Jagdish Kumar Suri — Chairman and Managing Director',
@@ -115,14 +116,12 @@ export const pages: Page[] = [
           },
           {
             title: 'Rahul Suri — Whole Time Director',
+            img: 'rahul-suri',
+            alt: 'Rahul Suri, Whole Time Director',
             text:
               'A promoter of the company, with more than three decades in rice. He specialises in the international marketing of agricultural and food products, and oversees production, export sales and marketing, and quality control. He is a member of the Saudi Arabia committee at the All India Rice Exporters Association.',
           },
         ],
-      },
-      {
-        t: 'figures',
-        items: [{ img: 'rahul-suri', alt: 'Rahul Suri, Whole Time Director', caption: 'Rahul Suri, Whole Time Director' }],
       },
       {
         t: 'p',
@@ -227,6 +226,8 @@ export const pages: Page[] = [
           'Honoured by APEDA for outstanding contribution to the promotion of agricultural and processed food products',
         ],
       },
+      { t: 'h', text: 'Certificates and award documents' },
+      { t: 'docs', section: 'certificates' },
       { t: 'h', text: 'How it works day to day' },
       {
         t: 'p',

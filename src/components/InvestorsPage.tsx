@@ -8,22 +8,24 @@ import { Band, Img } from './ui';
 // The investor relations front page. Every figure and claim here is already published elsewhere on
 // the site (the company pages) or in the filings themselves; the documents link to the PDFs.
 
-const allDocs = Object.values(docGroups).flatMap((groups) => groups.flatMap((group) => group.docs));
+// the filings (the certificates are on the certifications page, and are not counted here)
+const allDocs = (['financials', 'announcements', 'governance', 'offer'] as const).flatMap((k) => docGroups[k].flatMap((group) => group.docs));
 const doc = (file: string) => allDocs.find((d) => d.file === file) as Doc;
 const count = (section: keyof typeof docGroups) => docGroups[section].reduce((n, group) => n + group.docs.length, 0);
-const href = (d: Doc) => asset(`/assets/investors/${d.file}`);
-const size = (d: Doc) => `PDF · ${(d.size / 1048576).toFixed(d.size > 10485760 ? 0 : 1)} MB`;
+// the largest filings are linked to their official copy on aeroplanerice.com
+const href = (d: Doc) => d.url ?? asset(`/assets/investors/${d.file}`);
+const size = (d: Doc) => `${d.file.endsWith('.xlsx') ? 'Excel' : d.file.endsWith('.html') ? 'Web page' : 'PDF'} · ${(d.size / 1048576).toFixed(d.size > 10485760 ? 0 : 1)} MB`;
 
-const RESULTS = doc('Final-Board-Meeting-Outcome-_Reg-30-ACJKEL_03.08.2026.pdf');
+const RESULTS = doc('outcome_Q2_FY2627.pdf');
 const PRESENTATION = doc('investor-presentation_7.8.26.pdf');
 
 const latest = [
-  { tag: 'Results', date: '3 Aug 2026', title: 'Financial results, Q1 FY27', file: RESULTS },
-  { tag: 'Presentation', date: '7 Aug 2026', title: 'Investor presentation, Q1 FY 2026-27', file: PRESENTATION },
-  { tag: 'Press release', date: '7 Aug 2026', title: 'Press release on the Q1 FY 2026-27 results', file: doc('revised-press-release_7.8.26.pdf') },
+  { tag: 'Results', date: 'Nov 2026', title: 'Financial results, Q2 FY27', file: RESULTS },
+  { tag: 'Press release', date: 'Nov 2026', title: 'Press release on the Q2 FY 2026-27 results', file: doc('Intimation-letter_Press-Release_06.09.2026-signed-file.pdf') },
+  { tag: 'Board meeting', date: '27 Oct 2026', title: 'Notice of the board meeting on 2 November 2026', file: doc('Amir-Chand_BM-Intimation_Reg-29_27.10.2026-signed.pdf') },
+  { tag: 'Credit rating', date: '12 Oct 2026', title: 'Credit rating for FY 2025-26', file: doc('Intimation_Credit-Rating_12.10.2026-signed-1.pdf') },
   { tag: 'AGM', date: '29 Sep 2026', title: 'Summary of the 23rd annual general meeting', file: doc('Intimation_AGM-Proceedings_29.09.2026.pdf') },
   { tag: 'Expansion', date: '24 Sep 2026', title: 'Intimation of a subsidiary in Saudi Arabia', file: doc('ACJKEL_Intimation-for-Saudi-Subsidiary_24.09.26_SIGNED.pdf') },
-  { tag: 'Distribution', date: '16 Jun 2026', title: 'Aeroplane to be distributed across Oman with Al Tasnim Group', file: doc('Intimation-Letter_Distribution-in-Oman_16.06.2026-signed.pdf') },
 ];
 
 const figures = [
@@ -86,7 +88,7 @@ export function InvestorsPage() {
               Every result, filing and policy is published here as it is filed.
             </p>
             <div className="ir__actions">
-              <a className="btn btn--yellow" href={href(RESULTS)} target="_blank" rel="noopener">Latest results, Q1 FY27</a>
+              <a className="btn btn--yellow" href={href(RESULTS)} target="_blank" rel="noopener">Latest results, Q2 FY27</a>
               <a className="btn btn--line" href={href(PRESENTATION)} target="_blank" rel="noopener">Investor presentation</a>
             </div>
           </div>

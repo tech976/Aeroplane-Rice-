@@ -905,7 +905,7 @@ body:has(.shop-bar[data-shown="true"]) .wa { bottom: calc(5.75rem + env(safe-are
 .site-nav__menu a:hover { background: rgb(50 43 106 / .08); }
 .menu__rule { display: block; width: 4rem; height: 2px; margin-block: 1.25rem .75rem; background: currentColor; opacity: .35; }
 
-.page { padding-top: clamp(7rem, 12vw, 11rem); padding-bottom: var(--space); }
+.page { padding-top: clamp(7rem, 12vw, 11rem); }
 .page__crumb { font: 500 .8125rem/1 var(--body); letter-spacing: .08em; text-transform: uppercase; color: rgb(50 43 106 / .82); margin-bottom: clamp(1.25rem, 2.5vw, 2rem); }
 .page__crumb a { color: inherit; text-decoration: none; }
 .page__crumb a:hover { text-decoration: underline; }
@@ -913,8 +913,26 @@ body:has(.shop-bar[data-shown="true"]) .wa { bottom: calc(5.75rem + env(safe-are
 .page-loading { min-height: 100svh; }
 .page__actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
 .page__head .lede { margin-top: clamp(1.25rem, 2.2vw, 2rem); }
-.page__body { margin-top: clamp(3rem, 6vw, 5rem); }
-.page__stats, .page__cards, .page__places { max-width: 62rem; }
+/* the page's content, with the pages of its section in a sidebar on wide screens */
+.page__layout { display: grid; gap: clamp(3rem, 6vw, 5rem); margin-top: clamp(3rem, 6vw, 5rem); padding-bottom: var(--space); }
+.page__body { min-width: 0; }
+/* the sidebar stops short of the WhatsApp button in the corner */
+@media (min-width: 1100px) { .page__layout { grid-template-columns: minmax(0, 1fr) 16rem; gap: clamp(3rem, 5vw, 6rem); align-items: start; padding-right: calc(var(--gutter) + 5rem); } }
+.page__aside { display: grid; gap: 2rem; align-content: start; }
+@media (min-width: 1100px) { .page__aside { position: sticky; top: 7rem; } }
+.page__toc { padding-top: 1.25rem; border-top: 1px solid var(--indigo); }
+.page__toc .label { margin: 0 0 .75rem; color: var(--red); }
+.page__toc ul { display: grid; list-style: none; }
+.page__toc a { display: block; padding: .55rem 0 .55rem .9rem; border-left: 2px solid var(--rule); color: var(--indigo); font-size: .9375rem; text-decoration: none; transition: border-color .2s, background-color .2s; }
+.page__toc a:hover { border-left-color: var(--indigo); background: rgb(50 43 106 / .04); }
+.page__toc a[aria-current="page"] { border-left-color: var(--red); font-weight: 700; }
+.page__promo { position: relative; overflow: hidden; display: grid; gap: .75rem; justify-items: start; padding: 1.5rem; border-radius: calc(var(--r) * .7); }
+.page__promo .pattern { opacity: .08; -webkit-mask-size: 18rem; mask-size: 18rem; }
+.page__promo > * { position: relative; }
+.page__promo .label { color: var(--yellow); }
+.page__promo p:not(.label) { font: 600 1.125rem/1.3 var(--display); color: var(--rice); }
+@media (max-width: 1099px) { .page__aside { grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); } }
+.page__stats, .page__cards, .page__places, .page__people { max-width: 62rem; }
 .page__h { font: 600 clamp(1.5rem, 2.6vw, 2.25rem)/1.1 var(--display); letter-spacing: -.03em; color: var(--indigo); margin-top: clamp(3rem, 5vw, 4.5rem); }
 .page__body > .page__h:first-child { margin-top: 0; }
 .page__p { margin-top: 1.25rem; font-size: 1.0625rem; line-height: 1.65; max-width: 38em; }
@@ -927,6 +945,18 @@ body:has(.shop-bar[data-shown="true"]) .wa { bottom: calc(5.75rem + env(safe-are
 .page__stats dd { margin-top: .6rem; font-size: .9375rem; line-height: 1.4; color: rgb(20 17 42 / .7); }
 
 .page__cards { margin-top: clamp(2rem, 4vw, 3rem); display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: clamp(1.25rem, 2.5vw, 2rem); }
+.page__cards[data-count="2"], .page__cards[data-count="4"] { grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr)); }
+@media (min-width: 700px) { .page__cards[data-count="4"] { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+/* leadership: a portrait beside each person's words */
+.page__people { display: grid; gap: clamp(1.25rem, 2.5vw, 2rem); margin-top: clamp(2rem, 4vw, 3rem); }
+.page__person { display: grid; grid-template-columns: clamp(7rem, 14vw, 11rem) 1fr; gap: clamp(1.25rem, 3vw, 2.25rem); align-items: start; padding: clamp(1.25rem, 2.5vw, 2rem); border-radius: calc(var(--r) * .7); background: rgb(50 43 106 / .045); }
+.page__portrait { aspect-ratio: 4 / 5; overflow: hidden; border-radius: calc(var(--r) * .5); background: var(--indigo); }
+.page__portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; }
+.page__portrait span { display: grid; place-items: center; height: 100%; font: 700 clamp(1.75rem, 3vw, 2.5rem)/1 var(--display); letter-spacing: .02em; color: var(--yellow); }
+.page__person h3 { font-size: clamp(1.25rem, 1.8vw, 1.5rem); color: var(--indigo); }
+.page__role { margin-top: .35rem; font: 700 .75rem/1.3 var(--display); letter-spacing: .12em; text-transform: uppercase; color: var(--red); }
+.page__person p:not(.page__role) { margin-top: .9rem; font-size: .9875rem; line-height: 1.65; max-width: 44em; }
+@media (max-width: 560px) { .page__person { grid-template-columns: 1fr; } .page__portrait { width: 9rem; } }
 .page__card { padding: clamp(1.5rem, 2.5vw, 2.25rem); border-radius: calc(var(--r) * .7); background: rgb(50 43 106 / .045); }
 .page__card h3 { font-size: 1.125rem; color: var(--indigo); }
 .page__card p { margin-top: .9rem; font-size: .9875rem; line-height: 1.6; }
@@ -949,6 +979,9 @@ body:has(.shop-bar[data-shown="true"]) .wa { bottom: calc(5.75rem + env(safe-are
 .page__more .page__h { margin-top: 0; }
 .page__figures { margin-top: clamp(2rem, 4vw, 3rem); display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: clamp(1.25rem, 2.5vw, 2rem); max-width: 62rem; }
 .page__figures--wide { grid-template-columns: 1fr; max-width: 56rem; }
+/* a lone photograph stays a modest size; photographs in a set share one shape */
+.page__figures[data-count="1"]:not(.page__figures--wide) { grid-template-columns: minmax(0, 34rem); }
+.page__figures:not([data-count="1"]) img { aspect-ratio: 4 / 3; object-fit: cover; }
 .page__figures figure { margin: 0; }
 .page__figures img { width: 100%; height: auto; border-radius: calc(var(--r) * .5); display: block; }
 .page__figures figcaption { margin-top: .75rem; font-size: .875rem; line-height: 1.45; color: rgb(20 17 42 / .6); }
