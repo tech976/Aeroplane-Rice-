@@ -19,3 +19,4 @@ dist-shopify
 /new imgs/
 /public/assets/art/Farmers_walking_in_rice_paddy_*.mp4
 .seo-build
+__pycache__/
