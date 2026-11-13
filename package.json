@@ -10,7 +10,9 @@
     "build:shopify": "tsc --noEmit && node scripts/shopify-theme.mjs",
     "shopify:products": "node scripts/shopify-products.mjs",
     "shopify:dev": "npm run build:shopify && shopify theme dev --path dist-shopify",
-    "shopify:push": "npm run build:shopify && shopify theme push --path dist-shopify --unpublished"
+    "shopify:push": "npm run build:shopify && shopify theme push --path dist-shopify --unpublished",
+    "shopify:setup": "npm run build && node scripts/shopify-setup.mjs",
+    "shopify:ready": "npm run build:shopify && npm run shopify:setup && shopify theme check --path dist-shopify"
   },
   "dependencies": {
     "motion": "^14.1.0",

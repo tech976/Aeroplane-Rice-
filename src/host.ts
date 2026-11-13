@@ -6,7 +6,7 @@ import site from './site.json';
 // `plans` are the variant's subscription options (Shopify selling plans), with the subscribed price
 export type LivePlan = { id: number; name: string; price: number };
 export type LiveVariant = { id: number; size: string; price: number; was: number; available: boolean; plans: LivePlan[] };
-type Bridge = { assetBase: string; version: string; variants: Record<string, LiveVariant[]> };
+type Bridge = { assetBase: string; version: string; filesBase?: string; variants: Record<string, LiveVariant[]> };
 
 declare global {
   interface Window { __AEROPLANE__?: Bridge }
@@ -20,11 +20,15 @@ export const onShopify = Boolean(bridge);
 /**
  * The address of a file from /public/assets. Shopify keeps theme files in one flat folder, so
  * /assets/img/field.webp becomes img-field.webp there. The investor filings are too large for a
- * theme and stay on the main site.
+ * theme: they load from the address in the theme's "Documents address" setting.
  */
 export function asset(path: string) {
   if (!bridge || !path.startsWith('/assets/')) return path;
-  if (path.startsWith('/assets/investors/')) return site.url + path;
+  if (path.startsWith('/assets/investors/')) {
+    // the theme setting "Documents address": the Vercel site, or a Shopify Files folder
+    const base = (bridge.filesBase || site.url).replace(/\/+$/, '');
+    return base.endsWith('/files') ? `${base}/${path.slice('/assets/investors/'.length)}` : base + path;
+  }
   // the version changes with every theme upload, so browsers never keep an old copy
   return `${bridge.assetBase}${path.slice('/assets/'.length).replaceAll('/', '-')}?v=${bridge.version}`;
 }

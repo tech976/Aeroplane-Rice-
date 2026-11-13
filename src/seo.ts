@@ -1,10 +1,11 @@
 import site from './site.json';
 import { onShopify } from './host';
+import { toStore } from './store-paths';
 
 /** Keeps the page's title, description and canonical address right as the visitor moves between pages. */
 export function setSeo({ title = site.title, description = site.description, path = '/', index = true }: { title?: string; description?: string; path?: string; index?: boolean } = {}) {
   // inside the Shopify theme the page belongs to the store's own address
-  const url = (onShopify ? location.origin : site.url) + path;
+  const url = onShopify ? location.origin + toStore(path) : site.url + path;
   document.title = title;
   const set = (selector: string, attribute: string, value: string) => document.head.querySelector(selector)?.setAttribute(attribute, value);
   set('meta[name="description"]', 'content', description);

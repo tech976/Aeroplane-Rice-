@@ -23,26 +23,73 @@ The same site runs as a Shopify theme. Shopify serves every page with the React 
 the live variants, prices, stock, cart, checkout and customer accounts.
 
 ```sh
-npm run shopify:products                            # writes shopify/products.csv
-npm run build:shopify                               # builds the theme into dist-shopify/
-npm run shopify:dev -- --store your-store.myshopify.com    # preview against the store
-npm run shopify:push -- --store your-store.myshopify.com   # upload as an unpublished theme
+npm run shopify:ready     # builds everything below and runs Shopify's theme check
 ```
 
-1. In Shopify admin, Products > Import, upload `shopify/products.csv`. Handles match the site's
-   product addresses (`/products/<id>`) and each pack size is a variant titled with its size, which
-   is how the app finds it. Shopify fetches the photographs from the main site while importing.
-2. Push the theme, then preview it or publish it from Online Store > Themes.
+That writes:
 
-- `shopify/` holds the Liquid source: `layout/theme.liquid` loads the app and hands it the store's
-  variants; the templates are empty because the app draws every page.
-- `src/host.ts` is where the app learns it is inside Shopify. Asset paths become the theme's flat
-  file names (`/assets/img/field.webp` is `img-field.webp`), and the investor filings (340 MB, too
-  large for a theme) keep loading from the main site.
-- Shopify only answers its own addresses (`/`, `/products/…`, `/collections/…`, `/pages/…`, `/cart`).
-  `/shop` and the company and investor pages still draw correctly, through the 404 template, but
-  answer with a 404 status. Before going live, create them as Pages or add URL redirects.
-- A product the store does not have shows as sold out inside the theme.
+- `aeroplane-theme.zip`, the theme, ready for **Online Store > Themes > Add theme > Upload zip file**
+  (about 30 MB; Shopify takes up to 50 MB).
+- `shopify-setup/`, everything else the store needs:
+  - `products.csv`: 38 products and 75 pack sizes.
+  - `redirects.csv`: the site's old addresses, sent to the store's.
+  - `pages/`: the company and investor pages.
+  - `policies/`: the four policies.
+  - `collections.json`: one collection per shop category.
+
+### Going live on a new store
+
+1. **Products.** Products > Import > `shopify-setup/products.csv`. Shopify fetches the photographs
+   from the Vercel site, so keep it running during the import.
+2. **Pages, collections, policies and redirects.** These are created in one go by the setup
+   script (step a, b or c), or by hand (step d).
+   - a. In the Shopify Dev Dashboard, create an app for the store with the Admin API scopes
+     `write_content`, `write_products`, `write_publications`, `write_legal_policies` and
+     `write_online_store_navigation`, and install it on the store.
+   - b. Put its keys in `.env.shopify` (git ignores this file):
+     `SHOPIFY_CLIENT_ID=…` and `SHOPIFY_CLIENT_SECRET=…`. An Admin API token works too, as
+     `SHOPIFY_ADMIN_TOKEN=…`.
+   - c. Run `npm run shopify:setup -- --apply --store your-store.myshopify.com`.
+     It only creates what is missing, and never changes or deletes anything already in the store.
+   - d. By hand instead:
+     - Online Store > Pages: add one page per file in `shopify-setup/pages/`. The **URL handle**
+       must be the file name (`company-leadership`), and the content is the file's HTML.
+     - Products > Collections: add one automated collection per entry in `collections.json`
+       (condition: product type is equal to the category), with the handle given there.
+     - Settings > Policies: paste each file from `shopify-setup/policies/`.
+     - Online Store > Navigation > URL redirects > Import: `shopify-setup/redirects.csv`.
+3. **Theme.** Online Store > Themes > Add theme > Upload zip file > `aeroplane-theme.zip`. Preview it,
+   then **Publish**. Or, with the Shopify CLI: `npm run shopify:push -- --store your-store.myshopify.com`.
+4. **Subscriptions.** Install the Shopify Subscriptions app and add plans to the products. The
+   "Subscribe & save" options appear on their own once a product has plans.
+5. **Domain.** Settings > Domains: connect the domain, then set `url` in `src/site.json` to it and
+   rebuild.
+
+### How it fits together
+
+- **Addresses.** Shopify answers only its own kinds of address, so inside the theme the site's
+  addresses become the store's (`src/store-paths.ts`):
+
+  | The site | The store |
+  | --- | --- |
+  | `/shop` | `/collections/all` |
+  | `/shop/basmati` | `/collections/basmati` |
+  | `/company/leadership` | `/pages/company-leadership` |
+  | `/cancellation-policy` | `/policies/refund-policy` |
+
+  Every page is a real store page: found, indexable, and given its own title and canonical
+  address. Old links reach the right page through the redirects.
+- **The theme files.** `shopify/` holds the Liquid source. `layout/theme.liquid` loads the app, the
+  Google tag (GTM-NQNXSK73) and the store's live variants. Each template writes the page's words and
+  links for crawlers and visitors without JavaScript, and the app replaces them as soon as it
+  starts. `src/host.ts` maps asset paths to the theme's flat file names (`/assets/img/field.webp`
+  becomes `img-field.webp`).
+- **Investor filings.** At about 340 MB they are far too large for a theme, so they load from the
+  address in **Theme settings > Investor documents**. That is the Vercel site by default. To move
+  them into Shopify, upload them to Content > Files and paste that folder's address there.
+- **Product limit.** The theme lists up to 50 products for the app (`collections.all`). Past that,
+  the list needs pagination.
+- **Missing products.** A product the store does not have shows as sold out.
 
 ## Not finished
 

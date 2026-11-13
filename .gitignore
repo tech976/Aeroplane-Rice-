@@ -20,3 +20,7 @@ dist-shopify
 /public/assets/art/Farmers_walking_in_rice_paddy_*.mp4
 .seo-build
 __pycache__/
+
+# Shopify: the theme zip is rebuilt by `npm run build:shopify`; the store's API keys stay local
+/aeroplane-theme.zip
+.env.shopify

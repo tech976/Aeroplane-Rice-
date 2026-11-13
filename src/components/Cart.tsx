@@ -84,7 +84,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const open = useCallback(() => drawer.current?.showModal(), []);
 
   // Shopify's own /cart address shows the home page with the cart open
-  useEffect(() => { if (location.pathname.replace(/\/+$/, '') === '/cart') open(); }, [open]);
+  useEffect(() => { if (onShopify && location.pathname.replace(/\/+$/, '') === '/cart') open(); }, [open]);
 
   const add = useCallback((productId: string, size: string, quantity = 1, plan?: string) => {
     const id = lineId(productId, size, plan);

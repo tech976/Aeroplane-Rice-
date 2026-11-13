@@ -1,1 +1,11 @@
-{%- comment -%} Drawn by the app in assets/aeroplane.js, which reads the address; see layout/theme.liquid. {%- endcomment -%}
+{%- comment -%} The app in assets/aeroplane.js draws every page (see layout/theme.liquid). This copy is for crawlers and visitors without JavaScript. {%- endcomment -%}
+<h1>{{ collection.title }}</h1>
+{{ collection.description }}
+{%- paginate collection.products by 50 %}
+<ul>
+  {%- for item in collection.products %}
+  <li><a href="{{ item.url }}">{{ item.title }}</a>, from {{ item.price_min | money }}</li>
+  {%- endfor %}
+</ul>
+{{ paginate | default_pagination }}
+{%- endpaginate %}

@@ -8,10 +8,12 @@ import { join, relative } from 'node:path';
 
 const OUT = 'dist-shopify';
 const SKIP = ['investors'];
+// files the site no longer uses (the old hero video), kept in public/ but left out of the theme
+const UNUSED = /^video[\\/]hero-field/;
 const LARGEST = 10 * 1024 * 1024; // larger files belong in Shopify Files, not the theme
 
 rmSync(OUT, { recursive: true, force: true });
-cpSync('shopify', OUT, { recursive: true, filter: (path) => !path.endsWith('.csv') });
+cpSync('shopify', OUT, { recursive: true });
 
 execSync('npx vite build --mode shopify', { stdio: 'inherit' });
 
@@ -33,7 +35,7 @@ const skipped = [];
       if (!SKIP.includes(inner)) walk(path);
       continue;
     }
-    if (name.startsWith('.')) continue;
+    if (name.startsWith('.') || UNUSED.test(inner)) continue;
     if (statSync(path).size > LARGEST) { skipped.push(inner); continue; }
     const flat = inner.split(/[\\/]/).join('-');
     if (copied.has(flat)) throw new Error(`${inner} and ${copied.get(flat)} would both become assets/${flat}`);
@@ -45,3 +47,11 @@ const skipped = [];
 
 console.log(`\nshopify: theme written to ${OUT}/ with ${copied.size} files from public/assets`);
 if (skipped.length) console.log(`shopify: left out, over ${LARGEST / 1024 / 1024} MB: ${skipped.join(', ')}`);
+
+// the theme as one file, for Online Store > Themes > Add theme > Upload zip file (50 MB at most)
+const ZIP = 'aeroplane-theme.zip';
+rmSync(ZIP, { force: true });
+execSync(`zip -qr -X ../${ZIP} layout templates config locales assets -x '*/.*'`, { cwd: OUT });
+const mb = statSync(ZIP).size / 1024 / 1024;
+if (mb > 50) throw new Error(`${ZIP} is ${mb.toFixed(1)} MB; Shopify takes theme uploads of up to 50 MB`);
+console.log(`shopify: ${ZIP} is ready to upload (${mb.toFixed(1)} MB)`);

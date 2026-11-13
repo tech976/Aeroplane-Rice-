@@ -8,3 +8,4 @@ export { pages, allPages } from './company';
 export { policyPages } from './policies';
 export { docGroups } from './investor-docs';
 export { crumbsFor } from './breadcrumbs';
+export { toStore, pageHandle, storePolicies } from './store-paths';

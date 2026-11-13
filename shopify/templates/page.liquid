@@ -1,1 +1,3 @@
-{%- comment -%} Drawn by the app in assets/aeroplane.js, which reads the address; see layout/theme.liquid. {%- endcomment -%}
+{%- comment -%} The app in assets/aeroplane.js draws every page (see layout/theme.liquid). This copy is for crawlers and visitors without JavaScript; scripts/shopify-setup.mjs fills each page with the site's text. {%- endcomment -%}
+{%- unless page.content contains '<h1' %}<h1>{{ page.title }}</h1>{% endunless %}
+{{ page.content }}

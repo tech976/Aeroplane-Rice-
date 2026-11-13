@@ -1,6 +1,7 @@
-{%- comment -%} Drawn by the app in assets/aeroplane.js, which reads the address; see layout/theme.liquid. This copy is for visitors and crawlers without JavaScript. {%- endcomment -%}
-<noscript>
-  <h1>{{ product.title }}</h1>
-  {{ product.description }}
-  <p>{{ product.price | money }}</p>
-</noscript>
+{%- comment -%} The app in assets/aeroplane.js draws every page (see layout/theme.liquid). This copy is for crawlers and visitors without JavaScript. {%- endcomment -%}
+<h1>{{ product.title }}</h1>
+<p>{{ product.price | money }}{% if product.variants.size > 1 %}, in {{ product.variants | map: 'title' | join: ', ' }}{% endif %}</p>
+{{ product.description }}
+{%- if product.collections.size > 0 %}
+<p>More in <a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a></p>
+{%- endif %}

@@ -1,1 +1,11 @@
-{%- comment -%} Drawn by the app in assets/aeroplane.js, which reads the address; see layout/theme.liquid. {%- endcomment -%}
+{%- comment -%} The app in assets/aeroplane.js draws every page (see layout/theme.liquid). This copy is for crawlers and visitors without JavaScript. {%- endcomment -%}
+<h1>Aeroplane Basmati Rice: aged Indian basmati, rice and kitchen staples</h1>
+<p>{{ shop.description | default: 'Aged Indian basmati, rested for eight months before milling. Shop basmati, regional rice and kitchen staples from the house of Aeroplane.' | escape }}</p>
+<h2>Shop by category</h2>
+<ul>
+  <li><a href="{{ routes.collections_url }}/basmati">Basmati rice</a></li>
+  <li><a href="{{ routes.collections_url }}/regional-rice">Regional rice</a></li>
+  <li><a href="{{ routes.collections_url }}/speciality">Speciality rice</a></li>
+  <li><a href="{{ routes.collections_url }}/gifts-and-baskets">Gifts and baskets</a></li>
+  <li><a href="{{ routes.collections_url }}/kitchen-staples">Kitchen staples</a></li>
+</ul>

@@ -1,8 +1,8 @@
-// Writes shopify/products.csv, for Shopify admin > Products > Import. Each product keeps its id as
+// Writes shopify-setup/products.csv, for Shopify admin > Products > Import. Each product keeps its id as
 // its handle, so /products/<id> is the same address on the site and in the store, and each pack
 // size becomes a variant whose title is the size, which is how src/host.ts finds it again.
 // Photographs are fetched by Shopify from the main site while importing.
-import { readFileSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 
 const site = JSON.parse(readFileSync('src/site.json', 'utf8'));
 const between = (text, start, end) => text.slice(text.indexOf(start) + start.length, text.lastIndexOf(end));
@@ -81,5 +81,6 @@ for (const product of products) {
   }
 }
 
-writeFileSync('shopify/products.csv', [COLUMNS.join(','), ...rows.map((row) => COLUMNS.map((c) => cell(row[c])).join(','))].join('\n') + '\n');
-console.log(`shopify: wrote shopify/products.csv, ${products.length} products and ${products.reduce((n, p) => n + p.variants.length, 0)} pack sizes`);
+mkdirSync('shopify-setup', { recursive: true });
+writeFileSync('shopify-setup/products.csv', [COLUMNS.join(','), ...rows.map((row) => COLUMNS.map((c) => cell(row[c])).join(','))].join('\n') + '\n');
+console.log(`shopify: wrote shopify-setup/products.csv, ${products.length} products and ${products.reduce((n, p) => n + p.variants.length, 0)} pack sizes`);

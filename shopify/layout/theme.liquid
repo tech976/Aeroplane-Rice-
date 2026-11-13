@@ -18,6 +18,14 @@
 -%}
 <html lang="en-IN">
 <head>
+{%- comment -%}theme-check-disable RemoteAsset{%- endcomment -%}
+<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-NQNXSK73"></script>
+{%- comment -%}theme-check-enable RemoteAsset{%- endcomment -%}
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ title | escape }}</title>
@@ -58,6 +66,7 @@
   window.__AEROPLANE__ = {
     assetBase: {{ script | split: 'aeroplane.js' | first | json }},
     version: {{ script | split: '?v=' | last | json }},
+    filesBase: {{ settings.documents_url | default: 'https://aeroplane-rice.vercel.app' | json }},
     variants: {
       {%- for item in collections.all.products -%}
         {{ item.handle | json }}: [
@@ -78,7 +87,14 @@
 <script type="module" src="{{ script }}"></script>
 </head>
 <body>
-<div id="root"></div>
-{{ content_for_layout }}
+{%- comment -%}
+  The templates write each page's words and links into #root, for crawlers and for anyone without
+  JavaScript; the app replaces them as soon as it starts. On policy pages Shopify writes the policy
+  text itself, which scripts/shopify-setup.mjs fills from src/policies.ts.
+{%- endcomment -%}
+<div id="root"><div class="store-fallback" style="max-width:60rem;margin:0 auto;padding:7rem 5vw">
+  <nav aria-label="Site"><a href="{{ routes.root_url }}">Aeroplane Basmati Rice</a> · <a href="{{ routes.all_products_collection_url }}">Shop</a> · <a href="/pages/company">Company</a> · <a href="/pages/investors">Investors</a> · <a href="/pages/contact">Contact</a></nav>
+  <main>{{ content_for_layout }}</main>
+</div></div>
 </body>
 </html>

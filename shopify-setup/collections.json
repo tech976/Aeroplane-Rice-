@@ -1,0 +1,62 @@
+[
+  {
+    "handle": "basmati",
+    "title": "Basmati rice",
+    "description": "Grown in the basmati belt at the foot of the Himalayas and rested for eight months before it is milled, so it cooks long, separate and fragrant. Extra-long 1121 grain for biryani, golden sella that holds its shape, and everyday basmati for dal chawal and pulao, in packs from 1 kg to 20 kg.",
+    "seoTitle": "Basmati Rice – Buy Aged Basmati Rice Online | Aeroplane",
+    "seoDescription": "Buy aged Aeroplane basmati rice online: 1121 extra-long grain, golden sella, classic and everyday basmati in 1 kg to 20 kg packs, rested eight months before milling.",
+    "rule": {
+      "column": "TYPE",
+      "relation": "EQUALS",
+      "condition": "Basmati"
+    }
+  },
+  {
+    "handle": "regional-rice",
+    "title": "Regional rice",
+    "description": "Rice for the dishes that belong to a region: Sona Masoori for South Indian meals, Jirasar, and Wada Kolam for everyday cooking in Maharashtra.",
+    "seoTitle": "Regional Rice – Sona Masoori, Jirasar & Wada Kolam | Aeroplane",
+    "seoDescription": "Buy Aeroplane regional rice online: Premium Sona Masoori, Jirasar and Shree Ram Wada Kolam rice in 5 kg packs.",
+    "rule": {
+      "column": "TYPE",
+      "relation": "EQUALS",
+      "condition": "Regional rice"
+    }
+  },
+  {
+    "handle": "speciality",
+    "title": "Speciality rice",
+    "description": "Rice for particular meals and kitchens: brown rice, diabetic rice, kheer rice, phirni mix and idli rice powder.",
+    "seoTitle": "Speciality Rice – Brown, Diabetic & Kheer Rice | Aeroplane",
+    "seoDescription": "Buy Aeroplane speciality rice online: Brown Prime rice, diabetic rice, kheer rice, phirni mix and idli rice powder.",
+    "rule": {
+      "column": "TYPE",
+      "relation": "EQUALS",
+      "condition": "Speciality"
+    }
+  },
+  {
+    "handle": "gifts-and-baskets",
+    "title": "Gifts and baskets",
+    "description": "Gift packs of Aeroplane basmati and kitchen baskets of rice and staples, put together for festivals and for families.",
+    "seoTitle": "Rice Gift Packs & Kitchen Baskets | Aeroplane",
+    "seoDescription": "Aeroplane basmati gift packs, festival rice combos and kitchen baskets of rice, atta and sugar, delivered across India.",
+    "rule": {
+      "column": "TYPE",
+      "relation": "EQUALS",
+      "condition": "Gifts and baskets"
+    }
+  },
+  {
+    "handle": "kitchen-staples",
+    "title": "Kitchen staples",
+    "description": "Shudh chakki atta, maida, besan, sooji, sulphur-free sugar and iodised salt, packed with the same care as the rice.",
+    "seoTitle": "Atta, Maida, Besan, Sooji, Sugar & Salt | Aeroplane Staples",
+    "seoDescription": "Buy Aeroplane kitchen staples online: shudh chakki atta, maida, besan, sooji, sulphur-free sugar and iodised salt.",
+    "rule": {
+      "column": "TYPE",
+      "relation": "EQUALS",
+      "condition": "Kitchen staples"
+    }
+  }
+]

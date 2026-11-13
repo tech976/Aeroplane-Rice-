@@ -2,9 +2,25 @@
   {
     "name": "theme_info",
     "theme_name": "Aeroplane Basmati",
-    "theme_version": "1.0.0",
+    "theme_version": "1.1.0",
     "theme_author": "Aeroplane Basmati Rice",
     "theme_documentation_url": "https://aeroplane-rice.vercel.app/",
     "theme_support_url": "https://aeroplane-rice.vercel.app/contact"
+  },
+  {
+    "name": "Investor documents",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "The investor filings (about 340 MB) are too large for a theme, so they load from another address. Leave this as it is while the Vercel site is running. To move them, upload the files to Content > Files and paste the address of that folder here, up to the last slash before the file name."
+      },
+      {
+        "type": "text",
+        "id": "documents_url",
+        "label": "Documents address",
+        "default": "https://aeroplane-rice.vercel.app",
+        "info": "The files are read from this address followed by /assets/investors/<file name>, unless it ends in /files/, in which case the file name follows directly."
+      }
+    ]
   }
 ]

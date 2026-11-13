@@ -122,6 +122,7 @@ export const docGroups: Record<string, Group[]> = {
       { title: 'Certificate of Incorporation', file: 'ii.-COI_SIGNED.pdf', size: 218474 },
       { title: 'Certificate of Commencement of Business', file: 'iii.-COC_SIGNED.pdf', size: 319110 },
       { title: "Industry Report", file: "Industry-Report.pdf", size: 1287664 },
+      { title: "Industry Research Report on the Rice Industry in India, January 2025", file: "Industry-Research-Report-on-Rice-Industry-in-India_13_01_25.pdf", size: 1156064 },
       { title: "List of Shareholders as on 31.03.2025", file: "17.-LIST-OF-SHAREHOLDERS-AS-ON-31.03.2025.pdf", size: 276764 },
     ] },
     { heading: 'Resolutions', docs: [
@@ -223,6 +224,7 @@ export const docGroups: Record<string, Group[]> = {
     { heading: 'Offer documents', docs: [
       { title: 'DRHP', file: 'DRHP.pdf', size: 8097622 },
       { title: 'RHP', file: 'RHP-PDF-FINAL_website-2.pdf', size: 9403438 },
+      { title: 'Prospectus', file: 'Aroma-Prospectus-v6-with-RFS-CB2932026.pdf', size: 9560259 },
     ] },
   ],
   certificates: [
