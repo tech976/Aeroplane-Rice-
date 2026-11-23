@@ -164,7 +164,7 @@ h3 { font-family: var(--display); font-weight: 700; line-height: 1.1; letter-spa
 .menu__close span:first-child { rotate: 45deg; translate: 0 .25rem; }
 .menu__close span:last-child { rotate: -45deg; translate: 0 -.25rem; }
 .menu__nav { display: grid; margin-block: auto; padding-block: 2rem; }
-.menu__nav a { padding-block: .35em; font: 700 clamp(2rem, 10vw, 3.25rem)/1 var(--display); letter-spacing: -.03em; text-transform: uppercase; text-decoration: none; }
+.menu__nav a { padding-block: .35em; font: 700 clamp(1.625rem, 8vw, 2.5rem)/1 var(--display); letter-spacing: -.03em; text-transform: uppercase; text-decoration: none; }
 .menu__nav a:hover, .menu__nav a:focus-visible { color: var(--yellow); }
 .menu__note { font-size: .9375rem; opacity: .8; }
 
