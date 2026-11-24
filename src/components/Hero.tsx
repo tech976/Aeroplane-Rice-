@@ -2,7 +2,7 @@ import { asset } from '../host';
 import { Marketplaces } from './Marketplaces';
 
 const WIDE = { small: '/assets/img/banner-16x9-s.webp', smallW: 1280, full: '/assets/img/banner-16x9.webp', fullW: 1920 };
-const TALL = { small: '/assets/img/banner-9x16-s.webp', smallW: 640, full: '/assets/img/banner-9x16.webp', fullW: 941 };
+const TALL = { small: '/assets/img/banner-9x16-v2-s.webp', smallW: 640, full: '/assets/img/banner-9x16-v2.webp', fullW: 941 };
 const set = (b: typeof TALL) => `${asset(b.small)} ${b.smallW}w, ${asset(b.full)} ${b.fullW}w`;
 
 /**
