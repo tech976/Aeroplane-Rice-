@@ -27,7 +27,14 @@ export function asset(path: string) {
   if (path.startsWith('/assets/investors/')) {
     // the theme setting "Documents address": the Vercel site, or a Shopify Files folder
     const base = (bridge.filesBase || site.url).replace(/\/+$/, '');
-    return base.endsWith('/files') ? `${base}/${path.slice('/assets/investors/'.length)}` : base + path;
+    if (base.endsWith('/files')) {
+      const name = path.slice('/assets/investors/'.length);
+      // Shopify Files takes no web pages, so the .html filings stay on the Vercel site
+      if (name.endsWith('.html')) return `https://aeroplane-rice.vercel.app${path}`;
+      // Shopify drops a trailing - or _ from a file's name when it is uploaded
+      return `${base}/${name.replace(/[-_]+(\.\w+)$/, '$1')}`;
+    }
+    return base + path;
   }
   // the version changes with every theme upload, so browsers never keep an old copy
   return `${bridge.assetBase}${path.slice('/assets/'.length).replaceAll('/', '-')}?v=${bridge.version}`;
