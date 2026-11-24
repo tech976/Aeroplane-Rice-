@@ -180,13 +180,13 @@ export const details: Record<string, Details> = {
   "raw-la-taste-basmati-rice-diwali-gift-pa": {
     "short": "Free 1 Kg Sugar Offer Applicable only on 5 Kg, 10 Kg, 20 Kg Pack Only.",
     "paragraphs": [
-      "Aeroplane Raw La-Taste Basmati Rice, a quality product from the house of Amir Chand Jagdish Kumar (Exports) Limited is the perfect choice to serve the most royal of all rice delicacies, Pulao. Appreciated by chefs and bulk caterers alike, this special product is customized to suit the common Indian kitchen! It is ideal for cooking any version of pulao from across India. Whether you’re cooking it for a large gathering at a get-together, or for a special serving for close family members, this rice is set to impress your family and guests again and again. The debate on best pulao rice settles with Aeroplane Raw La-Taste Basmati Rice.",
-      "Aeroplane Raw La-Taste Basmati Rice is an appropriate option for longer durations of cooking, especially when signature pulao ingredients like vegetables and meat are involved. It is treated through a special process called “Advanced Hydration Technique” which helps preserve the signature basmati aroma and length of the grains and enables more servings than any other rice in the market. Aeroplane Raw La-Taste Basmati Rice is defined by its consistency of grains, that remain fluffy and delectable even after a long duration of cooking.",
+      "Aeroplane La-Taste Basmati Rice, a quality product from the house of Amir Chand Jagdish Kumar (Exports) Limited is the perfect choice to serve the most royal of all rice delicacies, Pulao. Appreciated by chefs and bulk caterers alike, this special product is customized to suit the common Indian kitchen! It is ideal for cooking any version of pulao from across India. Whether you’re cooking it for a large gathering at a get-together, or for a special serving for close family members, this rice is set to impress your family and guests again and again. The debate on best pulao rice settles with Aeroplane La-Taste Basmati Rice.",
+      "Aeroplane La-Taste Basmati Rice is an appropriate option for longer durations of cooking, especially when signature pulao ingredients like vegetables and meat are involved. It is treated through a special process called “Advanced Hydration Technique” which helps preserve the signature basmati aroma and length of the grains and enables more servings than any other rice in the market. Aeroplane La-Taste Basmati Rice is defined by its consistency of grains, that remain fluffy and delectable even after a long duration of cooking.",
       "All Aeroplane Rice products are produced with international quality standards, cleaned, sorted and packed in superior, hygienic and state-of-the-art facilities.",
-      "Aeroplane Raw La-Taste Basmati Pulao Rice is a quality product from the house of Amir Chand Jagdish Kumar (Exports) Limited."
+      "Aeroplane La-Taste Basmati Pulao Rice is a quality product from the house of Amir Chand Jagdish Kumar (Exports) Limited."
     ],
     "highlights": [
-      "Aeroplane Raw La-Taste is the best choice for any kind of Pulao dishes",
+      "Aeroplane La-Taste is the best choice for any kind of Pulao dishes",
       "Gives more servings than any other rice in the market",
       "Extra long grain rice",
       "Grains have distinct basmati aroma and stay delectable despite long cooking durations",
@@ -452,13 +452,13 @@ export const details: Record<string, Details> = {
   "raw-la-taste-basmati-rice": {
     "short": "Free 1 Kg Sugar Offer Applicable only on 5 Kg, 10 Kg, 20 Kg Pack Only.",
     "paragraphs": [
-      "Aeroplane Raw La-Taste Basmati Rice, a quality product from the house of Amir Chand Jagdish Kumar (Exports) Limited is the perfect choice to serve the most royal of all rice delicacies, Pulao. Appreciated by chefs and bulk caterers alike, this special product is customized to suit the common Indian kitchen! It is ideal for cooking any version of pulao from across India. Whether you’re cooking it for a large gathering at a get-together, or for a special serving for close family members, this rice is set to impress your family and guests again and again. The debate on best pulao rice settles with Aeroplane Raw La-Taste Basmati Rice.",
-      "Aeroplane Raw La-Taste Basmati Rice is an appropriate option for longer durations of cooking, especially when signature pulao ingredients like vegetables and meat are involved. It is treated through a special process called “Advanced Hydration Technique” which helps preserve the signature basmati aroma and length of the grains and enables more servings than any other rice in the market. Aeroplane Raw La-Taste Basmati Rice is defined by its consistency of grains, that remain fluffy and delectable even after a long duration of cooking.",
+      "Aeroplane La-Taste Basmati Rice, a quality product from the house of Amir Chand Jagdish Kumar (Exports) Limited is the perfect choice to serve the most royal of all rice delicacies, Pulao. Appreciated by chefs and bulk caterers alike, this special product is customized to suit the common Indian kitchen! It is ideal for cooking any version of pulao from across India. Whether you’re cooking it for a large gathering at a get-together, or for a special serving for close family members, this rice is set to impress your family and guests again and again. The debate on best pulao rice settles with Aeroplane La-Taste Basmati Rice.",
+      "Aeroplane La-Taste Basmati Rice is an appropriate option for longer durations of cooking, especially when signature pulao ingredients like vegetables and meat are involved. It is treated through a special process called “Advanced Hydration Technique” which helps preserve the signature basmati aroma and length of the grains and enables more servings than any other rice in the market. Aeroplane La-Taste Basmati Rice is defined by its consistency of grains, that remain fluffy and delectable even after a long duration of cooking.",
       "All Aeroplane Rice products are produced with international quality standards, cleaned, sorted and packed in superior, hygienic and state-of-the-art facilities.",
-      "Aeroplane Raw La-Taste Basmati Pulao Rice is a quality product from the house of Amir Chand Jagdish Kumar (Exports) Limited."
+      "Aeroplane La-Taste Basmati Pulao Rice is a quality product from the house of Amir Chand Jagdish Kumar (Exports) Limited."
     ],
     "highlights": [
-      "Aeroplane Raw La-Taste is the best choice for any kind of Pulao dishes",
+      "Aeroplane La-Taste is the best choice for any kind of Pulao dishes",
       "Gives more servings than any other rice in the market",
       "Extra long grain rice",
       "Grains have distinct basmati aroma and stay delectable despite long cooking durations",

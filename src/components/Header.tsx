@@ -41,11 +41,11 @@ export function Header({ plain = false }: { plain?: boolean }) {
   return (
     <>
       <a className="skip" href="#main">Skip to content</a>
-      <p className="announce">Free 1 kg sugar with 5, 10 and 20 kg packs of Raw La-Taste Basmati. <a href="/#range">Shop now</a></p>
+      <p className="announce">Free 1 kg sugar with 5, 10 and 20 kg packs of La-Taste Basmati. <a href="/#range">Shop now</a></p>
       <header className="site-header" data-solid={solid || plain}>
         <div className="site-header__bar">
           <a className="site-header__logo" href="/" aria-label="Aeroplane Basmati, home">
-            <img src={asset('/assets/brand/logo-shield-clear.png')} alt="La-Taste Aeroplane Basmati" width={400} height={188} />
+            <img src={asset('/assets/brand/logo-primary-clear.png')} alt="La-Taste Aeroplane Basmati Rice" width={400} height={400} />
           </a>
           <nav className="site-nav" aria-label="Main">
             {away && <a href="/">Home</a>}
@@ -92,7 +92,7 @@ export function Header({ plain = false }: { plain?: boolean }) {
       <dialog className="menu dark" ref={menu} aria-label="Menu" onClick={onMenuClick}>
         <div className="menu__inner">
           <div className="menu__top">
-            <img src={asset('/assets/brand/logo-shield-white.png')} alt="La-Taste Aeroplane Basmati" width={1212} height={641} loading="lazy" />
+            <img src={asset('/assets/brand/logo-primary-clear.png')} alt="La-Taste Aeroplane Basmati Rice" width={400} height={400} loading="lazy" />
             <button className="menu__close" type="button" aria-label="Close menu"><span /><span /></button>
           </div>
           <nav className="menu__nav" aria-label="Mobile">

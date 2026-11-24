@@ -9,7 +9,7 @@ export type Product = { id: string; name: string; category: string; url: string;
 const exported: Product[] = [
   {
     "id": "raw-la-taste-basmati-rice",
-    "name": "Raw La-Taste Basmati",
+    "name": "La-Taste Basmati",
     "category": "Basmati",
     "url": "https://shop.aeroplanerice.com/shop/aeroplane-raw-la-taste-basmati-rice/",
     "image": "/assets/shop/raw-la-taste-basmati-rice.webp",
@@ -706,7 +706,7 @@ const exported: Product[] = [
   },
   {
     "id": "raw-la-taste-basmati-rice-diwali-gift-pa",
-    "name": "Raw La-Taste Gift Pack",
+    "name": "La-Taste Gift Pack",
     "category": "Gifts and baskets",
     "url": "https://shop.aeroplanerice.com/shop/aeroplane-raw-la-taste-basmati-rice-diwali-gift-pack/",
     "image": "/assets/shop/raw-la-taste-basmati-rice-diwali-gift-pa.webp",

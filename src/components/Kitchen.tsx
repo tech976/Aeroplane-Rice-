@@ -13,7 +13,7 @@ export function Kitchen() {
         <div className="kitchen__grid">
           <article className="story story--feature">
             <a href="#kitchen" className="story__media frame" tabIndex={-1} aria-hidden="true">
-              <Img name="kitchen-method" alt="" sizes="(min-width: 900px) 60vw, 100vw" />
+              <Img name="kitchen-method-v2" alt="" sizes="(min-width: 900px) 60vw, 100vw" />
               <Notch icon="scoop" />
             </a>
             <div className="story__body">

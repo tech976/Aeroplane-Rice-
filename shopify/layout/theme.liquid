@@ -51,8 +51,8 @@
 {{ 'fonts-montserrat.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
 {{ 'fonts-manrope.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
 {%- if template.name == 'index' %}
-<link rel="preload" as="image" media="(min-aspect-ratio: 1/1)" imagesrcset="{{ 'img-banner-16x9-v2-s.webp' | asset_url }} 1280w, {{ 'img-banner-16x9-v2.webp' | asset_url }} 1920w" imagesizes="100vw" fetchpriority="high">
-<link rel="preload" as="image" media="(max-aspect-ratio: 1/1)" imagesrcset="{{ 'img-banner-9x16-v4-s.webp' | asset_url }} 640w, {{ 'img-banner-9x16-v4.webp' | asset_url }} 941w" imagesizes="100vw" fetchpriority="high">
+<link rel="preload" as="image" media="(min-aspect-ratio: 1/1)" imagesrcset="{{ 'img-banner-wide-v3-s.webp' | asset_url }} 1280w, {{ 'img-banner-wide-v3.webp' | asset_url }} 1930w" imagesizes="100vw" fetchpriority="high">
+<link rel="preload" as="image" media="(max-aspect-ratio: 1/1)" imagesrcset="{{ 'img-banner-9x16-v5-s.webp' | asset_url }} 640w, {{ 'img-banner-9x16-v5.webp' | asset_url }} 941w" imagesizes="100vw" fetchpriority="high">
 {%- endif %}
 {{ 'aeroplane.css' | asset_url | stylesheet_tag }}
 {{ content_for_header }}
@@ -87,50 +87,6 @@
 <script type="module" src="{{ script }}"></script>
 </head>
 <body>
-{%- comment -%}
-  COMING SOON (Nov 2026): a full-screen layer over every page, with no way to close it. The store
-  still runs underneath it. To take it down, delete everything from here to END COMING SOON.
-  Team preview: open any page with ?preview=aeroplane to hide the layer in that browser, and
-  ?preview=off to bring it back. The theme editor never shows it.
-{%- endcomment -%}
-{%- unless request.design_mode -%}
-<script>
-  (function () {
-    var root = document.documentElement;
-    try {
-      var preview = new URLSearchParams(location.search).get('preview');
-      if (preview === 'aeroplane') localStorage.setItem('aeroplane-preview', '1');
-      if (preview === 'off') localStorage.removeItem('aeroplane-preview');
-      if (localStorage.getItem('aeroplane-preview') === '1') root.classList.add('soon-off');
-    } catch (e) {}
-    // keep keyboard focus out of the page underneath
-    document.addEventListener('DOMContentLoaded', function () {
-      var page = document.getElementById('root');
-      if (page && !root.classList.contains('soon-off')) page.setAttribute('inert', '');
-    });
-  })();
-</script>
-<style>
-  html:not(.soon-off), html:not(.soon-off) body { overflow: hidden !important; }
-  html.soon-off .soon { display: none !important; }
-  .soon { position: fixed; inset: 0; z-index: 2147483647; width: 100%; height: 100%; display: grid; place-items: center; padding: 2rem 1.25rem; overflow: hidden; background: #322B6A; color: #FDFCF9; text-align: center; font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif; }
-  .soon::before { content: ""; position: absolute; inset: 0; background: #FDFCF9; opacity: .07; -webkit-mask: url("{{ 'brand-pattern-mask.svg' | asset_url }}") 0 0 / 30rem; mask: url("{{ 'brand-pattern-mask.svg' | asset_url }}") 0 0 / 30rem; }
-  .soon__inner { position: relative; display: grid; justify-items: center; gap: clamp(1.25rem, 3vw, 2rem); }
-  .soon__logo { display: block; width: auto; height: clamp(4.5rem, 12vw, 7.5rem); }
-  .soon__rule { display: block; width: 4rem; height: 3px; background: #FFED00; }
-  .soon__title { margin: 0; font-weight: 700; font-size: clamp(2.25rem, 10vw, 7.5rem); line-height: .95; letter-spacing: -.04em; text-transform: uppercase; }
-  .soon__note { margin: 0; max-width: 26em; font-family: "Manrope", "Helvetica Neue", Arial, sans-serif; font-size: clamp(1rem, 1.6vw, 1.25rem); line-height: 1.5; opacity: .85; text-wrap: balance; }
-</style>
-<div class="soon" role="dialog" aria-modal="true" aria-labelledby="soon-title">
-  <div class="soon__inner">
-    <img class="soon__logo" src="{{ 'brand-logo-shield-white.png' | asset_url }}" alt="La-Taste Aeroplane Basmati" width="1212" height="641">
-    <span class="soon__rule" aria-hidden="true"></span>
-    <p class="soon__title" id="soon-title">Coming Soon</p>
-    <p class="soon__note">Something new from the house of Aeroplane is on its way.</p>
-  </div>
-</div>
-{%- endunless -%}
-{%- comment -%} END COMING SOON {%- endcomment -%}
 {%- comment -%}
   The templates write each page's words and links into #root, for crawlers and for anyone without
   JavaScript; the app replaces them as soon as it starts. On policy pages Shopify writes the policy

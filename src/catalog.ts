@@ -48,7 +48,7 @@ export const categoryPath = (name: string) => `/shop/${categoryByName(name)?.slu
 const named: Record<string, string> = {
   '1121-extra-long-grain-rice': '1121 Steam Basmati Rice',
   '1121-spl-mongra-basmati-rice': 'Special Mogra Basmati Rice',
-  'raw-la-taste-basmati-rice-diwali-gift-pa': 'Raw La-Taste Basmati Gift Pack',
+  'raw-la-taste-basmati-rice-diwali-gift-pa': 'La-Taste Basmati Gift Pack',
   atta: 'Shudh Chakki Atta (Whole Wheat Flour)',
   maida: 'Maida (Refined Wheat Flour)',
   besan: 'Besan (Gram Flour)',
