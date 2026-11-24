@@ -1,8 +1,8 @@
 import { asset } from '../host';
 import { Marketplaces } from './Marketplaces';
 
-const WIDE = { small: '/assets/img/banner-16x9-s.webp', smallW: 1280, full: '/assets/img/banner-16x9.webp', fullW: 1920 };
-const TALL = { small: '/assets/img/banner-9x16-v3-s.webp', smallW: 640, full: '/assets/img/banner-9x16-v3.webp', fullW: 941 };
+const WIDE = { small: '/assets/img/banner-16x9-v2-s.webp', smallW: 1280, full: '/assets/img/banner-16x9-v2.webp', fullW: 1920 };
+const TALL = { small: '/assets/img/banner-9x16-v4-s.webp', smallW: 640, full: '/assets/img/banner-9x16-v4.webp', fullW: 941 };
 const set = (b: typeof TALL) => `${asset(b.small)} ${b.smallW}w, ${asset(b.full)} ${b.fullW}w`;
 
 /**
@@ -23,7 +23,7 @@ export function Hero() {
           src={asset(WIDE.full)}
           srcSet={set(WIDE)}
           sizes="100vw" width={1920} height={1080} fetchPriority="high"
-          alt="Two women in a warm, softly lit kitchen presenting Aeroplane sooji, maida, besan, atta, salt and sugar"
+          alt="Aeroplane La-Taste basmati rice in green and blue bags, with Aeroplane maida, atta, sooji, salt, sugar and besan, on a wooden stand in a warm kitchen"
         />
       </picture>
 
