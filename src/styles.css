@@ -206,6 +206,8 @@ h3 { font-family: var(--display); font-weight: 700; line-height: 1.1; letter-spa
 /* The whole section fits one screen under the bar: a compact heading, then the film sized to the
    height that is left (the reserve is the bar, the spacing, the heading and the row beneath it). */
 .films { --reserve: 22.5rem; position: relative; overflow: hidden; padding-block: clamp(1.5rem, 3vw, 2.5rem); }
+/* The film section is switched off for now (Nov 2026). Delete this line to bring it back. */
+.films { display: none; }
 .films .pattern { opacity: .05; -webkit-mask-size: 32rem; mask-size: 32rem; }
 .films .wrap { position: relative; }
 .films .head { margin-bottom: clamp(1rem, 2vw, 1.5rem); gap: .5rem 3rem; }
