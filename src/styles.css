@@ -872,12 +872,6 @@ body:has(.shop-bar[data-shown="true"]) .wa { bottom: calc(5.75rem + env(safe-are
 .site-footer__base { position: relative; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin-top: clamp(3rem, 6vw, 6rem); padding-top: 1.5rem; font-size: .875rem; }
 /* the rule above the copyright runs the width of the text, like every other rule on the site, not into the margins */
 .site-footer__end { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 2rem; }
-/* the studio credit: small and quiet, the logo in its own colours */
-.made-by { display: inline-flex; align-items: center; gap: .45rem; color: inherit; text-decoration: none; opacity: .85; transition: opacity .2s; }
-.made-by img { width: 1.5rem; height: 1.5rem; }
-.made-by b { font-weight: 700; letter-spacing: .01em; }
-.made-by:hover { opacity: 1; }
-.made-by:hover b { text-decoration: underline; text-underline-offset: .2em; }
 .site-footer__base::before { content: ""; position: absolute; top: 0; inset-inline: var(--gutter); border-top: 1px solid var(--line); }
 /* leave the corner to the WhatsApp button */
 @media (min-width: 900px) { .site-footer__base { padding-right: calc(var(--gutter) + 5.75rem); } }
