@@ -20,6 +20,8 @@ execSync('npx vite build --mode shopify', { stdio: 'inherit' });
 // each page's title, description, preview tags and structured data, in the HTML Shopify sends
 execSync('npx vite build --ssr src/seo-data.ts --outDir .seo-build --logLevel warn', { stdio: 'inherit' });
 execSync(`node scripts/shopify-seo.mjs ${OUT}/snippets/aeroplane-seo.liquid`, { stdio: 'inherit' });
+// robots.txt rules, the extra sitemap and the guide for AI assistants
+execSync(`node scripts/shopify-discovery.mjs ${OUT}`, { stdio: 'inherit' });
 
 // the stylesheet points at /assets/...; in the theme its neighbours sit beside it, renamed
 const stamp = Date.now().toString(36);
