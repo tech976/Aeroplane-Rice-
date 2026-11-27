@@ -9,3 +9,5 @@ export { policyPages } from './policies';
 export { docGroups } from './investor-docs';
 export { crumbsFor } from './breadcrumbs';
 export { toStore, pageHandle, storePolicies } from './store-paths';
+export { questions } from './faq';
+export { brandPages } from './marketplace-links';

@@ -6,15 +6,13 @@
   Built by `npm run build:shopify`; edit the source in /shopify and /src, not in dist-shopify.
 {%- endcomment -%}
 {%- liquid
-  assign site_title = 'Aeroplane Basmati Rice | Buy Aged Basmati Rice & Staples Online'
-  assign site_description = 'Aeroplane Basmati Rice: aged Indian basmati, rested for eight months before milling. Shop basmati, regional rice and kitchen staples from the house of Aeroplane.'
-  if template.name == 'index'
-    assign title = site_title
-  else
-    assign title = page_title | append: ' | Aeroplane Basmati Rice'
-  endif
-  assign description = page_description | default: site_description
   assign script = 'aeroplane.js' | asset_url
+  comment
+    The app asks for every theme file as <asset address><name>?v=<aeroplane.js's version> (src/host.ts).
+    The banner preloads below use the same address, so the browser reuses them instead of fetching twice.
+  endcomment
+  assign asset_base = script | split: 'aeroplane.js' | first
+  assign asset_version = script | split: '?v=' | last
 -%}
 <html lang="en-IN">
 <head>
@@ -28,31 +26,15 @@
 </script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{ title | escape }}</title>
-<meta name="description" content="{{ description | escape }}">
+{%- render 'aeroplane-seo', product: product, collection: collection, page: page, page_title: page_title, page_description: page_description, canonical_url: canonical_url, template: template %}
 <meta name="theme-color" content="#FDFCF9">
-<link rel="canonical" href="{{ canonical_url }}">
-<meta property="og:type" content="{% if template.name == 'product' %}product{% else %}website{% endif %}">
-<meta property="og:url" content="{{ canonical_url }}">
-<meta property="og:locale" content="en_IN">
-<meta property="og:site_name" content="Aeroplane Basmati Rice">
-<meta property="og:title" content="{{ title | escape }}">
-<meta property="og:description" content="{{ description | escape }}">
-{%- if template.name == 'product' and product.featured_image %}
-<meta property="og:image" content="https:{{ product.featured_image | image_url: width: 1200 }}">
-{%- else %}
-<meta property="og:image" content="https:{{ 'img-og.jpg' | asset_url }}">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-{%- endif %}
-<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" sizes="64x64" href="{{ 'brand-favicon.png' | asset_url }}">
 <link rel="apple-touch-icon" href="{{ 'brand-touch-icon.png' | asset_url }}">
 {{ 'fonts-montserrat.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
 {{ 'fonts-manrope.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
 {%- if template.name == 'index' %}
-<link rel="preload" as="image" media="(min-aspect-ratio: 1/1)" imagesrcset="{{ 'img-banner-wide-v3-s.webp' | asset_url }} 1280w, {{ 'img-banner-wide-v3.webp' | asset_url }} 1930w" imagesizes="100vw" fetchpriority="high">
-<link rel="preload" as="image" media="(max-aspect-ratio: 1/1)" imagesrcset="{{ 'img-banner-9x16-v5-s.webp' | asset_url }} 640w, {{ 'img-banner-9x16-v5.webp' | asset_url }} 941w" imagesizes="100vw" fetchpriority="high">
+<link rel="preload" as="image" media="(min-aspect-ratio: 1/1)" imagesrcset="{{ asset_base }}img-banner-wide-v3-s.webp?v={{ asset_version }} 1280w, {{ asset_base }}img-banner-wide-v3.webp?v={{ asset_version }} 1930w" imagesizes="100vw" fetchpriority="high">
+<link rel="preload" as="image" media="(max-aspect-ratio: 1/1)" imagesrcset="{{ asset_base }}img-banner-9x16-v5-s.webp?v={{ asset_version }} 640w, {{ asset_base }}img-banner-9x16-v5.webp?v={{ asset_version }} 941w" imagesizes="100vw" fetchpriority="high">
 {%- endif %}
 {{ 'aeroplane.css' | asset_url | stylesheet_tag }}
 {{ content_for_header }}

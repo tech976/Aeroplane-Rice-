@@ -9,7 +9,7 @@ export const shopCategories: ShopCategory[] = [
     name: 'Basmati', slug: 'basmati', heading: 'Basmati rice.',
     intro: 'Grown in the basmati belt at the foot of the Himalayas and rested for eight months before it is milled, so it cooks long, separate and fragrant. Extra-long 1121 grain for biryani, golden sella that holds its shape, and everyday basmati for dal chawal and pulao, in packs from 1 kg to 20 kg.',
     seoTitle: 'Basmati Rice – Buy Aged Basmati Rice Online | Aeroplane',
-    seoDescription: 'Buy aged Aeroplane basmati rice online: 1121 extra-long grain, golden sella, classic and everyday basmati in 1 kg to 20 kg packs, rested eight months before milling.',
+    seoDescription: 'Buy aged Aeroplane basmati rice online: 1121 extra-long grain, golden sella, classic and everyday basmati in 1 kg to 20 kg packs, aged eight months.',
   },
   {
     name: 'Regional rice', slug: 'regional-rice', heading: 'Regional rice.',

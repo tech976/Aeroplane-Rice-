@@ -12,7 +12,7 @@ export function Kitchen() {
 
         <div className="kitchen__grid">
           <article className="story story--feature">
-            <a href="#kitchen" className="story__media frame" tabIndex={-1} aria-hidden="true">
+            <a href="#kitchen" className="story__media frame" tabIndex={-1} aria-hidden="true" aria-label="How to cook basmati so every grain stands apart">
               <Img name="kitchen-method-v2" alt="" sizes="(min-width: 900px) 60vw, 100vw" />
               <Notch icon="scoop" />
             </a>
@@ -29,7 +29,7 @@ export function Kitchen() {
           </article>
 
           <article className="story">
-            <a href="#kitchen" className="story__media frame" tabIndex={-1} aria-hidden="true">
+            <a href="#kitchen" className="story__media frame" tabIndex={-1} aria-hidden="true" aria-label="Weeknight vegetable pulao, one pot">
               <Img name="pulao-plate" alt="" sizes="(min-width: 900px) 28vw, 100vw" />
             </a>
             <div className="story__body">

@@ -4,6 +4,7 @@ import { Icon } from './ui';
 import { asset } from '../host';
 import { shopCategories } from '../catalog';
 import { policyPages } from '../policies';
+import { questions } from '../faq';
 
 const WREATH = '<path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(105.1 234.5) rotate(-138.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(119.3 260.8) rotate(-155.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(140.6 281.7) rotate(-172.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(167.1 295.5) rotate(-189.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(196.5 300.9) rotate(-206.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(226.1 297.6) rotate(-223.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(253.5 285.7) rotate(-240.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(276.2 266.3) rotate(-257.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(292.3 241.1) rotate(-274.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(294.9 234.5) rotate(138.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(280.7 260.8) rotate(155.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(259.4 281.7) rotate(172.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(232.9 295.5) rotate(189.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(203.5 300.9) rotate(206.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(173.9 297.6) rotate(223.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(146.5 285.7) rotate(240.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(123.8 266.3) rotate(257.0)"/><path d="M0-13C5-6 5 6 0 13C-5 6-5-6 0-13Z" transform="translate(107.7 241.1) rotate(274.0)"/>';
 
@@ -54,14 +55,6 @@ export function Promise() {
     </section>
   );
 }
-
-const questions = [
-  ['Which Aeroplane rice is best for biryani?', 'Basmati 1121 Steam. It is our extra-long grain, and it stays firm and separate through dum cooking. Classic Basmati works well too if you like a softer bite.'],
-  ['Why does aged basmati cook better?', 'Resting dries the grain slowly and hardens its surface. Aged rice absorbs water evenly, lengthens instead of splitting, and comes out fluffy instead of sticky.'],
-  ['How much water should I use?', 'For soaked basmati, one cup of rice to one and a half cups of water is a reliable start. Rinse first, soak for thirty minutes, and let the pot rest ten minutes before you lift the lid.'],
-  ['How do I pay and get delivery?', 'Add packs to your cart here, then continue to the Aeroplane online shop to pay and choose delivery. The prices shown on this page are the shop\'s own.'],
-  ['Where do I find the lot number?', 'On the back of every pack, beside the grain length and the months of ageing. Quote it if you ever write to us and we can trace the lot.'],
-];
 
 export function Faq() {
   return (

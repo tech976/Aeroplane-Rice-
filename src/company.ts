@@ -294,7 +294,7 @@ export const pages: Page[] = [
     lede: 'Annual general meeting papers, board meeting notices, shareholding, shareholder service forms and the statutory filings.',
     seoTitle: 'Filings and announcements | Aeroplane Basmati Rice',
     seoDescription:
-      'AGM notices and proceedings, board meeting notices, shareholding pattern, shareholder service forms and statutory filings for Amir Chand Jagdish Kumar (Exports) Ltd.',
+      'AGM notices, board meeting notices, shareholding pattern, shareholder service forms and statutory filings for Amir Chand Jagdish Kumar (Exports) Ltd.',
     blocks: [{ t: 'docs', section: 'announcements' }],
   },
 
